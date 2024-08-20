@@ -11,7 +11,7 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
             <a href='profile'>Profile</a>
             <a href='inscriptions-cours'>S'inscrire aux cours</a>
             <a href='informations-supplementaires'>Informations supplémentaires</a>
-            <a href='deconnexion'>Déconnexion</a>
+            <a href='/'>Déconnexion</a>
         </nav>
     </div>`;
 
