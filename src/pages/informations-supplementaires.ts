@@ -6,8 +6,12 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
   return html`<div>
+        <h1>Informations supplémentaires</h1>
         <nav>
-            <a href='pages/profile'>Compte</a>
+            <a href='profile'>Profile</a>
+            <a href='compte'>Compte</a>
+            <a href='inscriptions-cours'>S'inscrire aux cours</a>
+            <a href='deconnexion'>Déconnexion</a>
         </nav>
     </div>`;
 

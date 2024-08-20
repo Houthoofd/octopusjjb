@@ -142,14 +142,14 @@
       this[globalName] = mainExports;
     }
   }
-})({"8nIRZ":[function(require,module,exports) {
+})({"hTlze":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "e1b671d028fb02be";
+module.bundle.HMR_BUNDLE_ID = "50f58e12c5407367";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -583,23 +583,22 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"iTI9x":[function(require,module,exports) {
+},{}],"2CbBh":[function(require,module,exports) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 let template = (0, _core.html)`${(context)=>{
     return (0, _core.html)`<div>
         <h1>Compte</h1>
         <nav>
-            <a href='pages/compte'>Compte</a>
-            <a href='pages/profile'>Profile</a>
-            <a href='pages/inscriptions-cours'>S'inscrire aux cours</a>
-            <a href='pages/informations-supplementaires'>Informations supplémentaires</a>
-            <a href='pages/deconnexion'>Déconnexion</a>
+            <a href='profile'>Profile</a>
+            <a href='inscriptions-cours'>S'inscrire aux cours</a>
+            <a href='informations-supplementaires'>Informations supplémentaires</a>
+            <a href='deconnexion'>Déconnexion</a>
         </nav>
     </div>`;
 }}`;
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg"}]},["8nIRZ","iTI9x"], "iTI9x", "parcelRequirec605")
+},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg"}]},["hTlze","2CbBh"], "2CbBh", "parcelRequirec605")
 
-//# sourceMappingURL=management.28fb02be.js.map
+//# sourceMappingURL=compte.c5407367.js.map

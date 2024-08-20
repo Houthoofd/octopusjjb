@@ -589,7 +589,7 @@ var _routerElement = require("@lithium-framework/router-element");
 let template = (0, _core.html)`${(context)=>{
     return (0, _core.html)`<div>
         <nav>
-            <a href='pages/management'>Management</a>
+            <a href='pages/profile'>Compte</a>
         </nav>
     </div>`;
 }}`;
