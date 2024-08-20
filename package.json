@@ -5,10 +5,10 @@
   "main": "index.js",
   "source": [
     "src/index.html",
-    "src/pages/profile.html",
-    "src/pages/compte.html",
-    "src/pages/inscriptions-cours.html",
-    "src/pages/informations-supplementaires.html"
+    "src/pages/profile/index.html",
+    "src/pages/compte/index.html",
+    "src/pages/inscriptions/index.html",
+    "src/pages/informations/index.html"
   ],
   "scripts": {
     "clean": "rmdir /s /q dist ; rmdir /s /q .parcel-cache",
