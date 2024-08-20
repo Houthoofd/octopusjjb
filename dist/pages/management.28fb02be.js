@@ -587,7 +587,16 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<h1>Management</h1>`;
+    return (0, _core.html)`<div>
+        <h1>Compte</h1>
+        <nav>
+            <a href='pages/compte'>Compte</a>
+            <a href='pages/profile'>Profile</a>
+            <a href='pages/inscriptions-cours'>S'inscrire aux cours</a>
+            <a href='pages/informations-supplementaires'>Informations supplémentaires</a>
+            <a href='pages/deconnexion'>Déconnexion</a>
+        </nav>
+    </div>`;
 }}`;
 (0, _core.render)(template);
 

@@ -7,7 +7,7 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
   return html`<div>
         <nav>
-            <a href='pages/management'>Management</a>
+            <a href='pages/profile'>Compte</a>
         </nav>
     </div>`;
 
