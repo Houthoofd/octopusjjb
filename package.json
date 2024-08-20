@@ -1,0 +1,22 @@
+{
+  "name": "octopusjjb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "source": [
+    "src/index.html"
+  ],
+  "scripts": {
+    "clean": "rmdir /s /q dist ; rmdir /s /q .parcel-cache",
+    "start": "parcel --no-cache",
+    "build": "parcel build --no-cache",
+    "watch": "parcel watch --no-cache",
+    "serve": "parcel serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "parcels": "^0.13.5"
+  }
+}
