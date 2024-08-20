@@ -5,11 +5,7 @@ import '@lithium-framework/router-element'
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
-  return html`<div>
-        <nav>
-            <a href='pages/management'>Management</a>
-        </nav>
-    </div>`;
+  return html`<h1>Management</h1>`;
 
 }}`
 
