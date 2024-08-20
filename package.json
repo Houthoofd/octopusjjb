@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "source": [
-    "src/index.html"
+    "src/index.html",
+    "src/pages/management.html"
   ],
   "scripts": {
     "clean": "rmdir /s /q dist ; rmdir /s /q .parcel-cache",
@@ -17,6 +18,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@lithium-framework/core": "^1.7.0",
+    "@lithium-framework/router-element": "^1.0.0",
     "parcels": "^0.13.5"
   }
 }
