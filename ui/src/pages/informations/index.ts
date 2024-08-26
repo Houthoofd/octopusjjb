@@ -5,17 +5,38 @@ import '@lithium-framework/router-element'
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
-  return html`<div>
-        <h1>Informations supplémentaires</h1>
-        <nav>
-            <a href='profile'>Profile</a>
-            <a href='compte'>Compte</a>
-            <a href='inscriptions'>S'inscrire aux cours</a>
-            <a href='/'>Déconnexion</a>
-        </nav>
-    </div>`;
+    return html`<div class='informations'>
+          <nav class='header-menu'>
+              <a href='compte'>Compte</a>
+              <a href='/' id='logout'>Déconnexion</a>
+          </nav>
+          <div class='content'>
+              <nav class='horizontal-menu'>
+                  <a href='cours'>S'inscrire aux cours</a>
+                  <a href='informations'>Informations supplémentaires</a>
+              </nav>
+              <h1>Informations</h1>
+          </div>
+      </div>`;
+  
+  }}`
 
-}}`
+document.addEventListener('DOMContentLoaded', () => {
+    
+    const logoutLink = document.getElementById('logout');
+
+    if (logoutLink) {
+        logoutLink.addEventListener('click', (e) => {
+            
+            e.preventDefault();
+
+            localStorage.clear();
+            sessionStorage.clear();
+
+            window.location.href = '/';
+        });
+    }
+});
 
 
 

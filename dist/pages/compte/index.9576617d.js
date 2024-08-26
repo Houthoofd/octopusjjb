@@ -587,17 +587,28 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<div>
-        <h1>Compte</h1>
-        <nav>
-            <a href='profile'>Profile</a>
-            <a href='inscriptions'>S'inscrire aux cours</a>
-            <a href='informations'>Informations supplémentaires</a>
-            <a href='/'>Déconnexion</a>
-        </nav>
-    </div>`;
+    return (0, _core.html)`<div class='compte'>
+          <nav class='header-menu'>
+              <a href='compte'>Compte</a>
+              <a href='/' id='logout'>Déconnexion</a>
+          </nav>
+          <div class='content'>
+              <nav class='horizontal-menu'>
+                  <a href='cours'>S'inscrire aux cours</a>
+                  <a href='informations'>Informations supplémentaires</a>
+              </nav>
+              <h1>Compte</h1>
+          </div>
+      </div>`;
 }}`;
-console.log("compte");
+document.addEventListener("DOMContentLoaded", ()=>{
+    const logoutLink = document.getElementById("logout");
+    if (logoutLink) logoutLink.addEventListener("click", (e)=>{
+        e.preventDefault();
+        localStorage.clear();
+        window.location.href = "/";
+    });
+});
 (0, _core.render)(template);
 
 },{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT"}]},["aDpIY","4rHzT"], "4rHzT", "parcelRequirec605")
