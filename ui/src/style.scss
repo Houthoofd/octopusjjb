@@ -1,3 +1,12 @@
+html, body{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
 header.header {
     display: flex;
     align-items: center;
@@ -15,8 +24,57 @@ nav.navbar-middle > a {
 }
 nav.navbar-right {
     display: flex;
+    gap: 20px;
 }
 nav.navbar-right > a {
     text-decoration: none;
     color: black;
+}
+a#login.hidden {
+    display: none;
+}
+a#logout.hidden {
+    display: none;
+}
+
+
+nav.header-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d3d3d35c;
+}
+nav.header-menu > a{
+    text-decoration: none;
+    color: black;
+}
+
+.profile {
+    display: grid;
+    grid-template-rows: 10vh auto;
+}
+.informations {
+    display: grid;
+    grid-template-rows: 10vh auto;
+}
+.compte {
+    display: grid;
+    grid-template-rows: 10vh auto;
+}
+.cours {
+    display: grid;
+    grid-template-rows: 10vh auto;
+}
+.content {
+    display: grid;
+    grid-template-columns: 14vh auto;
+}
+nav.horizontal-menu {
+    background-color: #d3d3d35c;
+    flex-direction: column;
+    gap: 20px;
+    height: 843px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }

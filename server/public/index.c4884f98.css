@@ -1,0 +1,2 @@
+header.header{justify-content:space-between;align-items:center;display:flex}nav.navbar-middle{justify-content:flex-start;align-items:center;gap:20px;display:flex}nav.navbar-middle>a{color:#000;text-decoration:none}nav.navbar-right{gap:20px;display:flex}nav.navbar-right>a{color:#000;text-decoration:none}a#login.hidden,a#logout.hidden{display:none}.profile,.informations,.compte,.cours{grid-template-rows:10vh auto;display:grid}.content{grid-template-columns:14vh auto;display:grid}nav.horizontal-menu{display:grid}
+/*# sourceMappingURL=index.c4884f98.css.map */

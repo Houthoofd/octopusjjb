@@ -64,6 +64,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     for(let item of data){
                         localStorage.setItem('first_name', item.first_name);
                         localStorage.setItem('email', item.email);
+                        localStorage.setItem('role', item.status);
+                        localStorage.setItem('isLogged', 'true');
+                        console.log("mise en mémoire dans le locale storage" + item.first_name + item.email)
                     }
                     window.location.href = 'http://localhost:1234';
                 } else {

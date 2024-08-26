@@ -10,7 +10,8 @@
         "ui/src/pages/profile/index.html",
         "ui/src/pages/informations/index.html",
         "ui/src/pages/inscriptions/index.html",
-        "ui/src/pages/connexion/index.html"
+        "ui/src/pages/connexion/index.html",
+        "ui/src/pages/cours/index.html"
       ],
       "distDir": "server/public"
     },
