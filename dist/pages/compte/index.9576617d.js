@@ -600,6 +600,6 @@ let template = (0, _core.html)`${(context)=>{
 console.log("compte");
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg"}]},["aDpIY","4rHzT"], "4rHzT", "parcelRequirec605")
+},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT"}]},["aDpIY","4rHzT"], "4rHzT", "parcelRequirec605")
 
 //# sourceMappingURL=index.9576617d.js.map

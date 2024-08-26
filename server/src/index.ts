@@ -5,11 +5,10 @@ import cors from 'cors';
 import path from 'path';
 
 import { default as indexRouter } from './routes';
+
 const __server_dirname = process.cwd ? process.cwd() : process.env.PWD as string;
 
 const app = express();
-
-console.log({ x : path.join(__server_dirname, '/public') })
 
 app.use(logger('dev'));
 app.use(express.json());

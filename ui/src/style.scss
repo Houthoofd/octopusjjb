@@ -1,0 +1,22 @@
+header.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+nav.navbar-middle {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+nav.navbar-middle > a {
+    text-decoration: none;
+    color: black;
+}
+nav.navbar-right {
+    display: flex;
+}
+nav.navbar-right > a {
+    text-decoration: none;
+    color: black;
+}
