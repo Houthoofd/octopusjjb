@@ -1,7 +1,12 @@
 ### Google
 
-GET https://www.google.be
+GET http://localhost:3000/users
 
 ### Youtube
 
-GET https://www.youtube.com
+GET http://localhost:3000/pages
+
+
+### Connexion
+
+POST http://localhost:3000/connexion

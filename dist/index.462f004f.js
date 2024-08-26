@@ -587,15 +587,29 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<div>
+    let first_name = "";
+    console.log("jazfbjaze");
+    if (localStorage.getItem("first_name")) {
+        first_name = localStorage.getItem("first_name") || "";
+        console.log(first_name);
+    }
+    return (0, _core.html)`<div class='home'>
+        <header class='header'>
+            <nav class='navbar-middle'>
+                <a href='#'>Acceuil</a>
+                <a href='#'>Enfants</a>
+                <a href='#'>Contact</a>
+                <a href='pages/connexion'>Connexion</a>
+            </nav>
+            <nav class='navbar-right'>
+                <a href='pages/profile'>${first_name}</a>
+            </nav>
+        </header>
         <h1>Home 1234</h1>
-        <nav>
-            <a href='pages/compte'>Compte</a>
-        </nav>
     </div>`;
 }}`;
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
+},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
 
 //# sourceMappingURL=index.462f004f.js.map

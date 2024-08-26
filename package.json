@@ -6,13 +6,18 @@
     "frontend": {
       "source": [
         "ui/src/index.html",
-        "ui/src/pages/compte/index.html"
+        "ui/src/pages/compte/index.html",
+        "ui/src/pages/profile/index.html",
+        "ui/src/pages/informations/index.html",
+        "ui/src/pages/inscriptions/index.html",
+        "ui/src/pages/connexion/index.html"
       ],
       "distDir": "server/public"
     },
     "backend": {
       "context": "node",
-      "source": "server/src/index.ts"
+      "source": "server/src/index.ts",
+      "distDir": "server/dist"
     }
   },
   "scripts": {
@@ -26,10 +31,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@patternfly/react-core": "^5.3.4",
+    "@types/mysql": "^2.15.26",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@lithium-framework/core": "^1.7.0",

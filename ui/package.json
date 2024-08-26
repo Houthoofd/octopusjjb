@@ -1,0 +1,31 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "source": [
+    "src/index.html",
+    "src/pages/profile/index.html",
+    "src/pages/compte/index.html",
+    "src/pages/inscriptions/index.html",
+    "src/pages/informations/index.html"
+  ],
+  "scripts": {
+    "clean": "rmdir /s /q dist ; rmdir /s /q .parcel-cache",
+    "start": "parcel --no-cache",
+    "build": "parcel build --no-cache",
+    "watch": "parcel watch --no-cache",
+    "serve": "parcel serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lithium-framework/core": "^1.7.0",
+    "@lithium-framework/router-element": "^1.0.0",
+    "parcels": "^0.13.5"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0"
+  }
+}

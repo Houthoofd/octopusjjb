@@ -1,7 +1,8 @@
 import MysqlConnector from './mysqlconnector';
 
 
-export default class Client{
+export class Client{
+
     VerificationUtilisateur(sql: string, values: any[]): Promise<any> {
         return new Promise((resolve, reject) => {
             const mysqlConnector = new MysqlConnector();
@@ -45,7 +46,7 @@ export default class Client{
         return new Promise((resolve, reject) => {
             const mysqlConnector = new MysqlConnector();
             console.log("éxécution du query");
-            mysqlConnector.query(sql, values, (error, results) => {
+            mysqlConnector.query(sql, values as any, (error, results) => {
                 if (error) {
                     console.error('Erreur lors de l\'exécution de la requête : ' + error.message);
                     reject(error);
@@ -58,5 +59,8 @@ export default class Client{
                 mysqlConnector.close();
             });
         });
-    } 
+    }
+
 }
+
+
