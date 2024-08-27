@@ -10,3 +10,7 @@ GET http://localhost:3000/pages
 ### Connexion
 
 POST http://localhost:3000/connexion
+
+
+### inscriptions
+POST http://localhost:3000/inscriptions/
