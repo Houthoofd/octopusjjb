@@ -1,0 +1,52 @@
+.raw-infos {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    padding: 10px 10px;
+}
+.type-de-cours-infos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 10px;
+    width: 12ch;
+}
+.heure-fin-infos {
+    padding: 10px 10px;
+    width: 12ch;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.heure-debut-infos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 10px;
+    width: 12ch;
+}
+.date-infos {
+    display: flex;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px;
+}
+.down-arrow {
+    cursor: pointer;
+    background-color: #0350f4b0;
+    justify-content: center;
+    padding: 10px 10px;
+    border-radius: 3px;
+}
+button.inscription {
+    padding: 10px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #5b32a3b8;
+    color: #ffff;
+    cursor: pointer;
+}
