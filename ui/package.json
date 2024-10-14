@@ -2,7 +2,6 @@
   "name": "ui",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "source": [
     "src/index.html",
     "src/pages/profile/index.html",
@@ -23,7 +22,10 @@
   "dependencies": {
     "@lithium-framework/core": "^1.7.0",
     "@lithium-framework/router-element": "^1.0.0",
-    "parcels": "^0.13.5"
+    "@patternfly/patternfly": "^5.4.1",
+    "@patternfly/react-styles": "^5.4.0",
+    "parcels": "^0.13.5",
+    "unofficial-pf-v5-wc": "file:../../../PatternFlyLithium/unofficial-pf-v5-wc"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0"
