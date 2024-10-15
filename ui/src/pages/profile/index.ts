@@ -7,21 +7,25 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
   return html`<pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left >
-    <pf-action-list slot = "masthead-content">
-      <pf-action-list-item>
-        <pf-button>Action 1</pf-button>
-      </pf-action-list-item>
-      <pf-action-list-item>
-        <pf-button>Action 1</pf-button>
-      </pf-action-list-item>
-    </pf-action-list>
     <div slot = "drawer-panel">
-      <pf-navigation>w
+      <pf-navigation>
         <pf-navigation-list>
-            <pf-navigation-list-item>Link 1</pf-navigation-list-item>
-            <pf-navigation-list-item>Link 1</pf-navigation-list-item>
-            <pf-navigation-list-item>Link 1</pf-navigation-list-item>
-            <pf-navigation-list-item>Link 1</pf-navigation-list-item>
+            <pf-navigation-list-item
+              @mousedown=${() => { window.location.href = "cours" }}>
+                Cours
+            </pf-navigation-list-item>
+            <pf-navigation-list-item
+              @mousedown=${() => { window.location.href = "informations" }}>
+                Informations supplémentaires
+            </pf-navigation-list-item>
+            <pf-navigation-list-item
+              @mousedown=${() => { window.location.href = "compte" }}>
+                Compte
+            </pf-navigation-list-item>
+            <pf-navigation-list-item
+              @mousedown=${() => { window.location.href = "profile" }}>
+                Profile
+            </pf-navigation-list-item>
         </pf-navigation-list>
       </pf-navigation>
     </div>
@@ -41,6 +45,7 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
         </div>
       </pf-panel>
     </div>
+    <pf-avatar></pf-avatar>
   </pf-page>`;
 
 }}`

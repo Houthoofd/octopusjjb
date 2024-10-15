@@ -1,5 +1,6 @@
 import { render , html, ViewTemplate , ViewContext } from '@lithium-framework/core';
-import '@lithium-framework/router-element'
+import '@lithium-framework/router-element';
+import 'unofficial-pf-v5-wc';
 
 
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{

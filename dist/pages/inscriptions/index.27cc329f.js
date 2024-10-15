@@ -586,6 +586,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"1XyRs":[function(require,module,exports) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 let template = (0, _core.html)`${(context)=>{
     return (0, _core.html)`<div class='Sign-in'>
           <h1>Inscription</h1>
@@ -616,6 +617,6 @@ let template = (0, _core.html)`${(context)=>{
 }}`;
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT"}]},["kHMg9","1XyRs"], "1XyRs", "parcelRequirec605")
+},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc":"eGY4R"}]},["kHMg9","1XyRs"], "1XyRs", "parcelRequirec605")
 
 //# sourceMappingURL=index.27cc329f.js.map
