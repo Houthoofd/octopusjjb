@@ -1,4 +1,23 @@
 pf-page {
-  --page-drawer-panel_max-width: 300px;
+  --page-drawer-panel_max-width: 400px;
+}
+
+pf-page pf-panel.notification-box {
+  background-color: #0000;
+  width: 350px;
+  height: 100%;
+  display: none;
+  position: absolute;
+  right: 0;
+  box-shadow: 0 1px 5px #000000bf;
+}
+
+pf-page pf-panel.notification-box.active {
+  width: 350px;
+  height: 100%;
+  display: block;
+  position: absolute;
+  right: 0;
+  box-shadow: 0 1px 5px #000000bf;
 }
 /*# sourceMappingURL=index.8440cdc9.css.map */

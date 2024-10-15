@@ -25,7 +25,8 @@
     "@patternfly/patternfly": "^5.4.1",
     "@patternfly/react-styles": "^5.4.0",
     "parcels": "^0.13.5",
-    "unofficial-pf-v5-wc": "file:../../../PatternFlyLithium/unofficial-pf-v5-wc"
+    "unofficial-pf-v5-wc": "file:../../../PatternFlyLithium/unofficial-pf-v5-wc",
+    "unofficial-pf-v5-wc-icons": "file:../../../PatternFlyLithium/unofficial-pf-v5-wc-icons"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.12.0"

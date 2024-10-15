@@ -39,7 +39,8 @@
     "express": "^4.19.2",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
-    "unofficial-pf-v5-wc": "file:../../PatternFlyLithium/unofficial-pf-v5-wc"
+    "unofficial-pf-v5-wc": "file:../../PatternFlyLithium/unofficial-pf-v5-wc",
+    "unofficial-pf-v5-wc-icons": "file:../../PatternFlyLithium/unofficial-pf-v5-wc-icons"
   },
   "devDependencies": {
     "@lithium-framework/core": "^1.7.0",
