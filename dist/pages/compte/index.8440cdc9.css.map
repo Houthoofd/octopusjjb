@@ -1,1 +1,1 @@
-{"mappings":"","sources":[],"sourcesContent":[],"names":[],"version":3,"file":"index.8440cdc9.css.map","sourceRoot":"/__parcel_source_root/"}
+{"mappings":"AAAA","sources":["ui/src/style.scss"],"sourcesContent":["pf-page{\r\n\r\n  --page-drawer-panel_max-width : 300px;\r\n\r\n  ::part(wrapper){\r\n    \r\n  }\r\n\r\n}"],"names":[],"version":3,"file":"index.8440cdc9.css.map","sourceRoot":"/__parcel_source_root/"}

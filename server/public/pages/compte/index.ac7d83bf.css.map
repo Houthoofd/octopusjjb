@@ -1,0 +1,1 @@
+{"mappings":"ACEE","sources":["pages/compte/index.ac7d83bf.css","ui/src/pages/compte/style.scss"],"sourcesContent":["pf-page ::part(wrapper) {\n  background-color: red;\n}\n/*# sourceMappingURL=index.ac7d83bf.css.map */\n","pf-page{\r\n\r\n  ::part(wrapper){\r\n    background-color: red;\r\n  }\r\n\r\n}"],"names":[],"version":3,"file":"index.ac7d83bf.css.map"}
