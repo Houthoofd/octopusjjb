@@ -1,5 +1,7 @@
 import { render , html, ViewTemplate , ViewContext } from '@lithium-framework/core';
-import '@lithium-framework/router-element'
+import '@lithium-framework/router-element';
+import 'unofficial-pf-v5-wc';
+import 'unofficial-pf-v5-wc-icons';
 
 
 
@@ -7,21 +9,12 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
 
-  return html`<div class='login'>
-        <h1>Connexion</h1>
-        <form class='login-form'>
-            <div class='input-fields'>
-                <label for="email">E-mail</label>
-                <input type="email">
-            </div>
-            <div class='input-fields'>
-                <label for="password">Mot de passe</label>
-                <input type="password">
-            </div>
-            <button type="submit">Connexion</button>
-        </form>
-    </div>`;
-
+  return html`
+  <pf-modal>
+    <slot>
+      <pf-login></pf-login>
+    </slot>
+  </pf-modal>`;
 }}`
 
 

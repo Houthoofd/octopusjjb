@@ -586,21 +586,15 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"bAY0y":[function(require,module,exports) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<div class='login'>
-        <h1>Connexion</h1>
-        <form class='login-form'>
-            <div class='input-fields'>
-                <label for="email">E-mail</label>
-                <input type="email">
-            </div>
-            <div class='input-fields'>
-                <label for="password">Mot de passe</label>
-                <input type="password">
-            </div>
-            <button type="submit">Connexion</button>
-        </form>
-    </div>`;
+    return (0, _core.html)`
+  <pf-modal>
+    <slot>
+      <pf-login></pf-login>
+    </slot>
+  </pf-modal>`;
 }}`;
 document.addEventListener("DOMContentLoaded", ()=>{
     const form = document.querySelector("form");
@@ -649,6 +643,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT"}]},["1UYOq","bAY0y"], "bAY0y", "parcelRequirec605")
+},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["1UYOq","bAY0y"], "bAY0y", "parcelRequirec605")
 
 //# sourceMappingURL=index.d30d5b6f.js.map
