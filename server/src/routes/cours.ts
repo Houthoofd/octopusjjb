@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
 
   // Requête SQL paramétrée pour éviter les injections SQL
-  const query = 'SELECT * FROM cours LIMIT 12';
+  const query = 'SELECT * FROM cours WHERE date_cours >= CURDATE() LIMIT 12';
 
   const client = new SQLClient();
 

@@ -39,7 +39,7 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
     </div>
     <pf-panel class="notification-box">
       <pf-alert success>
-        <slot>Vous venez de vous inscrire avec success !</slot>
+        <slot></slot>
       </pf-alert>
     </pf-panel>
   </pf-page>`;
@@ -134,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         })
                         .then(data => {
                           notificationBox.classList.toggle('active');
+                          notificationBox.querySelectorAll('slot')[0].innerHTML = `Vous venez de vous inscrire pour le cours du ${formatedDate}`;
                             setTimeout(() => {
                               notificationBox.classList.remove('active');
                           }, 2000);
