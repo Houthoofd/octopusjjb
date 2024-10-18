@@ -1,5 +1,7 @@
 import { render , html, ViewTemplate , ViewContext } from '@lithium-framework/core';
-import '@lithium-framework/router-element'
+import '@lithium-framework/router-element';
+import 'unofficial-pf-v5-wc';
+import 'unofficial-pf-v5-wc-icons';
 
 
 let template: ViewTemplate<any> = html`${(context: ViewContext) => {
@@ -11,19 +13,28 @@ let template: ViewTemplate<any> = html`${(context: ViewContext) => {
     }
 
     return html`<div class='home'>
-        <header class='header'>
-            <nav class='navbar-middle'>
-                <a href='#'>Acceuil</a>
-                <a href='#'>Enfants</a>
-                <a href='#'>Contact</a>
-                <a href='pages/connexion' id='login'>Connexion</a>
-            </nav>
-            <nav class='navbar-right'>
-                <a href='pages/profile'>${first_name}</a>
-                <a href='/' id='logout'>Déconnexion</a>
-            </nav>
-        </header>
-        <h1>Home 1234</h1>
+        <pf-masthead display-inline>
+            <action-list>
+                <action-list-item>
+                    <pf-button primary>Acceuil</pf-button>
+                </action-list-item>
+                <action-list-item>
+                    <pf-button primary>Horaires</pf-button>
+                </action-list-item>
+                <action-list-item>
+                    <pf-button primary>Tarifs</pf-button>
+                </action-list-item>
+                <action-list-item>
+                    <pf-button primary>Connexion</pf-button>
+                </action-list-item>
+            </action-list>
+        </pf-masthead>
+        <section>
+            <h3>Plonger dans l'univers implaccable du jiu jitsu Brésilien</h3>
+        </section>
+        <section>
+            
+        </section>
     </div>`;
 }}`;
 

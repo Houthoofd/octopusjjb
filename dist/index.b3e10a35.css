@@ -1,0 +1,312 @@
+:host, * {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font-size: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:host {
+  --slide-duration: 8s;
+  --padding-left: 0;
+  --padding-right: 0;
+  -webkit-scroll-behavior: smooth;
+  scroll-behavior: smooth;
+  flex-direction: column;
+  grid-template-columns: none;
+  grid-auto-rows: auto;
+  grid-auto-columns: 100%;
+  place-items: stretch stretch;
+  gap: 0;
+  display: flex;
+  position: relative;
+  overflow: visible;
+  scroll-snap-type: none !important;
+  scroll-snap-stop: none !important;
+  overscroll-behavior-x: none !important;
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+  grid-auto-flow: row !important;
+  place-content: center !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+:host > .scroller, :host > [part="controls"] {
+  align-self: stretch;
+}
+
+:host > .scroller {
+  justify-self: stretch;
+  height: 100%;
+}
+
+:host > [part="controls"] {
+  justify-self: auto;
+}
+
+.invisible {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0 -1px -1px 0;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+svg {
+  stroke: currentColor;
+  stroke-width: inherit;
+  stroke-linecap: inherit;
+  fill: inherit;
+  vector-effect: non-scaling-stroke;
+}
+
+.scroller {
+  padding-left: var(--padding-left, 0);
+  padding-right: var(--padding-right, 0);
+  scroll-padding-left: var(--padding-left, 0);
+  scroll-padding-right: var(--padding-right, 0);
+  overscroll-behavior-x: none;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+  -webkit-scroll-behavior: inherit;
+  scroll-behavior: inherit;
+  will-change: -webkit-scroll-behavior;
+  will-change: scroll-behavior;
+  grid-template-columns: inherit;
+  grid-auto-columns: inherit;
+  column-gap: inherit;
+  justify-content: inherit;
+  justify-items: inherit;
+  grid-template-rows: inherit;
+  grid-auto-rows: inherit;
+  row-gap: inherit;
+  align-content: inherit;
+  align-items: inherit;
+  display: block;
+  position: relative;
+  overflow: auto hidden;
+}
+
+.scroller:before {
+  content: "";
+  width: var(--scroll-width, 5000%);
+  z-index: -1;
+  height: 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.scroller::-webkit-scrollbar {
+  -webkit-appearance: none;
+  display: var(--webkit-scrollbar-display, none);
+  width: var(--webkit-scrollbar-width);
+  height: var(--webkit-scrollbar-width);
+  background: var(--webkit-scrollbar-background);
+  border: var(--webkit-scrollbar-border);
+  border-radius: var(--webkit-scrollbar-border-radius);
+}
+
+.scroller::-webkit-scrollbar-thumb:vertical {
+  background: var(--webkit-scrollbar-thumb-background);
+  border: var(--webkit-scrollbar-thumb-border);
+  border-radius: var(--webkit-scrollbar-thumb-border-radius);
+}
+
+.scroller::-webkit-scrollbar-thumb:horizontal {
+  background: var(--webkit-scrollbar-thumb-background);
+  border: var(--webkit-scrollbar-thumb-border);
+  border-radius: var(--webkit-scrollbar-thumb-border-radius);
+}
+
+.scroller > [part="slides"] {
+  z-index: 1;
+  position: relative;
+}
+
+[part="slides"] {
+  grid-auto-flow: column;
+  grid-template-columns: inherit;
+  grid-auto-columns: inherit;
+  column-gap: inherit;
+  justify-items: inherit;
+  grid-template-rows: inherit;
+  grid-auto-rows: inherit;
+  row-gap: inherit;
+  align-content: inherit;
+  align-items: inherit;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  justify-content: start !important;
+}
+
+[part="slides"]::slotted(*) {
+  scroll-snap-align: center;
+}
+
+[part="controls"] {
+  padding-left: var(--padding-left);
+  padding-right: var(--padding-right);
+  grid-template-columns: [left] 1fr[center] auto[right] 1fr;
+  place-content: center stretch;
+  place-items: center;
+  height: auto;
+  display: grid;
+}
+
+[part="controls"]:empty {
+  display: none;
+}
+
+@media print {
+  :host > nav {
+    display: none !important;
+  }
+}
+
+:host(:-webkit-full-screen), :host(:fullscreen) {
+  color: #fff;
+  background-color: #121212;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0 !important;
+}
+
+:host(:-webkit-full-screen) [part="fullscreen-button"], :host(:fullscreen) [part="fullscreen-button"] {
+  grid-area: auto;
+  margin: 0;
+  position: absolute;
+  top: .75em;
+  bottom: auto;
+  right: .75em;
+}
+
+:host(:-webkit-full-screen) .fullscreen-hidden, :host(:fullscreen) .fullscreen-hidden, :host(:not(:-webkit-full-screen)) .fullscreen-shown, :host(:not(:fullscreen)) .fullscreen-shown {
+  display: none !important;
+}
+
+[part="fullscreen-button"] {
+  vertical-align: baseline;
+  z-index: 2;
+  line-height: inherit;
+  cursor: pointer;
+  color: inherit;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  fill: none;
+  background-color: #0000;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0;
+  border-radius: .3125em;
+  grid-area: 1 / 3;
+  justify-self: end;
+  width: 1.875em;
+  min-width: 0;
+  height: 1.875em;
+  margin: .375em 0;
+  padding: 0;
+  text-decoration: none;
+  transition: background-color .2s linear;
+  overflow: hidden;
+}
+
+[part="fullscreen-button"]:hover {
+  background-color: #ffffff4d;
+  transition: background-color .1s linear;
+}
+
+[part="prev-button"], [part="next-button"] {
+  vertical-align: baseline;
+  z-index: 2;
+  line-height: inherit;
+  color: inherit;
+  cursor: pointer;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  fill: none;
+  background-color: #0000;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-width: 0;
+  border-radius: .3125rem;
+  width: 1.875rem;
+  min-width: 0;
+  height: 2.5rem;
+  margin-top: -1.25rem;
+  padding: 0;
+  text-decoration: none;
+  transition: background-color .2s linear;
+  position: absolute;
+  top: 50%;
+  overflow: hidden;
+}
+
+[part="prev-button"] {
+  left: .1875rem;
+}
+
+[part="next-button"] {
+  right: .1875rem;
+}
+
+[part="prev-button"]:hover, [part="next-button"]:hover {
+  background-color: #ffffff4d;
+  transition: background-color .1s linear;
+}
+
+[part="pagination"] {
+  grid-area: 1 / 2;
+  justify-content: center;
+  justify-self: center;
+  margin: 0;
+  padding: .875em 0;
+  display: flex;
+}
+
+[part*="page-button"] {
+  cursor: pointer;
+  background-color: #0000;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox=\"0 0 20 20\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"none\">        <circle cx=\"10\" cy=\"10\" r=\"6\" stroke=\"none\" fill=\"gray\"></circle>    </svg>");
+  background-position: 50%;
+  background-size: 100%;
+  border-width: 0;
+  height: 1.25em;
+  padding: 0 0 0 1.25em;
+  display: inline-block;
+}
+
+[part*="page-button-active"] {
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox=\"0 0 20 20\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"none\">        <circle cx=\"10\" cy=\"10\" r=\"6\" stroke=\"none\" fill=\"black\"></circle>    </svg>");
+}
+
+:host(:fullscreen) [part*="page-button-active"], :host(:-webkit-full-screen) [part*="page-button-active"] {
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox=\"0 0 20 20\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" preserveAspectRatio=\"none\">        <circle cx=\"10\" cy=\"10\" r=\"6\" stroke=\"none\" fill=\"white\"></circle>    </svg>");
+}
+
+slot[name="optional"]::slotted(*) {
+  grid-area: 1 / 1;
+}
+/*# sourceMappingURL=index.b3e10a35.css.map */

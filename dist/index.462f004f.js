@@ -586,6 +586,8 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"03LU1":[function(require,module,exports) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 let template = (0, _core.html)`${(context)=>{
     let first_name = "";
     if (localStorage.getItem("first_name")) {
@@ -593,19 +595,28 @@ let template = (0, _core.html)`${(context)=>{
         console.log(first_name);
     }
     return (0, _core.html)`<div class='home'>
-        <header class='header'>
-            <nav class='navbar-middle'>
-                <a href='#'>Acceuil</a>
-                <a href='#'>Enfants</a>
-                <a href='#'>Contact</a>
-                <a href='pages/connexion' id='login'>Connexion</a>
-            </nav>
-            <nav class='navbar-right'>
-                <a href='pages/profile'>${first_name}</a>
-                <a href='/' id='logout'>Déconnexion</a>
-            </nav>
-        </header>
-        <h1>Home 1234</h1>
+        <pf-masthead display-inline>
+            <action-list>
+                <action-list-item>
+                    <pf-button primary>Acceuil</pf-button>
+                </action-list-item>
+                <action-list-item>
+                    <pf-button primary>Horaires</pf-button>
+                </action-list-item>
+                <action-list-item>
+                    <pf-button primary>Tarifs</pf-button>
+                </action-list-item>
+                <action-list-item>
+                    <pf-button primary>Connexion</pf-button>
+                </action-list-item>
+            </action-list>
+        </pf-masthead>
+        <section>
+            <h3>Plonger dans l'univers implaccable du jiu jitsu Brésilien</h3>
+        </section>
+        <section>
+            
+        </section>
     </div>`;
 }}`;
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -625,6 +636,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
+},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
 
 //# sourceMappingURL=index.462f004f.js.map
