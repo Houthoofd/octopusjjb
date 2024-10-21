@@ -315,27 +315,29 @@ button.inscription {
   padding: 10px;
 }
 
-pf-modal.result-box {
+.raw-infos {
+  cursor: pointer;
+  justify-content: space-between;
+  display: flex;
+}
+
+.raw-infos:nth-child(2n) {
+  background-color: #004080;
+}
+
+.raw-infos:nth-child(odd) {
+  background-color: #0958a7;
+}
+
+.course-container {
   color: #000;
-  background-color: #fff;
-  border-radius: 15px;
-  width: 50%;
-  min-width: 300px;
-  height: 50%;
-  min-height: 300px;
+}
+
+pf-modal.result-box {
   display: none;
-  position: absolute;
 }
 
 pf-modal.result-box.active {
-  color: #000;
-  background-color: #fff;
-  border-radius: 15px;
-  width: 50%;
-  min-width: 300px;
-  height: 50%;
-  min-height: 300px;
   display: block;
-  position: absolute;
 }
 /*# sourceMappingURL=index.8440cdc9.css.map */

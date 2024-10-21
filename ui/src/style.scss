@@ -331,26 +331,24 @@ button.inscription {
   color: #ffff;
   cursor: pointer;
 }
+.raw-infos {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.raw-infos:nth-child(even){
+  background-color:#004080;
+}
+.raw-infos:nth-child(odd){
+  background-color:#0958a7;
+}
+.course-container {
+  color: black;
+}
 
 pf-modal.result-box {
-  color: #000;
-  background-color: #fff;
-  border-radius: 15px;
-  width: 50%;
-  min-width: 300px;
-  height: 50%;
-  min-height: 300px;
-  position: absolute;
   display: none;
 }
 pf-modal.result-box.active {
-  color: #000;
-  background-color: #fff;
-  border-radius: 15px;
-  width: 50%;
-  min-width: 300px;
-  height: 50%;
-  min-height: 300px;
-  position: absolute;
   display: block;
 }
