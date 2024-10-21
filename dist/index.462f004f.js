@@ -690,9 +690,32 @@ let template = (0, _core.html)`${(context)=>{
             </div>
         </section>
         <section id="réservation">
-            <h3>Réservey maintenant</h3>
+            <h3>Réservez maintenant</h3>
             <span>Ne manquer pas cette occasion d'esseyer un cours gratuit</span>
-            <pf-button primary>Réservez</pf-button>
+            <pf-button primary>Cliquez-ici</pf-button>
+            <form>
+                <div>
+                    <label for='name'>Nom</label>
+                    <input type='text'>
+                </div>
+                <div>
+                    <label for='mail'>Mail</label>
+                    <input type='email'>
+                </div>
+                <div class='table-infos'></div>
+                <pf-modal class='result-box'>
+                    <slot slot="header">
+                        <h3>Ma réservation</h3>
+                    </slot>
+                    <slot>
+                        
+                    </slot>
+                    <slot slot="footer">
+                        <pf-button>Confirm</pf-button>
+                        <pf-button>Cancel</pf-button>
+                    </slot>
+                </pf-modal>
+            </form>
         </section>
         <footer>
             <div class="footer-container">
@@ -732,6 +755,94 @@ let template = (0, _core.html)`${(context)=>{
     </div>`;
 }}`;
 document.addEventListener("DOMContentLoaded", ()=>{
+    const btn1 = document.querySelectorAll("pf-button")[4];
+    const btn2 = document.querySelectorAll("pf-button")[5];
+    const form = document.querySelectorAll("form")[0];
+    const tableResult = document.querySelectorAll(".table-infos")[0];
+    btn1.addEventListener("click", (e)=>{
+        const nameInput = form.querySelector('input[name="name"]');
+        const emailInput = form.querySelector('input[name="mail"]');
+        console.log(nameInput, emailInput);
+        form.classList.toggle("active");
+        fetch("http://localhost:3000/cours/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then((response)=>{
+            if (!response.ok) throw new Error("Erreur serveur.");
+            return response.json();
+        }).then((data)=>{
+            if (data.length > 0) // Boucle sur chaque élément des cours récupérés
+            data.forEach((item)=>{
+                let formatedDate = formatDateFromISO(item.date_cours);
+                // Création des éléments HTML pour afficher les informations du cours
+                const raw = document.createElement("div");
+                raw.classList.add("raw-infos");
+                const date = document.createElement("div");
+                date.classList.add("date-infos");
+                date.innerHTML = formatedDate;
+                const heureDebut = document.createElement("div");
+                heureDebut.classList.add("heure-debut-infos");
+                heureDebut.innerHTML = item.heure_debut;
+                const heureFin = document.createElement("div");
+                heureFin.classList.add("heure-fin-infos");
+                heureFin.innerHTML = item.heure_fin;
+                const typeCours = document.createElement("div");
+                typeCours.classList.add("type-de-cours-infos");
+                typeCours.innerHTML = item.type_cours;
+                const inscriptionButton = document.createElement("button");
+                inscriptionButton.classList.add("inscription");
+                inscriptionButton.innerHTML = "Inscription";
+                const svgContainer = document.createElement("div");
+                svgContainer.classList.add("down-arrow");
+                svgContainer.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);">
+                            <path d="M11.178 19.569a.998.998 0 0 0 1.644 0l9-13A.999.999 0 0 0 21 5H3a1.002 1.002 0 0 0-.822 1.569l9 13z"></path>
+                        </svg>
+                    `;
+                raw.append(date, heureDebut, heureFin, typeCours, inscriptionButton, svgContainer);
+                tableResult.appendChild(raw);
+                raw.addEventListener("click", (e)=>{
+                    const modal = document.querySelector("pf-modal") || document.createElement("pf-modal");
+                    const target = e.currentTarget;
+                    // Basculer l'état actif du modal
+                    modal.classList.toggle("active");
+                    // Récupérer les informations du cours
+                    const date = target.querySelector(".date-infos")?.innerHTML || "Date non disponible";
+                    const heureDebut = target.querySelector(".heure-debut-infos")?.innerHTML || "Heure de d\xe9but non disponible";
+                    const heureFin = target.querySelector(".heure-fin-infos")?.innerHTML || "Heure de fin non disponible";
+                    const typeCours = target.querySelector(".type-de-cours-infos")?.innerHTML || "Type de cours non disponible";
+                    // Construire le contenu pour le modal
+                    let modalContent = `
+                            <div><strong>Nom :</strong> ${name}</div>
+                            <div><strong>Email :</strong> ${mail}</div>
+                            <div><strong>Date :</strong> ${date}</div>
+                            <div><strong>Heure de d\xe9but :</strong> ${heureDebut}</div>
+                            <div><strong>Heure de fin :</strong> ${heureFin}</div>
+                            <div><strong>Type de cours :</strong> ${typeCours}</div>
+                        `;
+                    // Ajouter le contenu au deuxième slot du modal
+                    const modalSlot = modal.querySelectorAll("slot")[1];
+                    if (modalSlot) {
+                        const contentDiv = document.createElement("div");
+                        contentDiv.innerHTML = modalContent;
+                        modalSlot.innerHTML = ""; // Vider le contenu précédent
+                        modalSlot.appendChild(contentDiv); // Ajouter le nouveau contenu
+                    } else console.error("Aucun slot trouv\xe9 dans le composant pf-modal.");
+                    // Ajouter le modal au DOM s'il n'est pas déjà présent
+                    if (!document.body.contains(modal)) document.body.appendChild(modal);
+                    console.log("Informations affich\xe9es dans le modal:", modalContent);
+                });
+            });
+            else tableResult.textContent = "Cours non trouv\xe9s";
+            console.log("R\xe9ponse du serveur:", data);
+        }).catch((error)=>{
+            tableResult.textContent = "Erreur lors de la r\xe9cup\xe9ration des cours.";
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+        });
+    });
+    console.log(btn1, btn2, form);
     let isLogged = "";
     const logoutLink = document.getElementById("logout");
     if (localStorage.getItem("isLogged")) {
@@ -746,6 +857,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
         window.location.href = "/";
     });
 });
+function formatDateFromISO(isoDateString) {
+    const date = new Date(isoDateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+function convertToISODate(dateString) {
+    const [year, month, day] = dateString.split("-");
+    return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
+}
 (0, _core.render)(template);
 
 },{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
