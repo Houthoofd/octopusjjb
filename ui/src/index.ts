@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.appendChild(emailElement);
         
             const courseContainer = document.createElement('div');
-            courseContainer.classList.add('course-container'); // Classe pour le style si besoin
+            courseContainer.classList.add('course-container');
         
             // Requête fetch
             fetch('http://localhost:3000/cours/', {
@@ -221,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.length > 0) {
                     data.forEach(item => {
                         let formatedDate = formatDateFromISO(item.date_cours);
+
         
                         const raw = document.createElement('div');
                         raw.classList.add('raw-infos');
@@ -290,8 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
         
-    
-        // Attacher l'écouteur d'événement à btn2
         btn2.addEventListener('click', handleBtn2Click);
     });
     
