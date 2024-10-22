@@ -1,7 +1,10 @@
-import { render , html, ViewTemplate , ViewContext } from '@lithium-framework/core';
+import { html , render , WebComponent , customElement , attr , attrState , state, css, ViewTemplate, ViewContext } from '@lithium-framework/core';
 import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
+import { PfModalBox } from 'unofficial-pf-v5-wc/src/components/modal/modal';
+
+  
 
 
 let template: ViewTemplate<any> = html`${(context: ViewContext) => {
@@ -242,22 +245,37 @@ document.addEventListener('DOMContentLoaded', () => {
                         courseContainer.appendChild(raw);
 
                         raw.addEventListener('click', (e) => {
-                            const row = e.target as HTMLElement;
-                            console.log(modal, row);
-                        
-                            let extraSlot = modal.querySelector('slot[name="extra"]');
-                            if (!extraSlot) {
-                                extraSlot = document.createElement('slot');
-                                extraSlot.setAttribute('name', 'extra');
-                                modal.appendChild(extraSlot);
+                            const target = (e.target as HTMLElement);
+                            const row = target.parentNode;
+                            console.log(row)
+                            const modal = document.querySelector('pf-modal');
+  
+                            if (modal && modal.shadowRoot && row) {
+                            const existingSlotContent = modal.querySelector('[slot="extra-slot"]');
+      
+                            if (existingSlotContent) {
+                             existingSlotContent.innerHTML = '';
                             }
+  
+                            const extraSlot = document.createElement('div');
+                            extraSlot.setAttribute('slot', 'extra-slot');
+                            const selection = document.createElement('div');
+                            selection.setAttribute('class', 'selection');
+
                         
-                            const contentContainer = document.createElement('div');
-                            contentContainer.classList.add('extra-content');
-                        
-                            contentContainer.textContent = `Vous avez cliqué sur: ${row.textContent}`;
-                        
-                            extraSlot.appendChild(contentContainer);
+                            for (let i = 0; i < row.children.length; i++) {
+                                const child = row.children[i];
+                                const childContent = document.createElement('div');
+                                childContent.innerHTML = child.innerHTML; 
+                                selection.appendChild(childContent);
+                            }
+                            
+
+                            extraSlot.appendChild(selection);
+                            modal.appendChild(extraSlot);
+                            } else {
+                            console.error("Modale introuvable ou pas encore chargée.");
+                            }
                         });
                     });
                     modal.appendChild(courseContainer);

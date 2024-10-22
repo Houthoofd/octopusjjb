@@ -340,4 +340,13 @@ pf-modal.result-box {
 pf-modal.result-box.active {
   display: block;
 }
+
+.selection {
+  color: #3e8635;
+  background-color: #f3faf2;
+  justify-content: space-around;
+  margin-top: 10px;
+  padding: 10px;
+  display: flex;
+}
 /*# sourceMappingURL=index.8440cdc9.css.map */

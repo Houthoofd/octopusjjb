@@ -802,18 +802,26 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         raw.append(date, heureDebut, heureFin, typeCours);
                         courseContainer.appendChild(raw);
                         raw.addEventListener("click", (e)=>{
-                            const row = e.target;
-                            console.log(modal, row);
-                            let extraSlot = modal.querySelector('slot[name="extra"]');
-                            if (!extraSlot) {
-                                extraSlot = document.createElement("slot");
-                                extraSlot.setAttribute("name", "extra");
+                            const target = e.target;
+                            const row = target.parentNode;
+                            console.log(row);
+                            const modal = document.querySelector("pf-modal");
+                            if (modal && modal.shadowRoot && row) {
+                                const existingSlotContent = modal.querySelector('[slot="extra-slot"]');
+                                if (existingSlotContent) existingSlotContent.innerHTML = "";
+                                const extraSlot = document.createElement("div");
+                                extraSlot.setAttribute("slot", "extra-slot");
+                                const selection = document.createElement("div");
+                                selection.setAttribute("class", "selection");
+                                for(let i = 0; i < row.children.length; i++){
+                                    const child = row.children[i];
+                                    const childContent = document.createElement("div");
+                                    childContent.innerHTML = child.innerHTML;
+                                    selection.appendChild(childContent);
+                                }
+                                extraSlot.appendChild(selection);
                                 modal.appendChild(extraSlot);
-                            }
-                            const contentContainer = document.createElement("div");
-                            contentContainer.classList.add("extra-content");
-                            contentContainer.textContent = `Vous avez cliqu\xe9 sur: ${row.textContent}`;
-                            extraSlot.appendChild(contentContainer);
+                            } else console.error("Modale introuvable ou pas encore charg\xe9e.");
                         });
                     });
                     modal.appendChild(courseContainer);

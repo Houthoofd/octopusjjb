@@ -352,3 +352,11 @@ pf-modal.result-box {
 pf-modal.result-box.active {
   display: block;
 }
+.selection {
+  color: #3e8635;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 10px;
+  background-color: #f3faf2;
+  margin-top: 10px;
+}
