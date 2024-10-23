@@ -589,6 +589,7 @@ var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 let template = (0, _core.html)`${(context)=>{
+    context.createConsumable("selection", []);
     let first_name = "";
     if (localStorage.getItem("first_name")) {
         first_name = localStorage.getItem("first_name") || "";
@@ -692,7 +693,7 @@ let template = (0, _core.html)`${(context)=>{
         <section id="réservation">
             <h3>Réservez maintenant</h3>
             <span>Ne manquer pas cette occasion d'esseyer un cours gratuit</span>
-            <pf-button primary>Cliquez-ici</pf-button>
+            <pf-button primary @click=${()=>displayForm()}>Cliquez-ici</pf-button>
             <form>
                 <div>
                     <label for='name'>Nom</label>
@@ -707,9 +708,32 @@ let template = (0, _core.html)`${(context)=>{
                     <slot slot="header">
                         <h3>Ma réservation</h3>
                     </slot>
-                    <slot></slot>
+                    <slot>
+                        <div class="table-infos">
+                            ${(0, _core.asyncAppend)(preloadData, (result)=>{
+        return (0, _core.html)`
+                                <div class="raw-infos">
+                                        ${(0, _core.repeat)(result, (0, _core.html)`${(cour)=>{
+            return (0, _core.html)`<div class="row" @click=${(cour)=>selectRow(cour, context)}>
+                                                        <div class="type-de-cours">${cour.type_cours}</div>
+                                                        <div class="date">${formatDateFromISO(cour.date_cours)}</div>
+                                                        <div class="heure-debut">${cour.heure_debut}</div>
+                                                        <div class="heure-fin">${cour.heure_fin}</div>
+                                                    </div>`;
+        }}`)}
+                                    </div>
+                                </div>
+                                `;
+    })}
+                        </div>
+                    </slot>
+                    <div name="extra-slot">
+                        <div class="selection" ${(0, _core.children)({
+        property: "selection"
+    })}></div>
+                    </div>
                 </pf-modal>
-                <pf-button>Réservez</pf-button>
+                <pf-button @click=${()=>displayClasses()}>Réservez</pf-button>
             </form>
         </section>
         <footer>
@@ -742,112 +766,70 @@ let template = (0, _core.html)`${(context)=>{
             <div class="footer-bottom">
                 <p>&copy; 2024 Tous les droits sont réservés</p>
                 <div class="footer-icons">
-                <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+                <a href="#"><pf-icons-instagram></pf-icons-instagram></a>
                 <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
                 </div>
             </div>
         </footer>
     </div>`;
 }}`;
-document.addEventListener("DOMContentLoaded", ()=>{
-    const btn1 = document.querySelectorAll("pf-button")[4];
-    const btn2 = document.querySelectorAll("pf-button")[5];
+function displayForm() {
     const form = document.querySelectorAll("form")[0];
-    const tableResult = document.querySelectorAll(".table-infos")[0];
-    btn1.addEventListener("click", (e)=>{
-        console.log(btn2);
-        form.classList.toggle("active");
-        const handleBtn2Click = (e)=>{
-            const nameInput = document.querySelectorAll("input")[0].value;
-            const emailInput = document.querySelectorAll("input")[1].value;
-            const modal = document.querySelectorAll("pf-modal")[0];
-            console.log(modal);
-            modal.innerHTML = "";
-            modal.classList.toggle("active");
-            const nameElement = document.createElement("div");
-            const emailElement = document.createElement("div");
-            nameElement.textContent = `Nom: ${nameInput}`;
-            emailElement.textContent = `Email: ${emailInput}`;
-            modal.appendChild(nameElement);
-            modal.appendChild(emailElement);
-            const courseContainer = document.createElement("div");
-            courseContainer.classList.add("course-container"); // Classe pour le style si besoin
-            // Requête fetch
-            fetch("http://localhost:3000/cours/", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then((response)=>{
-                if (!response.ok) throw new Error("Erreur serveur.");
-                return response.json();
-            }).then((data)=>{
-                if (data.length > 0) {
-                    data.forEach((item)=>{
-                        let formatedDate = formatDateFromISO(item.date_cours);
-                        const raw = document.createElement("div");
-                        raw.classList.add("raw-infos");
-                        const date = document.createElement("div");
-                        date.classList.add("date-infos");
-                        date.innerHTML = formatedDate;
-                        const heureDebut = document.createElement("div");
-                        heureDebut.classList.add("heure-debut-infos");
-                        heureDebut.innerHTML = item.heure_debut;
-                        const heureFin = document.createElement("div");
-                        heureFin.classList.add("heure-fin-infos");
-                        heureFin.innerHTML = item.heure_fin;
-                        const typeCours = document.createElement("div");
-                        typeCours.classList.add("type-de-cours-infos");
-                        typeCours.innerHTML = item.type_cours;
-                        raw.append(date, heureDebut, heureFin, typeCours);
-                        courseContainer.appendChild(raw);
-                        raw.addEventListener("click", (e)=>{
-                            const target = e.target;
-                            const row = target.parentNode;
-                            console.log(row);
-                            const modal = document.querySelector("pf-modal");
-                            if (modal && modal.shadowRoot && row) {
-                                const existingSlotContent = modal.querySelector('[slot="extra-slot"]');
-                                if (existingSlotContent) existingSlotContent.innerHTML = "";
-                                const extraSlot = document.createElement("div");
-                                extraSlot.setAttribute("slot", "extra-slot");
-                                const selection = document.createElement("div");
-                                selection.setAttribute("class", "selection");
-                                for(let i = 0; i < row.children.length; i++){
-                                    const child = row.children[i];
-                                    const childContent = document.createElement("div");
-                                    childContent.innerHTML = child.innerHTML;
-                                    selection.appendChild(childContent);
-                                }
-                                extraSlot.appendChild(selection);
-                                modal.appendChild(extraSlot);
-                            } else console.error("Modale introuvable ou pas encore charg\xe9e.");
-                        });
-                    });
-                    modal.appendChild(courseContainer);
-                } else tableResult.textContent = "Cours non trouv\xe9s";
-                console.log("R\xe9ponse du serveur:", data);
-            }).catch((error)=>{
-                tableResult.textContent = "Erreur lors de la r\xe9cup\xe9ration des cours.";
-                console.error("Erreur lors de la requ\xeate fetch:", error);
-            });
-        };
-        // Attacher l'écouteur d'événement à btn2
-        btn2.addEventListener("click", handleBtn2Click);
-    });
-    console.log(btn1, btn2, form);
-    let isLogged = "";
-    const logoutLink = document.getElementById("logout");
-    if (localStorage.getItem("isLogged")) {
-        isLogged = localStorage.getItem("isLogged") || "";
-        const loginLink = document.getElementById("login");
-        loginLink?.setAttribute("class", "hidden");
-    } else logoutLink?.setAttribute("class", "hidden");
-    if (logoutLink) logoutLink.addEventListener("click", (e)=>{
-        e.preventDefault();
-        console.log(localStorage);
-        localStorage.clear();
-        window.location.href = "/";
+    form.classList.toggle("active");
+}
+function displayClasses() {
+    const modal = document.querySelectorAll("pf-modal")[0];
+    modal.classList.toggle("active");
+}
+function selectRow(cour, context) {
+    const selection = document.querySelector(".selection");
+    if (context.selection.length > 0) {
+        alert("Veuillez d'abord supprimer la s\xe9lection actuelle avant d'en ajouter une nouvelle.");
+        return;
+    }
+    const selectionTemplate = (0, _core.html)`
+        <div class="type-de-cours">${cour.type_cours}</div>
+        <div class="date">${formatDateFromISO(cour.date_cours)}</div>
+        <div class="heure-debut">${cour.heure_debut}</div>
+        <div class="heure-fin">${cour.heure_fin}</div>
+        <div class="delete" @click=${(cour)=>deleteSelection(cour, context)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
+    `;
+    if (selection) {
+        context.selection = [
+            {
+                cour: cour.type_cours,
+                date: formatDateFromISO(cour.date_cours),
+                heure_debut: cour.heure_debut,
+                heure_fin: cour.heure_fin
+            }
+        ];
+        console.log(context.selection);
+        (0, _core.render)(selectionTemplate, selection);
+    } else console.error("\xc9l\xe9ment .selection introuvable");
+}
+function deleteSelection(cour, context) {
+    console.log(context.selection);
+}
+const preloadData = new Promise((next, reject)=>{
+    fetch("http://localhost:3000/cours/", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then((response)=>{
+        if (!response.ok) {
+            reject("Erreur serveur.");
+            throw new Error("Erreur serveur.");
+        }
+        return response.json();
+    }).then((data)=>{
+        if (data.length > 0) {
+            console.log("R\xe9ponse du serveur:", data);
+            next(data); // Retourne tout le tableau de cours ici
+        } else next([]); // Retourne un tableau vide si aucun cours
+    }).catch((error)=>{
+        console.error("Erreur lors de la requ\xeate fetch:", error);
+        reject(error);
     });
 });
 function formatDateFromISO(isoDateString) {

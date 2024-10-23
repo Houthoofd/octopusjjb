@@ -260,7 +260,6 @@ section#réservation > form.active {
 
 .table-infos {
   display: grid;
-  justify-content: center;
   align-items: center;
   width: 100%;
 }
@@ -332,18 +331,28 @@ button.inscription {
   cursor: pointer;
 }
 .raw-infos {
-  display: flex;
-  justify-content: space-between;
   cursor: pointer;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column-reverse;
 }
-.raw-infos:nth-child(even){
+.row:nth-child(even){
   background-color:#004080;
 }
-.raw-infos:nth-child(odd){
+.row:nth-child(odd){
   background-color:#0958a7;
 }
 .course-container {
   color: black;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 10px;
+  gap: 10px;
+  text-align: center;
 }
 
 pf-modal.result-box {
@@ -359,4 +368,7 @@ pf-modal.result-box.active {
   padding: 10px 10px;
   background-color: #f3faf2;
   margin-top: 10px;
+}
+.selection > .delete{
+  cursor: pointer;
 }
