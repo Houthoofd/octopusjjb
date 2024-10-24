@@ -1,23 +1,4 @@
-import { html , render , WebComponent , customElement , attr , attrState , state, css, ViewTemplate, ViewContext, asyncAppend, repeat, children } from '@lithium-framework/core';
-import '@lithium-framework/router-element';
-import 'unofficial-pf-v5-wc';
-import 'unofficial-pf-v5-wc-icons';
-
-  
-
-
-let template: ViewTemplate<any> = html`${(context: ViewContext) => {
-    
-    context.createConsumable('selection',[]);
-
-    let first_name = "";
-
-    if (localStorage.getItem("first_name")) {
-        first_name = localStorage.getItem("first_name") || "";
-        console.log(first_name);
-    }
-
-    return html`<div class='home'>
+var e=globalThis,i={},s={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e in i)return i[e].exports;if(e in s){var t=s[e];delete s[e];var a={id:e,exports:{}};return i[e]=a,t.call(a.exports,a,a.exports),a.exports}var l=Error("Cannot find module '"+e+"'");throw l.code="MODULE_NOT_FOUND",l}).register=function(e,i){s[e]=i},e.parcelRequirec605=t),t.register;var a=t("1BF7I");t("lTDtW"),t("5OQrz"),t("2LYUy");let l=(0,a.html)`${e=>(e.createConsumable("selection",[]),localStorage.getItem("first_name")&&console.log(localStorage.getItem("first_name")||""),(0,a.html)`<div class='home'>
         <pf-masthead display-inline>
             <slot slot="brand">
                 <div class="logo"></div>
@@ -115,7 +96,7 @@ let template: ViewTemplate<any> = html`${(context: ViewContext) => {
         <section id="réservation">
             <h3>Réservez maintenant</h3>
             <span>Ne manquer pas cette occasion d'esseyer un cours gratuit</span>
-            <pf-button primary @click=${() => displayForm()}>Cliquez-ici</pf-button>
+            <pf-button primary @click=${()=>(function(){let e=document.querySelectorAll("form")[0],i=localStorage.getItem("selectionArray");e.classList.toggle("active"),console.log(i)})()}>Cliquez-ici</pf-button>
             <form>
                 <div>
                     <label for='name'>Nom</label>
@@ -132,33 +113,30 @@ let template: ViewTemplate<any> = html`${(context: ViewContext) => {
                     </slot>
                     <slot>
                         <div class="table-infos">
-                            ${asyncAppend(preloadData, (result) => {
-                                return html`
+                            ${(0,a.asyncAppend)(o,e=>(0,a.html)`
                                 <div class="raw-infos">
-                                        ${
-                                            repeat(
-                                                result, 
-                                                html`${(cour) => {
-                                                    return html`<div class="row" @click=${(cour) => selectRow(cour)}>
-                                                        <div class="type-de-cours">${cour.type_cours}</div>
-                                                        <div class="date">${formatDateFromISO(cour.date_cours)}</div>
-                                                        <div class="heure-debut">${cour.heure_debut}</div>
-                                                        <div class="heure-fin">${cour.heure_fin}</div>
-                                                    </div>`;
-
-                                                }}`
-                                            )}
+                                        ${(0,a.repeat)(e,(0,a.html)`${e=>(0,a.html)`<div class="row" @click=${e=>(function(e){let i=document.querySelector(".selection");if(r.length>0){alert("Veuillez d'abord supprimer la sélection actuelle avant d'en ajouter une nouvelle.");return}let s=(0,a.html)`
+        <div class="type-de-cours">${e.type_cours}</div>
+        <div class="date">${n(e.date_cours)}</div>
+        <div class="heure-debut">${e.heure_debut}</div>
+        <div class="heure-fin">${e.heure_fin}</div>
+        <div class="delete" @click=${()=>(function(e){r=r.filter(i=>i.cour!==e.type_cours||i.date!==n(e.date_cours)),localStorage.setItem("selectionArray",JSON.stringify(r)),console.log(r);let i=document.querySelector(".selection");i&&(i.innerHTML="")})(e)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
+    `;i?(r.push({cour:e.type_cours,date:n(e.date_cours),heure_debut:e.heure_debut,heure_fin:e.heure_fin}),localStorage.setItem("selectionArray",JSON.stringify(r)),console.log(r),(0,a.render)(s,i)):console.error("Élément .selection introuvable")})(e)}>
+                                                        <div class="type-de-cours">${e.type_cours}</div>
+                                                        <div class="date">${n(e.date_cours)}</div>
+                                                        <div class="heure-debut">${e.heure_debut}</div>
+                                                        <div class="heure-fin">${e.heure_fin}</div>
+                                                    </div>`}`)}
                                     </div>
                                 </div>
-                                `;
-                            })}
+                                `)}
                         </div>
                     </slot>
                     <div name="extra-slot">
                         <div class="selection"></div>
                     </div>
                 </pf-modal>
-                <pf-button @click=${() => displayClasses()}>Réservez</pf-button>
+                <pf-button @click=${()=>void document.querySelectorAll("pf-modal")[0].classList.toggle("active")}>Réservez</pf-button>
             </form>
         </section>
         <footer>
@@ -196,150 +174,5 @@ let template: ViewTemplate<any> = html`${(context: ViewContext) => {
                 </div>
             </div>
         </footer>
-    </div>`;
-}}`;
-
-function displaySelection(){
-    const storedSelection = localStorage.getItem('selectionArray');
-    const form = document.querySelectorAll('form')[0];
-    console.log(storedSelection);
-}
-
-
-function displayForm() {
-    const form = document.querySelectorAll('form')[0];
-    const storedSelection = localStorage.getItem('selectionArray');
-    form.classList.toggle('active');
-    console.log(storedSelection)
-}
-
-function displayClasses(){
-    const modal = document.querySelectorAll('pf-modal')[0];
-    modal.classList.toggle('active');
-}
-
-function confirm(){
-    
-}
-
-
-let selectionArray = JSON.parse(localStorage.getItem('selectionArray') || '[]');
-
-function selectRow(cour) {
-    const selectionElement = document.querySelector('.selection') as HTMLElement;
-
-
-    if (selectionArray.length > 0) {
-        alert('Veuillez d\'abord supprimer la sélection actuelle avant d\'en ajouter une nouvelle.');
-        return;
-    }
-
-    const selectionTemplate = html`
-        <div class="type-de-cours">${cour.type_cours}</div>
-        <div class="date">${formatDateFromISO(cour.date_cours)}</div>
-        <div class="heure-debut">${cour.heure_debut}</div>
-        <div class="heure-fin">${cour.heure_fin}</div>
-        <div class="delete" @click=${() => deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
-    `;
-
-    if (selectionElement) {
-    
-        selectionArray.push({
-            cour: cour.type_cours,
-            date: formatDateFromISO(cour.date_cours),
-            heure_debut: cour.heure_debut,
-            heure_fin: cour.heure_fin
-        });
-
-        localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
-
-        console.log(selectionArray);
-        render(selectionTemplate, selectionElement);
-    } else {
-        console.error('Élément .selection introuvable');
-    }
-
-    displayExistingSelection();
-}
-
-function displayExistingSelection() {
-    const selectionElement = document.querySelector('.selection') as HTMLElement;
-
-    selectionArray.forEach(cour => {
-        const selectionTemplate = html`
-            <div class="type-de-cours">${cour.cour}</div>
-            <div class="date">${cour.date}</div>
-            <div class="heure-debut">${cour.heure_debut}</div>
-            <div class="heure-fin">${cour.heure_fin}</div>
-            <div class="delete" @click=${() => deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
-        `;
-
-        render(selectionTemplate, selectionElement);
-    });
-}
-
-function deleteSelection(cour) {
-    selectionArray = selectionArray.filter(
-        (item) => item.cour !== cour.type_cours || item.date !== formatDateFromISO(cour.date_cours)
-    );
-
-    localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
-
-    console.log(selectionArray);
-
-    const selectionElement = document.querySelector('.selection');
-    if (selectionElement) {
-        selectionElement.innerHTML = '';
-    }
-}
-
-
-
-
-const preloadData: Promise<any[]> = new Promise((next, reject) => {
-    fetch('http://localhost:3000/cours/', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            reject('Erreur serveur.');
-            throw new Error('Erreur serveur.');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.length > 0) {
-            console.log('Réponse du serveur:', data);
-            next(data);  // Retourne tout le tableau de cours ici
-        } else {
-            next([]);  // Retourne un tableau vide si aucun cours
-        }
-    })
-    .catch(error => {
-        console.error('Erreur lors de la requête fetch:', error);
-        reject(error);
-    });
-});
-
-
-
-function formatDateFromISO(isoDateString) {
-    const date = new Date(isoDateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
-
-function convertToISODate(dateString) {
-    const [year, month, day] = dateString.split('-');
-    return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
-}
-
-
-
-
-render(template);
+    </div>`)}`,r=JSON.parse(localStorage.getItem("selectionArray")||"[]");const o=new Promise((e,i)=>{fetch("http://localhost:3000/cours/",{method:"GET",headers:{"Content-Type":"application/json"}}).then(e=>{if(!e.ok)throw i("Erreur serveur."),Error("Erreur serveur.");return e.json()}).then(i=>{i.length>0?(console.log("Réponse du serveur:",i),e(i)):e([])}).catch(e=>{console.error("Erreur lors de la requête fetch:",e),i(e)})});function n(e){let i=new Date(e),s=i.getFullYear(),t=String(i.getMonth()+1).padStart(2,"0"),a=String(i.getDate()).padStart(2,"0");return`${s}-${t}-${a}`}(0,a.render)(l);
+//# sourceMappingURL=index.eeb4d658.js.map

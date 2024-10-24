@@ -714,7 +714,7 @@ let template = (0, _core.html)`${(context)=>{
         return (0, _core.html)`
                                 <div class="raw-infos">
                                         ${(0, _core.repeat)(result, (0, _core.html)`${(cour)=>{
-            return (0, _core.html)`<div class="row" @click=${(cour)=>selectRow(cour, context)}>
+            return (0, _core.html)`<div class="row" @click=${(cour)=>selectRow(cour)}>
                                                         <div class="type-de-cours">${cour.type_cours}</div>
                                                         <div class="date">${formatDateFromISO(cour.date_cours)}</div>
                                                         <div class="heure-debut">${cour.heure_debut}</div>
@@ -728,9 +728,7 @@ let template = (0, _core.html)`${(context)=>{
                         </div>
                     </slot>
                     <div name="extra-slot">
-                        <div class="selection" ${(0, _core.children)({
-        property: "selection"
-    })}></div>
+                        <div class="selection"></div>
                     </div>
                 </pf-modal>
                 <pf-button @click=${()=>displayClasses()}>Réservez</pf-button>
@@ -773,17 +771,26 @@ let template = (0, _core.html)`${(context)=>{
         </footer>
     </div>`;
 }}`;
+function displaySelection() {
+    const storedSelection = localStorage.getItem("selectionArray");
+    const form = document.querySelectorAll("form")[0];
+    console.log(storedSelection);
+}
 function displayForm() {
     const form = document.querySelectorAll("form")[0];
+    const storedSelection = localStorage.getItem("selectionArray");
     form.classList.toggle("active");
+    console.log(storedSelection);
 }
 function displayClasses() {
     const modal = document.querySelectorAll("pf-modal")[0];
     modal.classList.toggle("active");
 }
-function selectRow(cour, context) {
-    const selection = document.querySelector(".selection");
-    if (context.selection.length > 0) {
+function confirm() {}
+let selectionArray = JSON.parse(localStorage.getItem("selectionArray") || "[]");
+function selectRow(cour) {
+    const selectionElement = document.querySelector(".selection");
+    if (selectionArray.length > 0) {
         alert("Veuillez d'abord supprimer la s\xe9lection actuelle avant d'en ajouter une nouvelle.");
         return;
     }
@@ -792,23 +799,40 @@ function selectRow(cour, context) {
         <div class="date">${formatDateFromISO(cour.date_cours)}</div>
         <div class="heure-debut">${cour.heure_debut}</div>
         <div class="heure-fin">${cour.heure_fin}</div>
-        <div class="delete" @click=${(cour)=>deleteSelection(cour, context)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
+        <div class="delete" @click=${()=>deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
     `;
-    if (selection) {
-        context.selection = [
-            {
-                cour: cour.type_cours,
-                date: formatDateFromISO(cour.date_cours),
-                heure_debut: cour.heure_debut,
-                heure_fin: cour.heure_fin
-            }
-        ];
-        console.log(context.selection);
-        (0, _core.render)(selectionTemplate, selection);
+    if (selectionElement) {
+        selectionArray.push({
+            cour: cour.type_cours,
+            date: formatDateFromISO(cour.date_cours),
+            heure_debut: cour.heure_debut,
+            heure_fin: cour.heure_fin
+        });
+        localStorage.setItem("selectionArray", JSON.stringify(selectionArray));
+        console.log(selectionArray);
+        (0, _core.render)(selectionTemplate, selectionElement);
     } else console.error("\xc9l\xe9ment .selection introuvable");
+    displayExistingSelection();
 }
-function deleteSelection(cour, context) {
-    console.log(context.selection);
+function displayExistingSelection() {
+    const selectionElement = document.querySelector(".selection");
+    selectionArray.forEach((cour)=>{
+        const selectionTemplate = (0, _core.html)`
+            <div class="type-de-cours">${cour.cour}</div>
+            <div class="date">${cour.date}</div>
+            <div class="heure-debut">${cour.heure_debut}</div>
+            <div class="heure-fin">${cour.heure_fin}</div>
+            <div class="delete" @click=${()=>deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
+        `;
+        (0, _core.render)(selectionTemplate, selectionElement);
+    });
+}
+function deleteSelection(cour) {
+    selectionArray = selectionArray.filter((item)=>item.cour !== cour.type_cours || item.date !== formatDateFromISO(cour.date_cours));
+    localStorage.setItem("selectionArray", JSON.stringify(selectionArray));
+    console.log(selectionArray);
+    const selectionElement = document.querySelector(".selection");
+    if (selectionElement) selectionElement.innerHTML = "";
 }
 const preloadData = new Promise((next, reject)=>{
     fetch("http://localhost:3000/cours/", {
