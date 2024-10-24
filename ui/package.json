@@ -20,11 +20,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@lithium-framework/core": "^1.7.0",
+    "@lithium-framework/core": "^1.8.5-0",
     "@lithium-framework/router-element": "^1.0.0",
     "@patternfly/patternfly": "^5.4.1",
     "@patternfly/react-styles": "^5.4.0",
+    "css-loader": "^7.1.2",
     "parcels": "^0.13.5",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
     "unofficial-pf-v5-wc": "file:../../../PatternFlyLithium/unofficial-pf-v5-wc",
     "unofficial-pf-v5-wc-icons": "file:../../../PatternFlyLithium/unofficial-pf-v5-wc-icons"
   },

@@ -584,291 +584,1082 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"03LU1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Home", ()=>Home);
+parcelHelpers.export(exports, "Section", ()=>Section);
+parcelHelpers.export(exports, "Footer", ()=>Footer);
+parcelHelpers.export(exports, "Modal", ()=>Modal);
+var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
 var _core = require("@lithium-framework/core");
-var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
-let template = (0, _core.html)`${(context)=>{
-    context.createConsumable("selection", []);
-    let first_name = "";
-    if (localStorage.getItem("first_name")) {
-        first_name = localStorage.getItem("first_name") || "";
-        console.log(first_name);
-    }
-    return (0, _core.html)`<div class='home'>
-        <pf-masthead display-inline>
-            <slot slot="brand">
-                <div class="logo"></div>
-            </slot>
-            <pf-action-list>
-                <pf-action-list-item>
-                    <pf-button>Acceuil</pf-button>
-                </pf-action-list-item>
-                <pf-action-list-item>
-                    <pf-button>Horaires</pf-button>
-                </pf-action-list-item>
-                <pf-action-list-item>
-                    <pf-button>Tarifs</pf-button>
-                </pf-action-list-item>
-                <pf-action-list-item>
-                    <pf-button>Connexion</pf-button>
-                </pf-action-list-item>
-            </pf-action-list>
-        </pf-masthead>
-        <section id="univers">
-            <h3>Plonger dans l'univers implaccable du jiu jitsu Brésilien</h3>
-        </section>
-        <section id="slogan">
-            <h3>Entraîner-vous avec les meilleurs</h3>
-            <span>Notre équipe d'enseignants d'élite vous offre une expérience d'apprentissage intense et sans compromis</span>
-        </section>
-        <section id="horaires">
-            <h3>Entraîner-vous avec les meilleurs</h3>
+class Home extends (0, _core.WebComponent) {
+}
+Home = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "main-home",
+        template: (0, _core.html)`${(home)=>{
+            const buttons = [
+                "Accueil",
+                "Horaires",
+                "Tarifs",
+                "Connexion"
+            ];
+            const schedule = [
+                {
+                    day: "Lundi",
+                    time: "19h30-21h15"
+                },
+                {
+                    day: "jeudi",
+                    time: "19h30-21h15"
+                },
+                {
+                    day: "Samedi",
+                    time: "12h00-13h30"
+                },
+                {
+                    day: "Dimanche",
+                    time: "14h15-16h00"
+                }
+            ];
+            const plans = [
+                {
+                    number: 1,
+                    text: "Cours gratuit \xe0 la r\xe9servation",
+                    image: "image1.png"
+                },
+                {
+                    number: 2,
+                    text: "Plan interm\xe9diaire",
+                    image: "image2.png"
+                },
+                {
+                    number: 3,
+                    text: "Plan premium",
+                    image: "image3.png"
+                }
+            ];
+            return (0, _core.html)`<div>
+            <pf-masthead display-inline>
+                <div slot="brand">
+                    <div class="logo"></div>
+                </div>
+                <pf-action-list>
+                    ${buttons.map((button)=>(0, _core.html)`<pf-action-list-item><pf-button>${button}</pf-button></pf-action-list-item>`)}
+                </pf-action-list>
+            </pf-masthead>
+
+            <section>
+                <h3>Plongez dans l'univers implacable du jiu jitsu Brésilien</h3>
+            </section>
+
+            <section>
+                <h3>Entraînez-vous avec les meilleurs</h3>
+                <span>Notre équipe d'enseignants d'élite vous offre une expérience d'apprentissage intense et sans compromis</span>
+            </section>
+
+            <section id="schedule">
+                <h3>Entraînez-vous avec les meilleurs</h3>
                 <div class="schedule-container">
-                    <div class="schedule-row">
-                        <div class="day">Lundi</div>
-                        <div class="time">17h-19h</div>
-                        <div class="arrow">→</div>
-                    </div>
-                    <div class="schedule-row">
-                        <div class="day">Mardi</div>
-                        <div class="time">18h-20h</div>
-                        <div class="arrow">→</div>
-                    </div>
-                    <div class="schedule-row">
-                        <div class="day">Mercredi</div>
-                        <div class="time">19h-21h</div>
-                        <div class="arrow">→</div>
-                    </div>
-                    <div class="schedule-row">
-                        <div class="day">Jeudi</div>
-                        <div class="time">20h-22h</div>
-                        <div class="arrow">→</div>
-                    </div>
-                    <div class="schedule-row">
-                        <div class="day">Samedi</div>
-                        <div class="time">10h-12h</div>
-                        <div class="arrow">→</div>
-                    </div>
+                    ${schedule.map((item)=>(0, _core.html)`
+                        <div class="schedule-row">
+                            <div class="day">${item.day}</div>
+                            <div class="time">${item.time}</div>
+                            <div class="arrow">→</div>
+                        </div>
+                    `)}
                 </div>
-        </section>
-        <section id="tarifs">
-            <div class="container">
-                <div class="header">
-                    <h2>Tarifs</h2>
-                    <h1>Choisissez parmi trois plans adaptés à vos besoins et votre budget.</h1>
-                </div>
+            </section>
 
-                <div class="plans-container">
-                    <div class="plan">
-                        <div class="plan-content">
-                            <span class="number">1</span>
-                            <p>Cours gratuit à la réservation</p>
-                        </div>
-                        <div class="plan-image">
-                            <img src="image1.png" alt="Person icon">
-                        </div>
+            <section id="tarifs">
+                <div class="container">
+                    <div class="header">
+                        <h2>Tarifs</h2>
+                        <h1>Choisissez parmi trois plans adaptés à vos besoins et votre budget.</h1>
                     </div>
-                    <div class="plan">
-                        <div class="plan-content">
-                            <span class="number">2</span>
-                            <p>Accès aux instructeurs à tout moment</p>
-                        </div>
-                        <div class="plan-image">
-                            <img src="image2.png" alt="Person walking">
-                        </div>
-                    </div>
-                    <div class="plan">
-                        <div class="plan-content">
-                            <span class="number">3</span>
-                            <p>Instructeurs passionnés, prêts à vous accompagner</p>
-                        </div>
-                        <div class="plan-image">
-                            <img src="image3.png" alt="Instructor icon">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="réservation">
-            <h3>Réservez maintenant</h3>
-            <span>Ne manquer pas cette occasion d'esseyer un cours gratuit</span>
-            <pf-button primary @click=${()=>displayForm()}>Cliquez-ici</pf-button>
-            <form>
-                <div>
-                    <label for='name'>Nom</label>
-                    <input type='text'>
-                </div>
-                <div>
-                    <label for='mail'>Mail</label>
-                    <input type='email'>
-                </div>
-                <div class='table-infos'></div>
-                <pf-modal class='result-box' scrollable medium>
-                    <slot slot="header">
-                        <h3>Ma réservation</h3>
-                    </slot>
-                    <slot>
-                        <div class="table-infos">
-                            ${(0, _core.asyncAppend)(preloadData, (result)=>{
-        return (0, _core.html)`
-                                <div class="raw-infos">
-                                        ${(0, _core.repeat)(result, (0, _core.html)`${(cour)=>{
-            return (0, _core.html)`<div class="row" @click=${(cour)=>selectRow(cour)}>
-                                                        <div class="type-de-cours">${cour.type_cours}</div>
-                                                        <div class="date">${formatDateFromISO(cour.date_cours)}</div>
-                                                        <div class="heure-debut">${cour.heure_debut}</div>
-                                                        <div class="heure-fin">${cour.heure_fin}</div>
-                                                    </div>`;
-        }}`)}
-                                    </div>
+                    <div class="plans-container">
+                        ${plans.map((plan)=>(0, _core.html)`
+                            <div class="plan">
+                                <div class="plan-content">
+                                    <span class="number">${plan.number}</span>
+                                    <p>${plan.text}</p>
                                 </div>
-                                `;
-    })}
-                        </div>
-                    </slot>
-                    <div name="extra-slot">
-                        <div class="selection"></div>
+                                <div class="plan-image">
+                                    <img src="${plan.image}" alt="Plan ${plan.number}">
+                                </div>
+                            </div>
+                        `)}
                     </div>
-                </pf-modal>
-                <pf-button @click=${()=>displayClasses()}>Réservez</pf-button>
-            </form>
-        </section>
-        <footer>
-            <div class="footer-container">
-                <div class="footer-column">
-                <h3>Emplacement</h3>
-                <ul>
-                    <li><a href="#">Nous trouver</a></li>
-                    <li><a href="#">Plan d'accès</a></li>
-                    <li><a href="#">Transports</a></li>
-                </ul>
                 </div>
-                <div class="footer-column">
-                <h3>Cours</h3>
-                <ul>
-                    <li><a href="#">Horaires</a></li>
-                    <li><a href="#">Prix</a></li>
-                    <li><a href="#">Instructeurs</a></li>
-                </ul>
-                </div>
-                <div class="footer-column">
-                <h3>Extras</h3>
-                <ul>
-                    <li><a href="#">Galerie photo</a></li>
-                    <li><a href="#">Événements</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Tous les droits sont réservés</p>
-                <div class="footer-icons">
-                <a href="#"><pf-icons-instagram></pf-icons-instagram></a>
-                <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
-                </div>
-            </div>
-        </footer>
-    </div>`;
-}}`;
-function displaySelection() {
-    const storedSelection = localStorage.getItem("selectionArray");
-    const form = document.querySelectorAll("form")[0];
-    console.log(storedSelection);
-}
-function displayForm() {
-    const form = document.querySelectorAll("form")[0];
-    const storedSelection = localStorage.getItem("selectionArray");
-    form.classList.toggle("active");
-    console.log(storedSelection);
-}
-function displayClasses() {
-    const modal = document.querySelectorAll("pf-modal")[0];
-    modal.classList.toggle("active");
-}
-function confirm() {}
-let selectionArray = JSON.parse(localStorage.getItem("selectionArray") || "[]");
-function selectRow(cour) {
-    const selectionElement = document.querySelector(".selection");
-    if (selectionArray.length > 0) {
-        alert("Veuillez d'abord supprimer la s\xe9lection actuelle avant d'en ajouter une nouvelle.");
-        return;
-    }
-    const selectionTemplate = (0, _core.html)`
-        <div class="type-de-cours">${cour.type_cours}</div>
-        <div class="date">${formatDateFromISO(cour.date_cours)}</div>
-        <div class="heure-debut">${cour.heure_debut}</div>
-        <div class="heure-fin">${cour.heure_fin}</div>
-        <div class="delete" @click=${()=>deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
-    `;
-    if (selectionElement) {
-        selectionArray.push({
-            cour: cour.type_cours,
-            date: formatDateFromISO(cour.date_cours),
-            heure_debut: cour.heure_debut,
-            heure_fin: cour.heure_fin
-        });
-        localStorage.setItem("selectionArray", JSON.stringify(selectionArray));
-        console.log(selectionArray);
-        (0, _core.render)(selectionTemplate, selectionElement);
-    } else console.error("\xc9l\xe9ment .selection introuvable");
-    displayExistingSelection();
-}
-function displayExistingSelection() {
-    const selectionElement = document.querySelector(".selection");
-    selectionArray.forEach((cour)=>{
-        const selectionTemplate = (0, _core.html)`
-            <div class="type-de-cours">${cour.cour}</div>
-            <div class="date">${cour.date}</div>
-            <div class="heure-debut">${cour.heure_debut}</div>
-            <div class="heure-fin">${cour.heure_fin}</div>
-            <div class="delete" @click=${()=>deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
-        `;
-        (0, _core.render)(selectionTemplate, selectionElement);
-    });
-}
-function deleteSelection(cour) {
-    selectionArray = selectionArray.filter((item)=>item.cour !== cour.type_cours || item.date !== formatDateFromISO(cour.date_cours));
-    localStorage.setItem("selectionArray", JSON.stringify(selectionArray));
-    console.log(selectionArray);
-    const selectionElement = document.querySelector(".selection");
-    if (selectionElement) selectionElement.innerHTML = "";
-}
-const preloadData = new Promise((next, reject)=>{
-    fetch("http://localhost:3000/cours/", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).then((response)=>{
-        if (!response.ok) {
-            reject("Erreur serveur.");
-            throw new Error("Erreur serveur.");
-        }
-        return response.json();
-    }).then((data)=>{
-        if (data.length > 0) {
-            console.log("R\xe9ponse du serveur:", data);
-            next(data); // Retourne tout le tableau de cours ici
-        } else next([]); // Retourne un tableau vide si aucun cours
-    }).catch((error)=>{
-        console.error("Erreur lors de la requ\xeate fetch:", error);
-        reject(error);
-    });
-});
-function formatDateFromISO(isoDateString) {
-    const date = new Date(isoDateString);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-}
-function convertToISODate(dateString) {
-    const [year, month, day] = dateString.split("-");
-    return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
-}
-(0, _core.render)(template);
+            </section>
 
-},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
+            <main-section></main-section>
+            <main-footer></main-footer>
+        </div>`;
+        }}`,
+        styles: [
+            (0, _core.css)`
+        .schedule-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            border: 1px solid #004080;
+            padding: 10px;
+        }
+        .schedule-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #004080;
+            padding: 15px 0;
+        }
+        .schedule-row:last-child {
+            border-bottom: none;
+        }
+
+        .day, .time, .arrow {
+            font-size: 18px;
+        }
+
+        .arrow {
+            font-size: 24px;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .header h2 {
+            font-size: 16px;
+            color: #cccccc;
+            margin-bottom: 10px;
+        }
+
+        .plans-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .plan {
+            background-color: #003366;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .plan-content .number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #66ccff;
+        }
+
+        .plan-content p {
+            font-size: 16px;
+            margin: 15px 0;
+        }
+
+        .plan-image img {
+            width: 80px;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        .logo{
+            background-image: url(/images/logo3.png);
+            background-size: contain;
+            aspect-ratio: 1/1;
+            height: 70px;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 10px 20px;
+        }
+        `
+        ],
+        shadowOptions: {
+            mode: "open"
+        }
+    })
+], Home);
+class Section extends (0, _core.WebComponent) {
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === "visible") this.isVisible = newValue === "true";
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    displayForm() {
+        this.isVisible = !this.isVisible;
+        this.visible = this.isVisible ? "true" : "false";
+    }
+    constructor(...args){
+        super(...args);
+        this.visible = null;
+        this.isVisible = false;
+    }
+}
+(0, _tsDecorate._)([
+    (0, _core.attr)
+], Section.prototype, "visible", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Section.prototype, "isVisible", void 0);
+Section = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "main-section",
+        template: (0, _core.html)`${(section)=>{
+            return (0, _core.html)`
+        <section id="reservation">
+    <h3>Réservez maintenant</h3>
+    <span>Ne manquez pas cette occasion d'essayer un cours gratuit</span>
+    <pf-button @click="${()=>section.displayForm()}">Cliquez-ici</pf-button>
+    ${section.isVisible ? (0, _core.html)`
+        <form>
+            <div>
+                <label for='name'>Nom</label>
+                <input type='text'>
+            </div>
+            <div>
+                <label for='mail'>Mail</label>
+                <input type='email'>
+            </div>
+            <div class='table-infos'></div>
+        </form>
+    ` : ""}
+</section>
+        `;
+        }}`,
+        styles: [
+            (0, _core.css)`
+        section#reservation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+        section#reservation > h3{
+            font-size: 36px;
+        }
+        section#reservation > form {
+            min-height: 0;
+            display: none;
+        }
+        section#reservation > form.active {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+        }
+        `
+        ]
+    })
+], Section);
+class Footer extends (0, _core.WebComponent) {
+}
+Footer = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "main-footer",
+        template: (0, _core.html)`${(footer)=>{
+            return (0, _core.html)`
+            <footer>
+                <div class="footer-container">
+                    <div class="footer-column">
+                        <h3>Emplacement</h3>
+                        <ul>
+                            <li><a href="#">Nous trouver</a></li>
+                            <li><a href="#">Plan d'accès</a></li>
+                            <li><a href="#">Transports</a></li>
+                        </ul>
+                </div>
+                <div class="footer-column">
+                        <h3>Cours</h3>
+                        <ul>
+                            <li><a href="#">Horaires</a></li>
+                            <li><a href="#">Prix</a></li>
+                            <li><a href="#">Instructeurs</a></li>
+                        </ul>
+                </div>
+                <div class="footer-column">
+                        <h3>Extras</h3>
+                        <ul>
+                            <li><a href="#">Galerie photo</a></li>
+                            <li><a href="#">Événements</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 Tous les droits sont réservés</p>
+                <div class="footer-icons">
+                    <a href="#"><pf-icons-instagram></pf-icons-instagram></a>
+                    <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                </div>
+            </div>
+        </footer>`;
+        }}`,
+        styles: [
+            (0, _core.css)`
+        footer {
+            background-color: #002244;
+            color: white;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            width: 30%;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+        .footer-icons {
+            display: flex;
+        }
+
+        .footer-icons a {
+            margin-left: 15px;
+        }
+
+        .footer-icons img {
+            width: 24px;
+            height: 24px;
+        }
+        `
+        ]
+    })
+], Footer);
+class Modal extends (0, _unofficialPfV5Wc.PfModalBox) {
+}
+Modal = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "custom-modal"
+    })
+], Modal);
+// function displaySelection(){
+//     const storedSelection = localStorage.getItem('selectionArray');
+//     const form = document.querySelectorAll('form')[0];
+//     console.log(storedSelection);
+// }
+// function displayForm() {
+//     const form = document.querySelectorAll('form')[0];
+//     const storedSelection = localStorage.getItem('selectionArray');
+//     form.classList.toggle('active');
+//     console.log(storedSelection)
+// }
+// function displayClasses(){
+//     const modal = document.querySelectorAll('pf-modal')[0];
+//     modal.classList.toggle('active');
+// }
+// function confirm(){
+// }
+// let selectionArray = JSON.parse(localStorage.getItem('selectionArray') || '[]');
+// function selectRow(cour) {
+//     const selectionElement = document.querySelector('.selection') as HTMLElement;
+//     if (selectionArray.length > 0) {
+//         alert('Veuillez d\'abord supprimer la sélection actuelle avant d\'en ajouter une nouvelle.');
+//         return;
+//     }
+//     const selectionTemplate = html`
+//         <div class="type-de-cours">${cour.type_cours}</div>
+//         <div class="date">${formatDateFromISO(cour.date_cours)}</div>
+//         <div class="heure-debut">${cour.heure_debut}</div>
+//         <div class="heure-fin">${cour.heure_fin}</div>
+//         <div class="delete" @click=${() => deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
+//     `;
+//     if (selectionElement) {
+//         selectionArray.push({
+//             cour: cour.type_cours,
+//             date: formatDateFromISO(cour.date_cours),
+//             heure_debut: cour.heure_debut,
+//             heure_fin: cour.heure_fin
+//         });
+//         localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
+//         console.log(selectionArray);
+//         render(selectionTemplate, selectionElement);
+//     } else {
+//         console.error('Élément .selection introuvable');
+//     }
+//     displayExistingSelection();
+// }
+// function displayExistingSelection() {
+//     const selectionElement = document.querySelector('.selection') as HTMLElement;
+//     selectionArray.forEach(cour => {
+//         const selectionTemplate = html`
+//             <div class="type-de-cours">${cour.cour}</div>
+//             <div class="date">${cour.date}</div>
+//             <div class="heure-debut">${cour.heure_debut}</div>
+//             <div class="heure-fin">${cour.heure_fin}</div>
+//             <div class="delete" @click=${() => deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
+//         `;
+//         render(selectionTemplate, selectionElement);
+//     });
+// }
+// function deleteSelection(cour) {
+//     selectionArray = selectionArray.filter(
+//         (item) => item.cour !== cour.type_cours || item.date !== formatDateFromISO(cour.date_cours)
+//     );
+//     localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
+//     console.log(selectionArray);
+//     const selectionElement = document.querySelector('.selection');
+//     if (selectionElement) {
+//         selectionElement.innerHTML = '';
+//     }
+// }
+// const preloadData: Promise<any[]> = new Promise((next, reject) => {
+//     fetch('http://localhost:3000/cours/', {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     })
+//     .then(response => {
+//         if (!response.ok) {
+//             reject('Erreur serveur.');
+//             throw new Error('Erreur serveur.');
+//         }
+//         return response.json();
+//     })
+//     .then(data => {
+//         if (data.length > 0) {
+//             console.log('Réponse du serveur:', data);
+//             next(data);  // Retourne tout le tableau de cours ici
+//         } else {
+//             next([]);  // Retourne un tableau vide si aucun cours
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Erreur lors de la requête fetch:', error);
+//         reject(error);
+//     });
+// });
+// function formatDateFromISO(isoDateString) {
+//     const date = new Date(isoDateString);
+//     const year = date.getFullYear();
+//     const month = String(date.getMonth() + 1).padStart(2, '0');
+//     const day = String(date.getDate()).padStart(2, '0');
+//     return `${year}-${month}-${day}`;
+// }
+// function convertToISODate(dateString) {
+//     const [year, month, day] = dateString.split('-');
+//     return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
+// }
+(0, _core.render)((0, _core.html)`<main-home></main-home>`, document.body);
+
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"7dAnV","unofficial-pf-v5-wc":"eGY4R","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lX6TJ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "_", ()=>(0, _tslib.__decorate));
+var _tslib = require("tslib");
+
+},{"tslib":"lRdW5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lRdW5":[function(require,module,exports) {
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */ /* global Reflect, Promise, SuppressedError, Symbol */ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "__extends", ()=>__extends);
+parcelHelpers.export(exports, "__assign", ()=>__assign);
+parcelHelpers.export(exports, "__rest", ()=>__rest);
+parcelHelpers.export(exports, "__decorate", ()=>__decorate);
+parcelHelpers.export(exports, "__param", ()=>__param);
+parcelHelpers.export(exports, "__esDecorate", ()=>__esDecorate);
+parcelHelpers.export(exports, "__runInitializers", ()=>__runInitializers);
+parcelHelpers.export(exports, "__propKey", ()=>__propKey);
+parcelHelpers.export(exports, "__setFunctionName", ()=>__setFunctionName);
+parcelHelpers.export(exports, "__metadata", ()=>__metadata);
+parcelHelpers.export(exports, "__awaiter", ()=>__awaiter);
+parcelHelpers.export(exports, "__generator", ()=>__generator);
+parcelHelpers.export(exports, "__createBinding", ()=>__createBinding);
+parcelHelpers.export(exports, "__exportStar", ()=>__exportStar);
+parcelHelpers.export(exports, "__values", ()=>__values);
+parcelHelpers.export(exports, "__read", ()=>__read);
+/** @deprecated */ parcelHelpers.export(exports, "__spread", ()=>__spread);
+/** @deprecated */ parcelHelpers.export(exports, "__spreadArrays", ()=>__spreadArrays);
+parcelHelpers.export(exports, "__spreadArray", ()=>__spreadArray);
+parcelHelpers.export(exports, "__await", ()=>__await);
+parcelHelpers.export(exports, "__asyncGenerator", ()=>__asyncGenerator);
+parcelHelpers.export(exports, "__asyncDelegator", ()=>__asyncDelegator);
+parcelHelpers.export(exports, "__asyncValues", ()=>__asyncValues);
+parcelHelpers.export(exports, "__makeTemplateObject", ()=>__makeTemplateObject);
+parcelHelpers.export(exports, "__importStar", ()=>__importStar);
+parcelHelpers.export(exports, "__importDefault", ()=>__importDefault);
+parcelHelpers.export(exports, "__classPrivateFieldGet", ()=>__classPrivateFieldGet);
+parcelHelpers.export(exports, "__classPrivateFieldSet", ()=>__classPrivateFieldSet);
+parcelHelpers.export(exports, "__classPrivateFieldIn", ()=>__classPrivateFieldIn);
+parcelHelpers.export(exports, "__addDisposableResource", ()=>__addDisposableResource);
+parcelHelpers.export(exports, "__disposeResources", ()=>__disposeResources);
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+        __proto__: []
+    }) instanceof Array && function(d, b) {
+        d.__proto__ = b;
+    } || function(d, b) {
+        for(var p in b)if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+    return extendStatics(d, b);
+};
+function __extends(d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+    function __() {
+        this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for(var s, i = 1, n = arguments.length; i < n; i++){
+            s = arguments[i];
+            for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+function __rest(s, e) {
+    var t = {};
+    for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function") {
+        for(var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++)if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+    }
+    return t;
+}
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for(var i = decorators.length - 1; i >= 0; i--)if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+function __param(paramIndex, decorator) {
+    return function(target, key) {
+        decorator(target, key, paramIndex);
+    };
+}
+function __esDecorate(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) {
+        if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
+        return f;
+    }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for(var i = decorators.length - 1; i >= 0; i--){
+        var context = {};
+        for(var p in contextIn)context[p] = p === "access" ? {} : contextIn[p];
+        for(var p in contextIn.access)context.access[p] = contextIn.access[p];
+        context.addInitializer = function(f) {
+            if (done) throw new TypeError("Cannot add initializers after decoration has completed");
+            extraInitializers.push(accept(f || null));
+        };
+        var result = (0, decorators[i])(kind === "accessor" ? {
+            get: descriptor.get,
+            set: descriptor.set
+        } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        } else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+}
+function __runInitializers(thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for(var i = 0; i < initializers.length; i++)value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    return useValue ? value : void 0;
+}
+function __propKey(x) {
+    return typeof x === "symbol" ? x : "".concat(x);
+}
+function __setFunctionName(f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", {
+        configurable: true,
+        value: prefix ? "".concat(prefix, " ", name) : name
+    });
+}
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+function __generator(thisArg, body) {
+    var _ = {
+        label: 0,
+        sent: function() {
+            if (t[0] & 1) throw t[1];
+            return t[1];
+        },
+        trys: [],
+        ops: []
+    }, f, y, t, g;
+    return g = {
+        next: verb(0),
+        "throw": verb(1),
+        "return": verb(2)
+    }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+    }), g;
+    function verb(n) {
+        return function(v) {
+            return step([
+                n,
+                v
+            ]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while(g && (g = 0, op[0] && (_ = 0)), _)try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [
+                op[0] & 2,
+                t.value
+            ];
+            switch(op[0]){
+                case 0:
+                case 1:
+                    t = op;
+                    break;
+                case 4:
+                    _.label++;
+                    return {
+                        value: op[1],
+                        done: false
+                    };
+                case 5:
+                    _.label++;
+                    y = op[1];
+                    op = [
+                        0
+                    ];
+                    continue;
+                case 7:
+                    op = _.ops.pop();
+                    _.trys.pop();
+                    continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                        _ = 0;
+                        continue;
+                    }
+                    if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                        _.label = op[1];
+                        break;
+                    }
+                    if (op[0] === 6 && _.label < t[1]) {
+                        _.label = t[1];
+                        t = op;
+                        break;
+                    }
+                    if (t && _.label < t[2]) {
+                        _.label = t[2];
+                        _.ops.push(op);
+                        break;
+                    }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop();
+                    continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) {
+            op = [
+                6,
+                e
+            ];
+            y = 0;
+        } finally{
+            f = t = 0;
+        }
+        if (op[0] & 5) throw op[1];
+        return {
+            value: op[0] ? op[1] : void 0,
+            done: true
+        };
+    }
+}
+var __createBinding = Object.create ? function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) desc = {
+        enumerable: true,
+        get: function() {
+            return m[k];
+        }
+    };
+    Object.defineProperty(o, k2, desc);
+} : function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+};
+function __exportStar(m, o) {
+    for(var p in m)if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function() {
+            if (o && i >= o.length) o = void 0;
+            return {
+                value: o && o[i++],
+                done: !o
+            };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while((n === void 0 || n-- > 0) && !(r = i.next()).done)ar.push(r.value);
+    } catch (error) {
+        e = {
+            error: error
+        };
+    } finally{
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        } finally{
+            if (e) throw e.error;
+        }
+    }
+    return ar;
+}
+function __spread() {
+    for(var ar = [], i = 0; i < arguments.length; i++)ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+function __spreadArrays() {
+    for(var s = 0, i = 0, il = arguments.length; i < il; i++)s += arguments[i].length;
+    for(var r = Array(s), k = 0, i = 0; i < il; i++)for(var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)r[k] = a[j];
+    return r;
+}
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) {
+        for(var i = 0, l = from.length, ar; i < l; i++)if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function() {
+        return this;
+    }, i;
+    function awaitReturn(f) {
+        return function(v) {
+            return Promise.resolve(v).then(f, reject);
+        };
+    }
+    function verb(n, f) {
+        if (g[n]) {
+            i[n] = function(v) {
+                return new Promise(function(a, b) {
+                    q.push([
+                        n,
+                        v,
+                        a,
+                        b
+                    ]) > 1 || resume(n, v);
+                });
+            };
+            if (f) i[n] = f(i[n]);
+        }
+    }
+    function resume(n, v) {
+        try {
+            step(g[n](v));
+        } catch (e) {
+            settle(q[0][3], e);
+        }
+    }
+    function step(r) {
+        r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+    }
+    function fulfill(value) {
+        resume("next", value);
+    }
+    function reject(value) {
+        resume("throw", value);
+    }
+    function settle(f, v) {
+        if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]);
+    }
+}
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function(e) {
+        throw e;
+    }), verb("return"), i[Symbol.iterator] = function() {
+        return this;
+    }, i;
+    function verb(n, f) {
+        i[n] = o[n] ? function(v) {
+            return (p = !p) ? {
+                value: __await(o[n](v)),
+                done: false
+            } : f ? f(v) : v;
+        } : f;
+    }
+}
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+        return this;
+    }, i);
+    function verb(n) {
+        i[n] = o[n] && function(v) {
+            return new Promise(function(resolve, reject) {
+                v = o[n](v), settle(resolve, reject, v.done, v.value);
+            });
+        };
+    }
+    function settle(resolve, reject, d, v) {
+        Promise.resolve(v).then(function(v) {
+            resolve({
+                value: v,
+                done: d
+            });
+        }, reject);
+    }
+}
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) Object.defineProperty(cooked, "raw", {
+        value: raw
+    });
+    else cooked.raw = raw;
+    return cooked;
+}
+var __setModuleDefault = Object.create ? function(o, v) {
+    Object.defineProperty(o, "default", {
+        enumerable: true,
+        value: v
+    });
+} : function(o, v) {
+    o["default"] = v;
+};
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) {
+        for(var k in mod)if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    }
+    __setModuleDefault(result, mod);
+    return result;
+}
+function __importDefault(mod) {
+    return mod && mod.__esModule ? mod : {
+        default: mod
+    };
+}
+function __classPrivateFieldGet(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+function __classPrivateFieldSet(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+}
+function __classPrivateFieldIn(state, receiver) {
+    if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function") throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+function __addDisposableResource(env, value, async) {
+    if (value !== null && value !== void 0) {
+        if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+        var dispose, inner;
+        if (async) {
+            if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+            dispose = value[Symbol.asyncDispose];
+        }
+        if (dispose === void 0) {
+            if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+            dispose = value[Symbol.dispose];
+            if (async) inner = dispose;
+        }
+        if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+        if (inner) dispose = function() {
+            try {
+                inner.call(this);
+            } catch (e) {
+                return Promise.reject(e);
+            }
+        };
+        env.stack.push({
+            value: value,
+            dispose: dispose,
+            async: async
+        });
+    } else if (async) env.stack.push({
+        async: true
+    });
+    return value;
+}
+var _SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+function __disposeResources(env) {
+    function fail(e) {
+        env.error = env.hasError ? new _SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+        env.hasError = true;
+    }
+    function next() {
+        while(env.stack.length){
+            var rec = env.stack.pop();
+            try {
+                var result = rec.dispose && rec.dispose.call(rec.value);
+                if (rec.async) return Promise.resolve(result).then(next, function(e) {
+                    fail(e);
+                    return next();
+                });
+            } catch (e) {
+                fail(e);
+            }
+        }
+        if (env.hasError) throw env.error;
+    }
+    return next();
+}
+exports.default = {
+    __extends: __extends,
+    __assign: __assign,
+    __rest: __rest,
+    __decorate: __decorate,
+    __param: __param,
+    __metadata: __metadata,
+    __awaiter: __awaiter,
+    __generator: __generator,
+    __createBinding: __createBinding,
+    __exportStar: __exportStar,
+    __values: __values,
+    __read: __read,
+    __spread: __spread,
+    __spreadArrays: __spreadArrays,
+    __spreadArray: __spreadArray,
+    __await: __await,
+    __asyncGenerator: __asyncGenerator,
+    __asyncDelegator: __asyncDelegator,
+    __asyncValues: __asyncValues,
+    __makeTemplateObject: __makeTemplateObject,
+    __importStar: __importStar,
+    __importDefault: __importDefault,
+    __classPrivateFieldGet: __classPrivateFieldGet,
+    __classPrivateFieldSet: __classPrivateFieldSet,
+    __classPrivateFieldIn: __classPrivateFieldIn,
+    __addDisposableResource: __addDisposableResource,
+    __disposeResources: __disposeResources
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
 
 //# sourceMappingURL=index.462f004f.js.map
