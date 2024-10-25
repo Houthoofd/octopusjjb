@@ -812,15 +812,59 @@ class Section extends (0, _core.WebComponent) {
         this.isVisible = !this.isVisible;
         this.visible = this.isVisible ? "true" : "false";
     }
-    async getValues() {
+    async send() {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const nameValue = inputs?.[0].value || "";
         const emailValue = inputs?.[1].value || "";
         if (!nameValue || !emailValue) alert("Vous devez remplir les champs");
-        else this.selection.push({
-            nom: nameValue,
-            email: emailValue
-        });
+        else if (this.currentSelection.length === 0) alert("Veuillez s\xe9lectionner au moins un cours d'essai.");
+        else {
+            this.utilisateur.push({
+                nom: nameValue,
+                email: emailValue,
+                cours: this.currentSelection
+            });
+            console.log("Utilisateur et cours s\xe9lectionn\xe9s :", this.utilisateur);
+            // Envoie à la base de données
+            try {
+                const response = await fetch("http://localhost:3000/reservations", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(this.utilisateur)
+                });
+                if (response.ok) {
+                    console.log("Utilisateur enregistr\xe9 avec succ\xe8s !");
+                    alert("Votre r\xe9servation a \xe9t\xe9 enregistr\xe9e !");
+                    this.currentSelection = [];
+                    this.utilisateur = [];
+                } else {
+                    console.error("Erreur lors de l'enregistrement :", response.statusText);
+                    alert("Une erreur s'est produite. Veuillez r\xe9essayer.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la requ\xeate :", error);
+                alert("Impossible d'enregistrer la r\xe9servation.");
+            }
+        }
+    }
+    selectRow(cour) {
+        if (this.currentSelection.length >= 1) {
+            alert("Vous ne pouvez s\xe9lectionner qu'un seul cours d'essai");
+            return;
+        }
+        this.currentSelection = [
+            ...this.currentSelection,
+            cour
+        ]; // crée une nouvelle référence
+        console.log("Cours s\xe9lectionn\xe9:", cour);
+    }
+    deleteRow(cour) {
+        const courDate = cour.date_cours;
+        // Supprime les cours ayant la même date de `currentSelection`
+        this.currentSelection = this.currentSelection.filter((selectedCour)=>selectedCour.date_cours !== courDate);
+        console.log("Liste de s\xe9lection mise \xe0 jour apr\xe8s suppression:", this.currentSelection);
     }
     async preloadData() {
         try {
@@ -851,11 +895,15 @@ class Section extends (0, _core.WebComponent) {
     }
     constructor(...args){
         super(...args);
-        this.selection = [];
+        this.utilisateur = [];
+        this.currentSelection = [];
         this.visible = null;
         this.isVisible = false;
     }
 }
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Section.prototype, "currentSelection", void 0);
 (0, _tsDecorate._)([
     (0, _core.attr)
 ], Section.prototype, "visible", void 0);
@@ -881,7 +929,7 @@ Section = (0, _tsDecorate._)([
                         <label for='mail'>Mail</label>
                         <input type='email'>
                     </div>
-                    <pf-panel>
+                    <pf-panel scrollable class="result-box">
                         <slot name="header">
                             <h3>Ma réservation</h3>
                         </slot>
@@ -892,7 +940,7 @@ Section = (0, _tsDecorate._)([
                                     <div class="raw-infos">
                                         ${(0, _core.repeat)(result, (0, _core.html)`${(cour)=>{
                     return (0, _core.html)`
-                                                        <div class="row">
+                                                        <div class="row" @click="${(cour)=>section.selectRow(cour)}">
                                                             <div class="type-de-cours">${cour.type_cours}</div>
                                                             <div class="date">${section.formatDateFromISO(cour.date_cours)}</div>
                                                             <div class="heure-debut">${cour.heure_debut}</div>
@@ -905,10 +953,23 @@ Section = (0, _tsDecorate._)([
                             </div>
                         </slot>
                         <slot name="extra-slot">
-                             <div class="selection"></div>
+                             <div class="selection">
+                                ${(0, _core.repeat)(section.currentSelection, (0, _core.html)`${(cour)=>{
+                console.log(cour);
+                return (0, _core.html)`
+                                                <div class="selection">
+                                                    <div class="type-de-cours">${cour.type_cours}</div>
+                                                    <div class="date">${section.formatDateFromISO(cour.date_cours)}</div>
+                                                    <div class="heure-debut">${cour.heure_debut}</div>
+                                                    <div class="heure-fin">${cour.heure_fin}</div>
+                                                    <div class="icon" @click="${(cour)=>section.deleteRow(cour)}"><pf-icons-trash-alt></pf-icons-trash-alt></div>
+                                                </div>
+                                            `;
+            }}`)}
+                             </div>
                         </slot>
                     </pf-panel>
-                    <pf-button @click="${(section)=>section.getValues(section)}">Réservez</pf-button>
+                    <pf-button @click="${()=>section.send()}">Réservez</pf-button>
                 </form>
             ` : ""}
         </section>
@@ -939,116 +1000,115 @@ Section = (0, _tsDecorate._)([
             gap: 10px;
         }
         .table-infos {
-  display: grid;
-  align-items: center;
-  width: 100%;
-}
-section#réservation > form > .table-infos .raw-infos {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  padding: 10px 10px;
-}
-section#réservation > form > .table-infos .raw-infos {
-  justify-content: space-between;
-  align-items: center;
-  display: flex;
-  padding: 10px 10px;
-  cursor: pointer;
-}
-section#réservation > form > .table-infos .raw-infos:nth-child(odd) {
-  background-color: #9e9e9e59;
-}
+            display: grid;
+            align-items: center;
+            width: 100%;
+        }
+        section#réservation > form > .table-infos .raw-infos {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 10px;
+        }
+        section#réservation > form > .table-infos .raw-infos {
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            padding: 10px 10px;
+            cursor: pointer;
+        }
+        section#réservation > form > .table-infos .raw-infos:nth-child(odd) {
+            background-color: #9e9e9e59;
+        }
 
-section#réservation > form > .table-infos .raw-infos:nth-child(even) {
-  background-color: #9e9e9e17;
-}
-.type-de-cours-infos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px 10px;
-  width: 12ch;
-}
-.heure-fin-infos {
-  padding: 10px 10px;
-  width: 12ch;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.heure-debut-infos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px 10px;
-  width: 12ch;
-}
-.date-infos {
-  display: flex;
-  align-items: center;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 10px;
-}
-.down-arrow {
-  cursor: pointer;
-  background-color: #0350f4b0;
-  justify-content: center;
-  padding: 10px 10px;
-  border-radius: 3px;
-}
-button.inscription {
-  padding: 10px 10px;
-  border: none;
-  border-radius: 3px;
-  background-color: #5b32a3b8;
-  color: #ffff;
-  cursor: pointer;
-}
-.raw-infos {
-  cursor: pointer;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column-reverse;
-}
-.row:nth-child(even){
-  background-color:#004080;
-}
-.row:nth-child(odd){
-  background-color:#0958a7;
-}
-.course-container {
-  color: black;
-}
+        section#réservation > form > .table-infos .raw-infos:nth-child(even) {
+            background-color: #9e9e9e17;
+        }
+        .type-de-cours-infos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px 10px;
+            width: 12ch;
+        }
+        .heure-fin-infos {
+            padding: 10px 10px;
+            width: 12ch;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .heure-debut-infos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px 10px;
+            width: 12ch;
+        }
+        .date-infos {
+            display: flex;
+            align-items: center;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 10px;
+        }
+        .down-arrow {
+            cursor: pointer;
+            background-color: #0350f4b0;
+            justify-content: center;
+            padding: 10px 10px;
+            border-radius: 3px;
+        }
+        button.inscription {
+            padding: 10px 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #5b32a3b8;
+            color: #ffff;
+            cursor: pointer;
+        }
+        .raw-infos {
+            cursor: pointer;
+            justify-content: space-between;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .row:nth-child(even){
+             background-color:#004080;
+        }
+        .row:nth-child(odd){
+            background-color:#0958a7;
+        }
+        .course-container {
+            color: black;
+        }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px 10px;
-  gap: 10px;
-  text-align: center;
-}
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 10px;
+            gap: 10px;
+            text-align: center;
+        }
 
-pf-modal.result-box {
-  display: none;
-}
-pf-modal.result-box.active {
-  display: block;
-}
-.selection {
-  color: #3e8635;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 10px;
-  background-color: #f3faf2;
-  margin-top: 10px;
-}
+        pf-modal.result-box {
+            display: none;
+        }
+        pf-modal.result-box.active {
+            display: block;
+        }       
+        .selection {
+            color: #3e8635;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 10px;
+            background-color: #f3faf2;
+            margin-top: 10px;
+        }
         `
         ]
     })

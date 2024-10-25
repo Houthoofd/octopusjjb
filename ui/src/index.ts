@@ -203,7 +203,7 @@ export class Home extends WebComponent {}
                         <label for='mail'>Mail</label>
                         <input type='email'>
                     </div>
-                    <pf-panel>
+                    <pf-panel scrollable class="result-box">
                         <slot name="header">
                             <h3>Ma réservation</h3>
                         </slot>
@@ -217,7 +217,7 @@ export class Home extends WebComponent {}
                                                 result, 
                                                 html`${(cour) => {
                                                     return html`
-                                                        <div class="row">
+                                                        <div class="row" @click="${(cour) => section.selectRow(cour)}">
                                                             <div class="type-de-cours">${cour.type_cours}</div>
                                                             <div class="date">${section.formatDateFromISO(cour.date_cours)}</div>
                                                             <div class="heure-debut">${cour.heure_debut}</div>
@@ -232,10 +232,27 @@ export class Home extends WebComponent {}
                             </div>
                         </slot>
                         <slot name="extra-slot">
-                             <div class="selection"></div>
+                             <div class="selection">
+                                ${repeat(
+                                        section.currentSelection,
+                                        html`${(cour) =>{
+                                            console.log(cour)
+                                            return html`
+                                                <div class="selection">
+                                                    <div class="type-de-cours">${cour.type_cours}</div>
+                                                    <div class="date">${section.formatDateFromISO(cour.date_cours)}</div>
+                                                    <div class="heure-debut">${cour.heure_debut}</div>
+                                                    <div class="heure-fin">${cour.heure_fin}</div>
+                                                    <div class="icon" @click="${(cour) => section.deleteRow(cour)}"><pf-icons-trash-alt></pf-icons-trash-alt></div>
+                                                </div>
+                                            `
+                                        }}`
+                                    )
+                                }
+                             </div>
                         </slot>
                     </pf-panel>
-                    <pf-button @click="${(section) => section.getValues(section)}">Réservez</pf-button>
+                    <pf-button @click="${() => section.send()}">Réservez</pf-button>
                 </form>
             ` : ''}
         </section>
@@ -266,126 +283,125 @@ export class Home extends WebComponent {}
             gap: 10px;
         }
         .table-infos {
-  display: grid;
-  align-items: center;
-  width: 100%;
-}
-section#réservation > form > .table-infos .raw-infos {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  padding: 10px 10px;
-}
-section#réservation > form > .table-infos .raw-infos {
-  justify-content: space-between;
-  align-items: center;
-  display: flex;
-  padding: 10px 10px;
-  cursor: pointer;
-}
-section#réservation > form > .table-infos .raw-infos:nth-child(odd) {
-  background-color: #9e9e9e59;
-}
+            display: grid;
+            align-items: center;
+            width: 100%;
+        }
+        section#réservation > form > .table-infos .raw-infos {
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 10px;
+        }
+        section#réservation > form > .table-infos .raw-infos {
+            justify-content: space-between;
+            align-items: center;
+            display: flex;
+            padding: 10px 10px;
+            cursor: pointer;
+        }
+        section#réservation > form > .table-infos .raw-infos:nth-child(odd) {
+            background-color: #9e9e9e59;
+        }
 
-section#réservation > form > .table-infos .raw-infos:nth-child(even) {
-  background-color: #9e9e9e17;
-}
-.type-de-cours-infos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px 10px;
-  width: 12ch;
-}
-.heure-fin-infos {
-  padding: 10px 10px;
-  width: 12ch;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.heure-debut-infos {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px 10px;
-  width: 12ch;
-}
-.date-infos {
-  display: flex;
-  align-items: center;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 10px;
-}
-.down-arrow {
-  cursor: pointer;
-  background-color: #0350f4b0;
-  justify-content: center;
-  padding: 10px 10px;
-  border-radius: 3px;
-}
-button.inscription {
-  padding: 10px 10px;
-  border: none;
-  border-radius: 3px;
-  background-color: #5b32a3b8;
-  color: #ffff;
-  cursor: pointer;
-}
-.raw-infos {
-  cursor: pointer;
-  justify-content: space-between;
-  display: flex;
-  flex-direction: column-reverse;
-}
-.row:nth-child(even){
-  background-color:#004080;
-}
-.row:nth-child(odd){
-  background-color:#0958a7;
-}
-.course-container {
-  color: black;
-}
+        section#réservation > form > .table-infos .raw-infos:nth-child(even) {
+            background-color: #9e9e9e17;
+        }
+        .type-de-cours-infos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px 10px;
+            width: 12ch;
+        }
+        .heure-fin-infos {
+            padding: 10px 10px;
+            width: 12ch;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .heure-debut-infos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px 10px;
+            width: 12ch;
+        }
+        .date-infos {
+            display: flex;
+            align-items: center;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 10px;
+        }
+        .down-arrow {
+            cursor: pointer;
+            background-color: #0350f4b0;
+            justify-content: center;
+            padding: 10px 10px;
+            border-radius: 3px;
+        }
+        button.inscription {
+            padding: 10px 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #5b32a3b8;
+            color: #ffff;
+            cursor: pointer;
+        }
+        .raw-infos {
+            cursor: pointer;
+            justify-content: space-between;
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .row:nth-child(even){
+             background-color:#004080;
+        }
+        .row:nth-child(odd){
+            background-color:#0958a7;
+        }
+        .course-container {
+            color: black;
+        }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px 10px;
-  gap: 10px;
-  text-align: center;
-}
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 10px;
+            gap: 10px;
+            text-align: center;
+        }
 
-pf-modal.result-box {
-  display: none;
-}
-pf-modal.result-box.active {
-  display: block;
-}
-.selection {
-  color: #3e8635;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 10px;
-  background-color: #f3faf2;
-  margin-top: 10px;
-}
+        pf-modal.result-box {
+            display: none;
+        }
+        pf-modal.result-box.active {
+            display: block;
+        }       
+        .selection {
+            color: #3e8635;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 10px;
+            background-color: #f3faf2;
+            margin-top: 10px;
+        }
         `
     ]
 })
 export class Section extends WebComponent {
-    selection: Array<{ nom: string; email: string }> = [];
+    utilisateur: Array<{ nom: string; email: string; cours: Array<any> }> = [];
+    @state() currentSelection: Array<{ date_cours : string, heure_debut: string, heure_fin : string, type_cours: string}> = [];
 
     @attr visible: "true" | "false" | null = null;
     @state() isVisible: boolean = false;
     
-
     attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
         if (name === "visible") {
             this.isVisible = newValue === "true";
@@ -398,17 +414,64 @@ export class Section extends WebComponent {
         this.visible = this.isVisible ? "true" : "false";
     }
 
-    async getValues() {
+    async send() {
         const inputs = this.shadowRoot?.querySelectorAll('input');
-
         const nameValue = inputs?.[0].value || '';
         const emailValue = inputs?.[1].value || '';
         
         if (!nameValue || !emailValue) {
             alert("Vous devez remplir les champs");
+        } else if (this.currentSelection.length === 0) {
+            alert("Veuillez sélectionner au moins un cours d'essai.");
         } else {
-            this.selection.push({ nom: nameValue, email: emailValue });
+    
+            this.utilisateur.push({ nom: nameValue, email: emailValue, cours: this.currentSelection });
+            
+            console.log("Utilisateur et cours sélectionnés :", this.utilisateur);
+    
+            // Envoie à la base de données
+            try {
+                const response = await fetch('http://localhost:3000/reservations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(this.utilisateur),
+                });
+                
+                if (response.ok) {
+                    console.log("Utilisateur enregistré avec succès !");
+                    alert("Votre réservation a été enregistrée !");
+                    
+                    this.currentSelection = [];
+                    this.utilisateur = [];
+                } else {
+                    console.error("Erreur lors de l'enregistrement :", response.statusText);
+                    alert("Une erreur s'est produite. Veuillez réessayer.");
+                }
+            } catch (error) {
+                console.error("Erreur lors de la requête :", error);
+                alert("Impossible d'enregistrer la réservation.");
+            }
         }
+    }
+
+    selectRow(cour: any) {
+        if (this.currentSelection.length >= 1) {
+            alert("Vous ne pouvez sélectionner qu'un seul cours d'essai");
+            return;
+        }
+        this.currentSelection = [...this.currentSelection, cour];  // crée une nouvelle référence
+        console.log('Cours sélectionné:', cour);
+    }
+
+    deleteRow(cour: any) {
+        const courDate = cour.date_cours;
+    
+        // Supprime les cours ayant la même date de `currentSelection`
+        this.currentSelection = this.currentSelection.filter(selectedCour => selectedCour.date_cours !== courDate);
+    
+        console.log('Liste de sélection mise à jour après suppression:', this.currentSelection);
     }
 
     async preloadData(): Promise<any[]> {
@@ -430,7 +493,7 @@ export class Section extends WebComponent {
         }
     }
 
-    formatDateFromISO(isoDateString) {
+    formatDateFromISO(isoDateString: string): string {
         const date = new Date(isoDateString);
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -438,11 +501,12 @@ export class Section extends WebComponent {
         return `${year}-${month}-${day}`;
     }
 
-    convertToISODate(dateString) {
+    convertToISODate(dateString: string): string {
         const [year, month, day] = dateString.split('-');
         return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
     }
 }
+
 
 
 
