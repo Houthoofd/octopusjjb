@@ -1,32 +1,10 @@
-import { html , render , WebComponent , customElement , attr , attrState , state, css, ViewTemplate, ViewContext, asyncAppend, repeat, children } from '@lithium-framework/core';
-import { PfModalBox } from 'unofficial-pf-v5-wc';
-import '@lithium-framework/router-element';
-import 'unofficial-pf-v5-wc';
-import 'unofficial-pf-v5-wc-icons';
-
-@customElement({
-    name: "main-home",
-    template: html`${(home: Home) => {
-        const buttons = ['Accueil', 'Horaires', 'Tarifs', 'Connexion'];
-        const schedule = [
-            { day: 'Lundi', time: '19h30-21h15' },
-            { day: 'jeudi', time: '19h30-21h15' },
-            { day: 'Samedi', time: '12h00-13h30' },
-            { day: 'Dimanche', time: '14h15-16h00' },
-        ];
-        const plans = [
-            { number: 1, text: 'Cours gratuit à la réservation', image: 'image1.png' },
-            { number: 2, text: 'Plan intermédiaire', image: 'image2.png' },
-            { number: 3, text: 'Plan premium', image: 'image3.png' }
-        ];
-
-        return html`<div>
+var e=globalThis,t={},i={},o=e.parcelRequirec605;function n(e,t,i,o){var n,a=arguments.length,r=a<3?t:null===o?o=Object.getOwnPropertyDescriptor(t,i):o;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)r=Reflect.decorate(e,t,i,o);else for(var s=e.length-1;s>=0;s--)(n=e[s])&&(r=(a<3?n(r):a>3?n(t,i,r):n(t,i))||r);return a>3&&r&&Object.defineProperty(t,i,r),r}null==o&&((o=function(e){if(e in t)return t[e].exports;if(e in i){var o=i[e];delete i[e];var n={id:e,exports:{}};return t[e]=n,o.call(n.exports,n,n.exports),n.exports}var a=Error("Cannot find module '"+e+"'");throw a.code="MODULE_NOT_FOUND",a}).register=function(e,t){i[e]=t},e.parcelRequirec605=o),o.register,"function"==typeof SuppressedError&&SuppressedError;var a=o("1BF7I"),r=o("5OQrz");o("lTDtW"),o("2LYUy");class s extends a.WebComponent{}s=n([(0,a.customElement)({name:"main-home",template:(0,a.html)`${e=>(0,a.html)`<div>
             <pf-masthead display-inline>
                 <div slot="brand">
                     <div class="logo"></div>
                 </div>
                 <pf-action-list>
-                    ${repeat(buttons, html`${(button) => {return html`<pf-action-list><pf-button>${button}</pf-button></pf-action-list>`}}`)}
+                    ${(0,a.repeat)(["Accueil","Horaires","Tarifs","Connexion"],(0,a.html)`${e=>(0,a.html)`<pf-action-list><pf-button>${e}</pf-button></pf-action-list>`}`)}
                 </pf-action-list>
             </pf-masthead>
 
@@ -42,18 +20,13 @@ import 'unofficial-pf-v5-wc-icons';
             <section id="schedule">
                 <h3>Entraînez-vous avec les meilleurs</h3>
                 <div class="schedule-container">
-                    ${repeat(
-                        schedule, 
-                        html`${(jour) => {
-                        return html`
+                    ${(0,a.repeat)([{day:"Lundi",time:"19h30-21h15"},{day:"jeudi",time:"19h30-21h15"},{day:"Samedi",time:"12h00-13h30"},{day:"Dimanche",time:"14h15-16h00"}],(0,a.html)`${e=>(0,a.html)`
                             <div class="schedule-row">
-                                <div class="day">${jour.day}</div>
-                                <div class="time">${jour.time}</div>
+                                <div class="day">${e.day}</div>
+                                <div class="time">${e.time}</div>
                                 <div class="arrow">→</div>
                             </div>
-                            `}
-                        }`)
-                    }
+                            `}`)}
                 </div>
             </section>
 
@@ -64,32 +37,24 @@ import 'unofficial-pf-v5-wc-icons';
                         <h1>Choisissez parmi trois plans adaptés à vos besoins et votre budget.</h1>
                     </div>
                     <div class="plans-container">
-                        ${repeat(
-                            plans,
-                            html`${(plan) => {
-                                return html`
+                        ${(0,a.repeat)([{number:1,text:"Cours gratuit à la réservation",image:"image1.png"},{number:2,text:"Plan intermédiaire",image:"image2.png"},{number:3,text:"Plan premium",image:"image3.png"}],(0,a.html)`${e=>(0,a.html)`
                                     <div class="plan">
                                         <div class="plan-content">
-                                            <span class="number">${plan.number}</span>
-                                            <p>${plan.text}</p>
+                                            <span class="number">${e.number}</span>
+                                            <p>${e.text}</p>
                                         </div>
                                         <div class="plan-image">
-                                            <img src="${plan.image}" alt="Plan ${plan.number}">
+                                            <img src="${e.image}" alt="Plan ${e.number}">
                                         </div>
                                 </div>
-                                `
-                            }}`
-                        )}
+                                `}`)}
                     </div>
                 </div>
             </section>
 
             <special-section></special-section>
             <main-footer></main-footer>
-        </div>`
-    }}`,
-    styles: [ 
-        css`
+        </div>`}`,styles:[(0,a.css)`
         .schedule-container {
             display: flex;
             flex-direction: column;
@@ -178,22 +143,12 @@ import 'unofficial-pf-v5-wc-icons';
             background-position: center;
             margin: 10px 20px;
         }
-        `
-    ],
-    shadowOptions: { mode: 'open' }
-})
-export class Home extends WebComponent {}
-
-
-@customElement({
-    name: "special-section",
-    template: html`${(section: Section) => {
-        return html`
+        `],shadowOptions:{mode:"open"}})],s);class l extends a.WebComponent{attributeChangedCallback(e,t,i){"visible"===e&&(this.isVisible="true"===i),super.attributeChangedCallback(e,t,i)}displayForm(){this.isVisible=!this.isVisible,this.visible=this.isVisible?"true":"false"}async getValues(){let e=this.shadowRoot?.querySelectorAll("input"),t=e?.[0].value||"",i=e?.[1].value||"";t&&i?this.selection.push({nom:t,email:i}):alert("Vous devez remplir les champs")}async preloadData(){try{let e=await fetch("http://localhost:3000/cours/",{method:"GET",headers:{"Content-Type":"application/json"}});if(!e.ok)throw Error("Erreur serveur.");let t=await e.json();return t.length>0?t:[]}catch(e){return console.error("Erreur lors de la requête fetch:",e),[]}}formatDateFromISO(e){let t=new Date(e),i=t.getFullYear(),o=String(t.getMonth()+1).padStart(2,"0"),n=String(t.getDate()).padStart(2,"0");return`${i}-${o}-${n}`}convertToISODate(e){let[t,i,o]=e.split("-");return new Date(`${t}-${i}-${o}T00:00:00Z`).toISOString()}constructor(...e){super(...e),this.selection=[],this.visible=null,this.isVisible=!1}}n([a.attr],l.prototype,"visible",void 0),n([(0,a.state)()],l.prototype,"isVisible",void 0),l=n([(0,a.customElement)({name:"special-section",template:(0,a.html)`${e=>(0,a.html)`
         <section id="reservation">
             <h3>Réservez maintenant</h3>
             <span>Ne manquez pas cette occasion d'essayer un cours gratuit</span>
-            <pf-button @click="${() => section.displayForm()}">Cliquez-ici</pf-button>
-            ${section.isVisible ? html`
+            <pf-button @click="${()=>e.displayForm()}">Cliquez-ici</pf-button>
+            ${e.isVisible?(0,a.html)`
                 <form>
                     <div>
                         <label for='name'>Nom</label>
@@ -209,40 +164,28 @@ export class Home extends WebComponent {}
                         </slot>
                         <slot>
                             <div class="table-infos">
-                                ${asyncAppend(section.preloadData(), (result) => {
-                                    return html`
+                                ${(0,a.asyncAppend)(e.preloadData(),t=>(0,a.html)`
                                     <div class="raw-infos">
-                                        ${
-                                            repeat(
-                                                result, 
-                                                html`${(cour) => {
-                                                    return html`
+                                        ${(0,a.repeat)(t,(0,a.html)`${t=>(0,a.html)`
                                                         <div class="row">
-                                                            <div class="type-de-cours">${cour.type_cours}</div>
-                                                            <div class="date">${section.formatDateFromISO(cour.date_cours)}</div>
-                                                            <div class="heure-debut">${cour.heure_debut}</div>
-                                                            <div class="heure-fin">${cour.heure_fin}</div>
-                                                        </div>`;
-                                                }}`
-                                            )
-                                        }
+                                                            <div class="type-de-cours">${t.type_cours}</div>
+                                                            <div class="date">${e.formatDateFromISO(t.date_cours)}</div>
+                                                            <div class="heure-debut">${t.heure_debut}</div>
+                                                            <div class="heure-fin">${t.heure_fin}</div>
+                                                        </div>`}`)}
                                     </div>
-                                    `;
-                                })}
+                                    `)}
                             </div>
                         </slot>
                         <slot name="extra-slot">
                              <div class="selection"></div>
                         </slot>
                     </pf-panel>
-                    <pf-button @click="${(section) => section.getValues(section)}">Réservez</pf-button>
+                    <pf-button @click="${e=>e.getValues(e)}">Réservez</pf-button>
                 </form>
-            ` : ''}
+            `:""}
         </section>
-        `
-    }}`,
-    styles : [
-        css`
+        `}`,styles:[(0,a.css)`
         section#reservation {
             display: flex;
             justify-content: center;
@@ -376,80 +319,7 @@ pf-modal.result-box.active {
   background-color: #f3faf2;
   margin-top: 10px;
 }
-        `
-    ]
-})
-export class Section extends WebComponent {
-    selection: Array<{ nom: string; email: string }> = [];
-
-    @attr visible: "true" | "false" | null = null;
-    @state() isVisible: boolean = false;
-    
-
-    attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
-        if (name === "visible") {
-            this.isVisible = newValue === "true";
-        }
-        super.attributeChangedCallback(name, oldValue, newValue);
-    }
-
-    displayForm() {
-        this.isVisible = !this.isVisible;
-        this.visible = this.isVisible ? "true" : "false";
-    }
-
-    async getValues() {
-        const inputs = this.shadowRoot?.querySelectorAll('input');
-
-        const nameValue = inputs?.[0].value || '';
-        const emailValue = inputs?.[1].value || '';
-        
-        if (!nameValue || !emailValue) {
-            alert("Vous devez remplir les champs");
-        } else {
-            this.selection.push({ nom: nameValue, email: emailValue });
-        }
-    }
-
-    async preloadData(): Promise<any[]> {
-        try {
-            const response = await fetch('http://localhost:3000/cours/', {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            
-            if (!response.ok) {
-                throw new Error('Erreur serveur.');
-            }
-            
-            const data = await response.json();
-            return data.length > 0 ? data : [];
-        } catch (error) {
-            console.error('Erreur lors de la requête fetch:', error);
-            return [];
-        }
-    }
-
-    formatDateFromISO(isoDateString) {
-        const date = new Date(isoDateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-
-    convertToISODate(dateString) {
-        const [year, month, day] = dateString.split('-');
-        return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
-    }
-}
-
-
-
-@customElement({
-    name: "main-footer",
-    template: html`${(footer: Footer) => {
-        return html`
+        `]})],l);class c extends a.WebComponent{}c=n([(0,a.customElement)({name:"main-footer",template:(0,a.html)`${e=>(0,a.html)`
             <footer>
                 <div class="footer-container">
                     <div class="footer-column">
@@ -484,10 +354,7 @@ export class Section extends WebComponent {
                     <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
                 </div>
             </div>
-        </footer>`
-    }}`,
-    styles : [
-        css`
+        </footer>`}`,styles:[(0,a.css)`
         footer {
             background-color: #002244;
             color: white;
@@ -550,118 +417,5 @@ export class Section extends WebComponent {
             width: 24px;
             height: 24px;
         }
-        `
-    ]
-})
-export class Footer extends WebComponent{
-
-}
-
-@customElement({
-    name: "custom-modal",
-})
-export class Modal extends PfModalBox{
-
-}
-
-
-// function displaySelection(){
-//     const storedSelection = localStorage.getItem('selectionArray');
-//     const form = document.querySelectorAll('form')[0];
-//     console.log(storedSelection);
-// }
-
-
-// function displayForm() {
-//     const form = document.querySelectorAll('form')[0];
-//     const storedSelection = localStorage.getItem('selectionArray');
-//     form.classList.toggle('active');
-//     console.log(storedSelection)
-// }
-
-// function displayClasses(){
-//     const modal = document.querySelectorAll('pf-modal')[0];
-//     modal.classList.toggle('active');
-// }
-
-// function confirm(){
-    
-// }
-
-
-// let selectionArray = JSON.parse(localStorage.getItem('selectionArray') || '[]');
-
-// function selectRow(cour) {
-//     const selectionElement = document.querySelector('.selection') as HTMLElement;
-
-
-//     if (selectionArray.length > 0) {
-//         alert('Veuillez d\'abord supprimer la sélection actuelle avant d\'en ajouter une nouvelle.');
-//         return;
-//     }
-
-//     const selectionTemplate = html`
-//         <div class="type-de-cours">${cour.type_cours}</div>
-//         <div class="date">${formatDateFromISO(cour.date_cours)}</div>
-//         <div class="heure-debut">${cour.heure_debut}</div>
-//         <div class="heure-fin">${cour.heure_fin}</div>
-//         <div class="delete" @click=${() => deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
-//     `;
-
-//     if (selectionElement) {
-    
-//         selectionArray.push({
-//             cour: cour.type_cours,
-//             date: formatDateFromISO(cour.date_cours),
-//             heure_debut: cour.heure_debut,
-//             heure_fin: cour.heure_fin
-//         });
-
-//         localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
-
-//         console.log(selectionArray);
-//         render(selectionTemplate, selectionElement);
-//     } else {
-//         console.error('Élément .selection introuvable');
-//     }
-
-//     displayExistingSelection();
-// }
-
-// function displayExistingSelection() {
-//     const selectionElement = document.querySelector('.selection') as HTMLElement;
-
-//     selectionArray.forEach(cour => {
-//         const selectionTemplate = html`
-//             <div class="type-de-cours">${cour.cour}</div>
-//             <div class="date">${cour.date}</div>
-//             <div class="heure-debut">${cour.heure_debut}</div>
-//             <div class="heure-fin">${cour.heure_fin}</div>
-//             <div class="delete" @click=${() => deleteSelection(cour)}><pf-icons-trash-alt></pf-icons-trash-alt></div>
-//         `;
-
-//         render(selectionTemplate, selectionElement);
-//     });
-// }
-
-// function deleteSelection(cour) {
-//     selectionArray = selectionArray.filter(
-//         (item) => item.cour !== cour.type_cours || item.date !== formatDateFromISO(cour.date_cours)
-//     );
-
-//     localStorage.setItem('selectionArray', JSON.stringify(selectionArray));
-
-//     console.log(selectionArray);
-
-//     const selectionElement = document.querySelector('.selection');
-//     if (selectionElement) {
-//         selectionElement.innerHTML = '';
-//     }
-// }
-
-
-
-
-
-
-render(html`<main-home></main-home>`, document.body);
+        `]})],c);class d extends r.PfModalBox{}d=n([(0,a.customElement)({name:"custom-modal"})],d),(0,a.render)((0,a.html)`<main-home></main-home>`,document.body);
+//# sourceMappingURL=index.b79b9326.js.map

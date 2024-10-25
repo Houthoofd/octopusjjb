@@ -702,7 +702,7 @@ Home = (0, _tsDecorate._)([
                 </div>
             </section>
 
-            <main-section></main-section>
+            <special-section></special-section>
             <main-footer></main-footer>
         </div>`;
         }}`,
@@ -812,8 +812,46 @@ class Section extends (0, _core.WebComponent) {
         this.isVisible = !this.isVisible;
         this.visible = this.isVisible ? "true" : "false";
     }
+    async getValues() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const nameValue = inputs?.[0].value || "";
+        const emailValue = inputs?.[1].value || "";
+        if (!nameValue || !emailValue) alert("Vous devez remplir les champs");
+        else this.selection.push({
+            nom: nameValue,
+            email: emailValue
+        });
+    }
+    async preloadData() {
+        try {
+            const response = await fetch("http://localhost:3000/cours/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            if (!response.ok) throw new Error("Erreur serveur.");
+            const data = await response.json();
+            return data.length > 0 ? data : [];
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+            return [];
+        }
+    }
+    formatDateFromISO(isoDateString) {
+        const date = new Date(isoDateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+    convertToISODate(dateString) {
+        const [year, month, day] = dateString.split("-");
+        return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
+    }
     constructor(...args){
         super(...args);
+        this.selection = [];
         this.visible = null;
         this.isVisible = false;
     }
@@ -826,27 +864,54 @@ class Section extends (0, _core.WebComponent) {
 ], Section.prototype, "isVisible", void 0);
 Section = (0, _tsDecorate._)([
     (0, _core.customElement)({
-        name: "main-section",
+        name: "special-section",
         template: (0, _core.html)`${(section)=>{
             return (0, _core.html)`
         <section id="reservation">
-    <h3>Réservez maintenant</h3>
-    <span>Ne manquez pas cette occasion d'essayer un cours gratuit</span>
-    <pf-button @click="${()=>section.displayForm()}">Cliquez-ici</pf-button>
-    ${section.isVisible ? (0, _core.html)`
-        <form>
-            <div>
-                <label for='name'>Nom</label>
-                <input type='text'>
-            </div>
-            <div>
-                <label for='mail'>Mail</label>
-                <input type='email'>
-            </div>
-            <div class='table-infos'></div>
-        </form>
-    ` : ""}
-</section>
+            <h3>Réservez maintenant</h3>
+            <span>Ne manquez pas cette occasion d'essayer un cours gratuit</span>
+            <pf-button @click="${()=>section.displayForm()}">Cliquez-ici</pf-button>
+            ${section.isVisible ? (0, _core.html)`
+                <form>
+                    <div>
+                        <label for='name'>Nom</label>
+                        <input type='text'>
+                    </div>
+                    <div>
+                        <label for='mail'>Mail</label>
+                        <input type='email'>
+                    </div>
+                    <pf-panel>
+                        <slot name="header">
+                            <h3>Ma réservation</h3>
+                        </slot>
+                        <slot>
+                            <div class="table-infos">
+                                ${(0, _core.asyncAppend)(section.preloadData(), (result)=>{
+                return (0, _core.html)`
+                                    <div class="raw-infos">
+                                        ${(0, _core.repeat)(result, (0, _core.html)`${(cour)=>{
+                    return (0, _core.html)`
+                                                        <div class="row">
+                                                            <div class="type-de-cours">${cour.type_cours}</div>
+                                                            <div class="date">${section.formatDateFromISO(cour.date_cours)}</div>
+                                                            <div class="heure-debut">${cour.heure_debut}</div>
+                                                            <div class="heure-fin">${cour.heure_fin}</div>
+                                                        </div>`;
+                }}`)}
+                                    </div>
+                                    `;
+            })}
+                            </div>
+                        </slot>
+                        <slot name="extra-slot">
+                             <div class="selection"></div>
+                        </slot>
+                    </pf-panel>
+                    <pf-button @click="${(section)=>section.getValues(section)}">Réservez</pf-button>
+                </form>
+            ` : ""}
+        </section>
         `;
         }}`,
         styles: [
@@ -863,7 +928,7 @@ Section = (0, _tsDecorate._)([
         }
         section#reservation > form {
             min-height: 0;
-            display: none;
+            display: block;
         }
         section#reservation > form.active {
             height: 100%;
@@ -873,6 +938,117 @@ Section = (0, _tsDecorate._)([
             flex-direction: column;
             gap: 10px;
         }
+        .table-infos {
+  display: grid;
+  align-items: center;
+  width: 100%;
+}
+section#réservation > form > .table-infos .raw-infos {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 10px;
+}
+section#réservation > form > .table-infos .raw-infos {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+section#réservation > form > .table-infos .raw-infos:nth-child(odd) {
+  background-color: #9e9e9e59;
+}
+
+section#réservation > form > .table-infos .raw-infos:nth-child(even) {
+  background-color: #9e9e9e17;
+}
+.type-de-cours-infos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 10px;
+  width: 12ch;
+}
+.heure-fin-infos {
+  padding: 10px 10px;
+  width: 12ch;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.heure-debut-infos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 10px;
+  width: 12ch;
+}
+.date-infos {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px;
+}
+.down-arrow {
+  cursor: pointer;
+  background-color: #0350f4b0;
+  justify-content: center;
+  padding: 10px 10px;
+  border-radius: 3px;
+}
+button.inscription {
+  padding: 10px 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #5b32a3b8;
+  color: #ffff;
+  cursor: pointer;
+}
+.raw-infos {
+  cursor: pointer;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.row:nth-child(even){
+  background-color:#004080;
+}
+.row:nth-child(odd){
+  background-color:#0958a7;
+}
+.course-container {
+  color: black;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 10px;
+  gap: 10px;
+  text-align: center;
+}
+
+pf-modal.result-box {
+  display: none;
+}
+pf-modal.result-box.active {
+  display: block;
+}
+.selection {
+  color: #3e8635;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 10px;
+  background-color: #f3faf2;
+  margin-top: 10px;
+}
         `
         ]
     })
@@ -1064,44 +1240,6 @@ Modal = (0, _tsDecorate._)([
 //     if (selectionElement) {
 //         selectionElement.innerHTML = '';
 //     }
-// }
-// const preloadData: Promise<any[]> = new Promise((next, reject) => {
-//     fetch('http://localhost:3000/cours/', {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-//     .then(response => {
-//         if (!response.ok) {
-//             reject('Erreur serveur.');
-//             throw new Error('Erreur serveur.');
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         if (data.length > 0) {
-//             console.log('Réponse du serveur:', data);
-//             next(data);  // Retourne tout le tableau de cours ici
-//         } else {
-//             next([]);  // Retourne un tableau vide si aucun cours
-//         }
-//     })
-//     .catch(error => {
-//         console.error('Erreur lors de la requête fetch:', error);
-//         reject(error);
-//     });
-// });
-// function formatDateFromISO(isoDateString) {
-//     const date = new Date(isoDateString);
-//     const year = date.getFullYear();
-//     const month = String(date.getMonth() + 1).padStart(2, '0');
-//     const day = String(date.getDate()).padStart(2, '0');
-//     return `${year}-${month}-${day}`;
-// }
-// function convertToISODate(dateString) {
-//     const [year, month, day] = dateString.split('-');
-//     return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
 // }
 (0, _core.render)((0, _core.html)`<main-home></main-home>`, document.body);
 
