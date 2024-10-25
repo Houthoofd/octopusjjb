@@ -648,7 +648,9 @@ Home = (0, _tsDecorate._)([
                     <div class="logo"></div>
                 </div>
                 <pf-action-list>
-                    ${buttons.map((button)=>(0, _core.html)`<pf-action-list-item><pf-button>${button}</pf-button></pf-action-list-item>`)}
+                    ${(0, _core.repeat)(buttons, (0, _core.html)`${(button)=>{
+                return (0, _core.html)`<pf-action-list><pf-button>${button}</pf-button></pf-action-list>`;
+            }}`)}
                 </pf-action-list>
             </pf-masthead>
 
@@ -664,13 +666,15 @@ Home = (0, _tsDecorate._)([
             <section id="schedule">
                 <h3>Entraînez-vous avec les meilleurs</h3>
                 <div class="schedule-container">
-                    ${schedule.map((item)=>(0, _core.html)`
-                        <div class="schedule-row">
-                            <div class="day">${item.day}</div>
-                            <div class="time">${item.time}</div>
-                            <div class="arrow">→</div>
-                        </div>
-                    `)}
+                    ${(0, _core.repeat)(schedule, (0, _core.html)`${(jour)=>{
+                return (0, _core.html)`
+                            <div class="schedule-row">
+                                <div class="day">${jour.day}</div>
+                                <div class="time">${jour.time}</div>
+                                <div class="arrow">→</div>
+                            </div>
+                            `;
+            }}`)}
                 </div>
             </section>
 
@@ -681,17 +685,19 @@ Home = (0, _tsDecorate._)([
                         <h1>Choisissez parmi trois plans adaptés à vos besoins et votre budget.</h1>
                     </div>
                     <div class="plans-container">
-                        ${plans.map((plan)=>(0, _core.html)`
-                            <div class="plan">
-                                <div class="plan-content">
-                                    <span class="number">${plan.number}</span>
-                                    <p>${plan.text}</p>
+                        ${(0, _core.repeat)(plans, (0, _core.html)`${(plan)=>{
+                return (0, _core.html)`
+                                    <div class="plan">
+                                        <div class="plan-content">
+                                            <span class="number">${plan.number}</span>
+                                            <p>${plan.text}</p>
+                                        </div>
+                                        <div class="plan-image">
+                                            <img src="${plan.image}" alt="Plan ${plan.number}">
+                                        </div>
                                 </div>
-                                <div class="plan-image">
-                                    <img src="${plan.image}" alt="Plan ${plan.number}">
-                                </div>
-                            </div>
-                        `)}
+                                `;
+            }}`)}
                     </div>
                 </div>
             </section>

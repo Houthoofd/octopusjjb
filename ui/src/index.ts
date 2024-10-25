@@ -26,7 +26,7 @@ import 'unofficial-pf-v5-wc-icons';
                     <div class="logo"></div>
                 </div>
                 <pf-action-list>
-                    ${buttons.map(button => html`<pf-action-list-item><pf-button>${button}</pf-button></pf-action-list-item>`)}
+                    ${repeat(buttons, html`${(button) => {return html`<pf-action-list><pf-button>${button}</pf-button></pf-action-list>`}}`)}
                 </pf-action-list>
             </pf-masthead>
 
@@ -42,13 +42,18 @@ import 'unofficial-pf-v5-wc-icons';
             <section id="schedule">
                 <h3>Entraînez-vous avec les meilleurs</h3>
                 <div class="schedule-container">
-                    ${schedule.map(item => html`
-                        <div class="schedule-row">
-                            <div class="day">${item.day}</div>
-                            <div class="time">${item.time}</div>
-                            <div class="arrow">→</div>
-                        </div>
-                    `)}
+                    ${repeat(
+                        schedule, 
+                        html`${(jour) => {
+                        return html`
+                            <div class="schedule-row">
+                                <div class="day">${jour.day}</div>
+                                <div class="time">${jour.time}</div>
+                                <div class="arrow">→</div>
+                            </div>
+                            `}
+                        }`)
+                    }
                 </div>
             </section>
 
@@ -59,17 +64,22 @@ import 'unofficial-pf-v5-wc-icons';
                         <h1>Choisissez parmi trois plans adaptés à vos besoins et votre budget.</h1>
                     </div>
                     <div class="plans-container">
-                        ${plans.map(plan => html`
-                            <div class="plan">
-                                <div class="plan-content">
-                                    <span class="number">${plan.number}</span>
-                                    <p>${plan.text}</p>
+                        ${repeat(
+                            plans,
+                            html`${(plan) => {
+                                return html`
+                                    <div class="plan">
+                                        <div class="plan-content">
+                                            <span class="number">${plan.number}</span>
+                                            <p>${plan.text}</p>
+                                        </div>
+                                        <div class="plan-image">
+                                            <img src="${plan.image}" alt="Plan ${plan.number}">
+                                        </div>
                                 </div>
-                                <div class="plan-image">
-                                    <img src="${plan.image}" alt="Plan ${plan.number}">
-                                </div>
-                            </div>
-                        `)}
+                                `
+                            }}`
+                        )}
                     </div>
                 </div>
             </section>
