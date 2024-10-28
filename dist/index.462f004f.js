@@ -812,42 +812,70 @@ class Section extends (0, _core.WebComponent) {
         this.isVisible = !this.isVisible;
         this.visible = this.isVisible ? "true" : "false";
     }
+    async checkReservation(nameValue, emailValue) {
+        try {
+            const response = await fetch(`http://localhost:3000/reservations/verification?email=${emailValue}&name=${nameValue}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            if (!response.ok) throw new Error("Erreur lors de la requ\xeate de v\xe9rification des r\xe9servations.");
+            const existingReservation = await response.json();
+            console.log(existingReservation);
+            // if (existingReservation.length > 0) {
+            //     alert("Vous avez déjà réservé un cours d'essai.");
+            //     return false;
+            // }
+            return true;
+        } catch (error) {
+            console.error("Erreur lors de la v\xe9rification des r\xe9servations :", error);
+            alert("Erreur lors de la v\xe9rification des r\xe9servations. Veuillez r\xe9essayer.");
+            return false;
+        }
+    }
     async send() {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const nameValue = inputs?.[0].value || "";
         const emailValue = inputs?.[1].value || "";
-        if (!nameValue || !emailValue) alert("Vous devez remplir les champs");
-        else if (this.currentSelection.length === 0) alert("Veuillez s\xe9lectionner au moins un cours d'essai.");
-        else {
-            this.utilisateur.push({
-                nom: nameValue,
-                email: emailValue,
-                cours: this.currentSelection
-            });
-            console.log("Utilisateur et cours s\xe9lectionn\xe9s :", this.utilisateur);
-            // Envoie à la base de données
-            try {
-                const response = await fetch("http://localhost:3000/reservations", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(this.utilisateur)
-                });
-                if (response.ok) {
-                    console.log("Utilisateur enregistr\xe9 avec succ\xe8s !");
-                    alert("Votre r\xe9servation a \xe9t\xe9 enregistr\xe9e !");
-                    this.currentSelection = [];
-                    this.utilisateur = [];
-                } else {
-                    console.error("Erreur lors de l'enregistrement :", response.statusText);
-                    alert("Une erreur s'est produite. Veuillez r\xe9essayer.");
-                }
-            } catch (error) {
-                console.error("Erreur lors de la requ\xeate :", error);
-                alert("Impossible d'enregistrer la r\xe9servation.");
-            }
+        if (!nameValue || !emailValue) {
+            alert("Vous devez remplir les champs");
+            return;
         }
+        if (this.currentSelection.length === 0) {
+            alert("Veuillez s\xe9lectionner au moins un cours d'essai.");
+            return;
+        }
+        this.utilisateur.push({
+            nom: nameValue,
+            email: emailValue,
+            cours: this.currentSelection
+        });
+        console.log("Utilisateur et cours s\xe9lectionn\xe9s :", this.utilisateur);
+        const isEligible = await this.verification(nameValue, emailValue);
+        console.log(isEligible);
+        if (isEligible === true) try {
+            const response = await fetch("http://localhost:3000/reservations", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(this.utilisateur)
+            });
+            if (response.ok) {
+                console.log("Utilisateur enregistr\xe9 avec succ\xe8s !");
+                alert("Votre r\xe9servation a \xe9t\xe9 enregistr\xe9e !");
+                this.currentSelection = [];
+                this.utilisateur = [];
+            } else {
+                console.error("Erreur lors de l'enregistrement :", response.statusText);
+                alert("Une erreur s'est produite. Veuillez r\xe9essayer.");
+            }
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate :", error);
+            alert("Impossible d'enregistrer la r\xe9servation.");
+        }
+        else alert("Vous avez d\xe9j\xe0 r\xe9serv\xe9 un cours d'essai.");
     }
     selectRow(cour) {
         if (this.currentSelection.length >= 1) {
@@ -857,14 +885,45 @@ class Section extends (0, _core.WebComponent) {
         this.currentSelection = [
             ...this.currentSelection,
             cour
-        ]; // crée une nouvelle référence
+        ];
         console.log("Cours s\xe9lectionn\xe9:", cour);
     }
     deleteRow(cour) {
         const courDate = cour.date_cours;
-        // Supprime les cours ayant la même date de `currentSelection`
         this.currentSelection = this.currentSelection.filter((selectedCour)=>selectedCour.date_cours !== courDate);
         console.log("Liste de s\xe9lection mise \xe0 jour apr\xe8s suppression:", this.currentSelection);
+    }
+    async verification(nameValue, emailValue) {
+        const usersInformations = {
+            nom: nameValue,
+            email: emailValue
+        };
+        try {
+            const response = await fetch("http://localhost:3000/reservations/verification", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(usersInformations)
+            });
+            if (response.ok) {
+                const result = await response.json();
+                console.log(result.canRegister);
+                if (result.canRegister === true) return true;
+                else {
+                    alert("Vous avez d\xe9j\xe0 r\xe9serv\xe9 un cours d'essai.");
+                    return false;
+                }
+            } else {
+                console.error("Erreur lors de la v\xe9rification :", response.statusText);
+                alert("Une erreur s'est produite lors de la v\xe9rification. Veuillez r\xe9essayer.");
+                return false;
+            }
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate :", error);
+            alert("Impossible de v\xe9rifier la r\xe9servation.");
+            return false;
+        }
     }
     async preloadData() {
         try {
