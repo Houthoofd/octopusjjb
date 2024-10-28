@@ -415,36 +415,6 @@ export class Section extends WebComponent {
         this.isVisible = !this.isVisible;
         this.visible = this.isVisible ? "true" : "false";
     }
-
-    async checkReservation(nameValue: string, emailValue: string): Promise<boolean> {
-        try {
-        
-            const response = await fetch(`http://localhost:3000/reservations/verification?email=${emailValue}&name=${nameValue}`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-    
-            if (!response.ok) {
-                throw new Error('Erreur lors de la requête de vérification des réservations.');
-            }
-    
-        
-            const existingReservation = await response.json();
-            console.log(existingReservation)
-        
-            // if (existingReservation.length > 0) {
-            //     alert("Vous avez déjà réservé un cours d'essai.");
-            //     return false;
-            // }
-    
-            return true;
-    
-        } catch (error) {
-            console.error('Erreur lors de la vérification des réservations :', error);
-            alert("Erreur lors de la vérification des réservations. Veuillez réessayer.");
-            return false;
-        }
-    }
     
     
 
@@ -452,7 +422,6 @@ export class Section extends WebComponent {
         const inputs = this.shadowRoot?.querySelectorAll('input');
         const nameValue = inputs?.[0].value || '';
         const emailValue = inputs?.[1].value || '';
-    
     
         if (!nameValue || !emailValue) {
             alert("Vous devez remplir les champs");
@@ -463,17 +432,14 @@ export class Section extends WebComponent {
             return;
         }
     
-    
         this.utilisateur.push({ nom: nameValue, email: emailValue, cours: this.currentSelection });
     
         console.log("Utilisateur et cours sélectionnés :", this.utilisateur);
     
-        
         const isEligible = await this.verification(nameValue, emailValue);
         console.log(isEligible)
-        
+    
         if (isEligible === true) {
-            
             try {
                 const response = await fetch('http://localhost:3000/reservations', {
                     method: 'POST',
@@ -484,10 +450,25 @@ export class Section extends WebComponent {
                 });
     
                 if (response.ok) {
-                    console.log("Utilisateur enregistré avec succès !");
-                    alert("Votre réservation a été enregistrée !");
+                    const result = await response.json();
+                    console.log("Utilisateur enregistré avec succès !", result);
+    
+                    if (result.role) { 
+                        const userInfos = this.utilisateur.map(user => ({
+                            nom: user.nom,
+                            email: user.email,
+                            cours: user.cours 
+                        }));
                     
-            
+                       
+                        const dataToStore = {
+                            users: userInfos,
+                            role: result.role
+                        };
+                    
+    
+                        localStorage.setItem('userStatus', JSON.stringify(dataToStore));
+                    }
                     this.currentSelection = [];
                     this.utilisateur = [];
                 } else {
@@ -499,10 +480,10 @@ export class Section extends WebComponent {
                 alert("Impossible d'enregistrer la réservation.");
             }
         } else {
-        
             alert("Vous avez déjà réservé un cours d'essai.");
         }
     }
+    
 
     selectRow(cour: any) {
         if (this.currentSelection.length >= 1) {

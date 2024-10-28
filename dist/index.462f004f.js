@@ -812,28 +812,6 @@ class Section extends (0, _core.WebComponent) {
         this.isVisible = !this.isVisible;
         this.visible = this.isVisible ? "true" : "false";
     }
-    async checkReservation(nameValue, emailValue) {
-        try {
-            const response = await fetch(`http://localhost:3000/reservations/verification?email=${emailValue}&name=${nameValue}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            if (!response.ok) throw new Error("Erreur lors de la requ\xeate de v\xe9rification des r\xe9servations.");
-            const existingReservation = await response.json();
-            console.log(existingReservation);
-            // if (existingReservation.length > 0) {
-            //     alert("Vous avez déjà réservé un cours d'essai.");
-            //     return false;
-            // }
-            return true;
-        } catch (error) {
-            console.error("Erreur lors de la v\xe9rification des r\xe9servations :", error);
-            alert("Erreur lors de la v\xe9rification des r\xe9servations. Veuillez r\xe9essayer.");
-            return false;
-        }
-    }
     async send() {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const nameValue = inputs?.[0].value || "";
@@ -863,8 +841,20 @@ class Section extends (0, _core.WebComponent) {
                 body: JSON.stringify(this.utilisateur)
             });
             if (response.ok) {
-                console.log("Utilisateur enregistr\xe9 avec succ\xe8s !");
-                alert("Votre r\xe9servation a \xe9t\xe9 enregistr\xe9e !");
+                const result = await response.json();
+                console.log("Utilisateur enregistr\xe9 avec succ\xe8s !", result);
+                if (result.role) {
+                    const userInfos = this.utilisateur.map((user)=>({
+                            nom: user.nom,
+                            email: user.email,
+                            cours: user.cours
+                        }));
+                    const dataToStore = {
+                        users: userInfos,
+                        role: result.role
+                    };
+                    localStorage.setItem("userStatus", JSON.stringify(dataToStore));
+                }
                 this.currentSelection = [];
                 this.utilisateur = [];
             } else {
