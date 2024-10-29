@@ -1,13 +1,4 @@
-import { html , render , WebComponent , customElement , attr , attrState , state, css, ViewTemplate, ViewContext, asyncAppend, repeat, children } from '@lithium-framework/core';
-import '@lithium-framework/router-element';
-import 'unofficial-pf-v5-wc';
-import 'unofficial-pf-v5-wc-icons';
-import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login';
-
-@customElement({
-  name:'login-page',
-  template: html`${(login: Login) => {
-    return html`
+var e=globalThis,o={},r={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e in o)return o[e].exports;if(e in r){var t=r[e];delete r[e];var n={id:e,exports:{}};return o[e]=n,t.call(n.exports,n,n.exports),n.exports}var l=Error("Cannot find module '"+e+"'");throw l.code="MODULE_NOT_FOUND",l}).register=function(e,o){r[e]=o},e.parcelRequirec605=t),t.register;var n=t("5D1XK");t("RKbfs"),t("5OQrz"),t("2LYUy");var l=t("7WQrb"),n=t("5D1XK");t("RKbfs"),t("5OQrz"),t("2LYUy");class i extends n.WebComponent{}i=(0,l.__decorate)([(0,n.customElement)({name:"login-page",template:(0,n.html)`${e=>(0,n.html)`
         <div class="login">
           <div class="header">
             <h1>Log in to your account</h1>
@@ -34,10 +25,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
             <span>Don't have an account ? <a href="../inscriptions">Create an account</a></span>
           </div>
         </div>
-      `
-  }}`,
-  styles: [ 
-    css`
+      `}`,styles:[(0,n.css)`
       .login{
         width: 500px;
         height: 500px;
@@ -55,7 +43,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
       .main-body {
         display: grid;
         gap: 5px;
-        width: 65%;
+        width: 60%;
       }
       .input-field {
         border: 1px solid #eff3f8;
@@ -70,8 +58,6 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
       input[type="email"]{
         border: none;
         background-color: #fafbfe;
-        width: 38ch;
-        padding: 10px 10px;
       }
       input[type="email"]::placeholder {
         color: #a2adbe;
@@ -79,8 +65,6 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
       input[type="password"]{
         border: none;
         background-color: #fafbfe;
-        width: 38ch;
-        padding: 10px 10px;
       }
       input[type="password"]:placeholder{
         color: #a2adbe;
@@ -89,16 +73,14 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
         appearance: none;
         width: 25px;
         height: 25px;
-        border: 1px solid #eff3f8;
+        border: 2px solid #eff3f8;
         border-radius: 3px;
         background-color: #fff;
         cursor: pointer;
-        margin: 0;
       }
 
       input[type="radio"]:checked {
-        background-color: #0066cc; 
-        border: 1px solid #0066cc;
+        background-color: #0066cc; /* Remplit le carré lorsqu'il est sélectionné */
       }
       label{
         color: #a2adbe;
@@ -125,16 +107,8 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
       .radio {
         display: flex;
         align-items: center;
-        gap: 10px;
-      }
-      a{
-        text-decoration: none;
-        font-weight: bold;
-      }
-    `
-  ],
-  shadowOptions: { mode: 'open' }
-})
-export class Login extends WebComponent{
-
-}
+    }
+    `],shadowOptions:{mode:"open"}})],i);let a=(0,n.html)`${e=>(0,n.html)`<login-page>
+    <h3>Hello</h3>
+  </login-page>`}`;document.addEventListener("DOMContentLoaded",()=>{let e=document.querySelector("form"),o=document.createElement("div");e?.appendChild(o),e&&e.addEventListener("submit",e=>{e.preventDefault();let r=document.querySelectorAll("input"),t=r[0].value,n=r[1].value;if(!t||!n){o.textContent="Veuillez remplir tous les champs.";return}let l={email:t,password:n};console.log(l),fetch("http://localhost:3000/connexion/",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(l)}).then(e=>{if(!e.ok)throw Error("Erreur serveur.");return e.json()}).then(e=>{if(e.length>0){for(let o of e)localStorage.setItem("first_name",o.first_name),localStorage.setItem("email",o.email),localStorage.setItem("role",o.status),localStorage.setItem("isLogged","true"),console.log("mise en mémoire dans le locale storage"+o.first_name+o.email);window.location.href="http://localhost:1234"}else o.textContent="Utilisateur non trouvé ou mot de passe incorrect.";console.log("Réponse du serveur:",e)}).catch(e=>{o.innerHTML="Vous n'êtes pas encore inscris, veuillez vous <a href='inscriptions'><strong>inscrire</string></a>",console.error("Erreur lors de la requête fetch:",e)})})}),(0,n.render)(a);
+//# sourceMappingURL=index.81896668.js.map

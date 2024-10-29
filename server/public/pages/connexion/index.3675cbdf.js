@@ -1,13 +1,4 @@
-import { html , render , WebComponent , customElement , attr , attrState , state, css, ViewTemplate, ViewContext, asyncAppend, repeat, children } from '@lithium-framework/core';
-import '@lithium-framework/router-element';
-import 'unofficial-pf-v5-wc';
-import 'unofficial-pf-v5-wc-icons';
-import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login';
-
-@customElement({
-  name:'login-page',
-  template: html`${(login: Login) => {
-    return html`
+var e=globalThis,o={},t={},r=e.parcelRequirec605;null==r&&((r=function(e){if(e in o)return o[e].exports;if(e in t){var r=t[e];delete t[e];var n={id:e,exports:{}};return o[e]=n,r.call(n.exports,n,n.exports),n.exports}var i=Error("Cannot find module '"+e+"'");throw i.code="MODULE_NOT_FOUND",i}).register=function(e,o){t[e]=o},e.parcelRequirec605=r),r.register;var n=r("5D1XK");r("RKbfs"),r("5OQrz"),r("2LYUy");var i=r("7WQrb"),n=r("5D1XK");r("RKbfs"),r("5OQrz"),r("2LYUy");class a extends n.WebComponent{}a=(0,i.__decorate)([(0,n.customElement)({name:"login-page",template:(0,n.html)`${e=>(0,n.html)`
         <div class="login">
           <div class="header">
             <h1>Log in to your account</h1>
@@ -34,10 +25,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
             <span>Don't have an account ? <a href="../inscriptions">Create an account</a></span>
           </div>
         </div>
-      `
-  }}`,
-  styles: [ 
-    css`
+      `}`,styles:[(0,n.css)`
       .login{
         width: 500px;
         height: 500px;
@@ -131,10 +119,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
         text-decoration: none;
         font-weight: bold;
       }
-    `
-  ],
-  shadowOptions: { mode: 'open' }
-})
-export class Login extends WebComponent{
-
-}
+    `],shadowOptions:{mode:"open"}})],a);let l=(0,n.html)`${e=>(0,n.html)`<login-page>
+    <h3>Hello</h3>
+  </login-page>`}`;document.addEventListener("DOMContentLoaded",()=>{let e=document.querySelector("form"),o=document.createElement("div");e?.appendChild(o),e&&e.addEventListener("submit",e=>{e.preventDefault();let t=document.querySelectorAll("input"),r=t[0].value,n=t[1].value;if(!r||!n){o.textContent="Veuillez remplir tous les champs.";return}let i={email:r,password:n};console.log(i),fetch("http://localhost:3000/connexion/",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(i)}).then(e=>{if(!e.ok)throw Error("Erreur serveur.");return e.json()}).then(e=>{if(e.length>0){for(let o of e)localStorage.setItem("first_name",o.first_name),localStorage.setItem("email",o.email),localStorage.setItem("role",o.status),localStorage.setItem("isLogged","true"),console.log("mise en mémoire dans le locale storage"+o.first_name+o.email);window.location.href="http://localhost:1234"}else o.textContent="Utilisateur non trouvé ou mot de passe incorrect.";console.log("Réponse du serveur:",e)}).catch(e=>{o.innerHTML="Vous n'êtes pas encore inscris, veuillez vous <a href='inscriptions'><strong>inscrire</string></a>",console.error("Erreur lors de la requête fetch:",e)})})}),(0,n.render)(l);
+//# sourceMappingURL=index.3675cbdf.js.map
