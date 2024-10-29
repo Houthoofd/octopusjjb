@@ -650,6 +650,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"7dAnV","@lithium-framework/router-element":"5L8xT","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["bQeHR","6WVIp"], "6WVIp", "parcelRequirec605")
+},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["bQeHR","6WVIp"], "6WVIp", "parcelRequirec605")
 
 //# sourceMappingURL=index.0b2f1b38.js.map
