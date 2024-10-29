@@ -590,7 +590,7 @@ var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 let template = (0, _core.html)`${(context)=>{
     return (0, _core.html)`
-  <pf-modal>
+  <pf-modal no-footer>
     <slot>
       <pf-login></pf-login>
     </slot>

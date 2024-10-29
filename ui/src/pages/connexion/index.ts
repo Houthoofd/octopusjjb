@@ -10,7 +10,7 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
   return html`
-  <pf-modal>
+  <pf-modal no-footer>
     <slot>
       <pf-login></pf-login>
     </slot>
