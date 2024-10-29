@@ -7,7 +7,12 @@ import 'unofficial-pf-v5-wc-icons';
 @customElement({
     name: "main-home",
     template: html`${(home: Home) => {
-        const buttons = ['Accueil', 'Horaires', 'Tarifs', 'Connexion'];
+        const buttons = [
+            {label: 'Accueil', ref: '/'},
+            {label: 'Horaires', ref: '/'},
+            {label: 'Tarifs', ref: '/'},
+            {label: 'Connexion', ref: '/pages/connexion'}
+        ];
         const schedule = [
             { day: 'Lundi', time: '19h30-21h15' },
             { day: 'jeudi', time: '19h30-21h15' },
@@ -26,7 +31,7 @@ import 'unofficial-pf-v5-wc-icons';
                     <div class="logo"></div>
                 </div>
                 <pf-action-list>
-                    ${repeat(buttons, html`${(button) => {return html`<pf-action-list><pf-button>${button}</pf-button></pf-action-list>`}}`)}
+                    ${repeat(buttons, html`${(button) => {return html`<pf-action-list><pf-button><a href=${button.ref}>${button.label}</a></pf-button></pf-action-list>`}}`)}
                 </pf-action-list>
             </pf-masthead>
 

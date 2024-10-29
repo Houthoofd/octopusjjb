@@ -602,10 +602,22 @@ Home = (0, _tsDecorate._)([
         name: "main-home",
         template: (0, _core.html)`${(home)=>{
             const buttons = [
-                "Accueil",
-                "Horaires",
-                "Tarifs",
-                "Connexion"
+                {
+                    label: "Accueil",
+                    ref: "/"
+                },
+                {
+                    label: "Horaires",
+                    ref: "/"
+                },
+                {
+                    label: "Tarifs",
+                    ref: "/"
+                },
+                {
+                    label: "Connexion",
+                    ref: "/pages/connexion"
+                }
             ];
             const schedule = [
                 {
@@ -649,7 +661,7 @@ Home = (0, _tsDecorate._)([
                 </div>
                 <pf-action-list>
                     ${(0, _core.repeat)(buttons, (0, _core.html)`${(button)=>{
-                return (0, _core.html)`<pf-action-list><pf-button>${button}</pf-button></pf-action-list>`;
+                return (0, _core.html)`<pf-action-list><pf-button><a href=${button.ref}>${button.label}</a></pf-button></pf-action-list>`;
             }}`)}
                 </pf-action-list>
             </pf-masthead>
