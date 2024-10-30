@@ -588,36 +588,339 @@ var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+var _components = require("../../components");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<div class='Sign-in'>
-          <h1>Inscription</h1>
-          <form class='Sign-form'>
-              <div class='input-fields'>
-                  <label for="email">E-mail</label>
-                  <input type="email">
-              </div>
-              <div class='input-fields'>
-                  <label for="password">Mot de passe</label>
-                  <input type="password">
-              </div>
-              <div class='input-fields'>
-                  <label for="Date_naissance">Date de naissance</label>
-                  <input type="date">
-              </div>
-              <div class='input-fields'>
-                  <label for="prénom">Prénom</label>
-                  <input type="text">
-              </div>µ
-              <div class='input-fields'>
-                  <label for="nom">Nom</label>
-                  <input type="text">
-              </div>
-              <button type="submit">Inscription</button>
-          </form>
-      </div>`;
+    return (0, _core.html)`<inscription-page></inscription-page>`;
 }}`;
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["kHMg9","1XyRs"], "1XyRs", "parcelRequirec605")
+},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE"}],"HH6XE":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Login", ()=>(0, _login1.Login));
+parcelHelpers.export(exports, "Inscription", ()=>(0, _inscription1.Inscription));
+var _login = require("./login");
+var _inscription = require("./inscription");
+var _login1 = require("./login/login");
+var _inscription1 = require("./inscription/inscription");
+
+},{"./login":"5oa14","./inscription":"18JMv","./login/login":"2p6U7","./inscription/inscription":"hpzNP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5oa14":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _login = require("./login");
+parcelHelpers.exportAll(_login, exports);
+
+},{"./login":"2p6U7","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2p6U7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Login", ()=>Login);
+var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
+var _core = require("@lithium-framework/core");
+var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+class Login extends (0, _core.WebComponent) {
+}
+Login = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "login-page",
+        template: (0, _core.html)`${(login)=>{
+            return (0, _core.html)`
+        <div class="login">
+          <div class="header">
+            <h1>Log in to your account</h1>
+          </div>
+          <div class="main-body">
+            <div class="input-field">
+              <pf-icons-envelope></pf-icons-envelope>
+              <input type="email" placeholder="Email">
+            </div>
+            <div class="input-field">
+              <pf-icons-lock></pf-icons-lock class="icon">
+              <input type="password" placeholder="Password">
+            </div>
+            <button class="button-login">Log in</button>
+          </div>
+          <div class="remember-password">
+            <div class="radio">
+              <input type="radio">
+              <label for="remember me">Remember me</label>
+            </div>
+            <a href="#">Forgot password ?</a>
+          </div>
+          <div class="footer">
+            <span>Don't have an account ? <a href="../inscriptions">Create an account</a></span>
+          </div>
+        </div>
+      `;
+        }}`,
+        styles: [
+            (0, _core.css)`
+      .login{
+        width: 500px;
+        height: 500px;
+        background-color: #ffffff;
+        position: absolute;
+        top: 25%;
+        left: 15%;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 7%;
+      }
+      .main-body {
+        display: grid;
+        gap: 5px;
+        width: 65%;
+      }
+      .input-field {
+        border: 1px solid #eff3f8;
+        padding: 10px 10px;
+        border-radius: 3px;
+        background-color: #fafbfe;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+      input[type="email"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="email"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="password"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="password"]:placeholder{
+        color: #a2adbe;
+      }
+      input[type="radio"] {
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border: 1px solid #eff3f8;
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      input[type="radio"]:checked {
+        background-color: #0066cc; 
+        border: 1px solid #0066cc;
+      }
+      label{
+        color: #a2adbe;
+      }
+      .button-login {
+        background-color: #0066cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        border: none;
+        font-size: 18px;
+        color: #ffffff;
+      }
+      .button-login:hover{
+        background-color: #004080;
+      }
+      .remember-password {
+        display: flex;
+        gap: 50px;
+      }
+      .radio {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      a{
+        text-decoration: none;
+        font-weight: bold;
+      }
+    `
+        ],
+        shadowOptions: {
+            mode: "open"
+        }
+    })
+], Login);
+
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"18JMv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _inscription = require("./inscription");
+parcelHelpers.exportAll(_inscription, exports);
+
+},{"./inscription":"hpzNP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hpzNP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Inscription", ()=>Inscription);
+var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
+var _core = require("@lithium-framework/core");
+var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+class Inscription extends (0, _core.WebComponent) {
+}
+Inscription = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "inscription-page",
+        template: (0, _core.html)`${(inscription)=>{
+            return (0, _core.html)`
+      <div class="register">
+          <div class="header">
+            <h1>Create a new account</h1>
+          </div>
+          <div class="main-body">
+            <div class='input-field'>
+              <input type="email" placeholder="Email">
+            </div>
+            <div class='input-field'>
+              <input type="password" placeholder="Password">
+            </div>
+            <div class='input-field'>
+              <input type="date" placeholder="date">
+            </div>
+            <div class='input-field'>
+              <input type="text" placeholder="Prénom">
+            </div>
+            <div class='input-field'>
+              <input type="text" placeholder="Nom">
+            </div>
+            <button class="button-register" type="submit">Inscription</button>
+          </div>
+
+          <div class="footer">
+            <span>Already have an account ? <a href="../connexion">Log in</a></span>
+          </div>
+        </div>
+    `;
+        }}`,
+        styles: [
+            (0, _core.css)`
+      .register{
+        width: 500px;
+        height: 570px;
+        background-color: #ffffff;
+        position: absolute;
+        top: 25%;
+        left: 15%;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 7%;
+        border-radius: 3px;
+      }
+      .main-body {
+        display: grid;
+        gap: 5px;
+        width: 65%;
+      }
+      .input-field {
+        border: 1px solid #eff3f8;
+        padding: 10px 10px;
+        border-radius: 3px;
+        background-color: #fafbfe;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+      input[type="email"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="email"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="date"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="date"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="text"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="text"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="password"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="password"]:placeholder{
+        color: #a2adbe;
+      }
+      input[type="radio"] {
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border: 1px solid #eff3f8;
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      input[type="radio"]:checked {
+        background-color: #0066cc; 
+        border: 1px solid #0066cc;
+      }
+      label{
+        color: #a2adbe;
+      }
+      .button-register {
+        background-color: #0066cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        border: none;
+        font-size: 18px;
+        color: #ffffff;
+      }
+      .button-register:hover{
+        background-color: #004080;
+      }
+      a{
+        text-decoration: none;
+        font-weight: bold;
+      }
+    `
+        ],
+        shadowOptions: {
+            mode: "open"
+        }
+    })
+], Inscription);
+
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["kHMg9","1XyRs"], "1XyRs", "parcelRequirec605")
 
 //# sourceMappingURL=index.27cc329f.js.map
