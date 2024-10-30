@@ -11,7 +11,8 @@
         "ui/src/pages/informations/index.html",
         "ui/src/pages/inscriptions/index.html",
         "ui/src/pages/connexion/index.html",
-        "ui/src/pages/cours/index.html"
+        "ui/src/pages/cours/index.html",
+        "ui/src/pages/password/index.html"
       ],
       "distDir": "server/public"
     },
@@ -25,7 +26,7 @@
     "start": "node server/dist/index.js",
     "build": "parcel build --no-cache",
     "watch": "parcel watch --no-cache",
-    "dev": "concurrently \"npm run build\" \"parcel serve --target frontend --no-cache\" \"nodemon server/dist/index.js\""
+    "dev": "concurrently \"npm run build\" \"parcel serve --target frontend --no-cache --port 1234\" \"parcel watch --target backend --no-cache --port 8080\" \"nodemon server/dist/index.js\""
   },
   "keywords": [],
   "author": "",

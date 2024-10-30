@@ -599,12 +599,15 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Login", ()=>(0, _login1.Login));
 parcelHelpers.export(exports, "Inscription", ()=>(0, _inscription1.Inscription));
+parcelHelpers.export(exports, "NewPassword", ()=>(0, _password1.NewPassword));
 var _login = require("./login");
 var _inscription = require("./inscription");
+var _password = require("./password");
 var _login1 = require("./login/login");
 var _inscription1 = require("./inscription/inscription");
+var _password1 = require("./password/password");
 
-},{"./login":"5oa14","./inscription":"18JMv","./login/login":"2p6U7","./inscription/inscription":"hpzNP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5oa14":[function(require,module,exports) {
+},{"./login":"5oa14","./inscription":"18JMv","./password":"3LFGP","./login/login":"2p6U7","./inscription/inscription":"hpzNP","./password/password":"lVhP0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5oa14":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _login = require("./login");
@@ -646,7 +649,7 @@ Login = (0, _tsDecorate._)([
               <input type="radio">
               <label for="remember me">Remember me</label>
             </div>
-            <a href="#">Forgot password ?</a>
+            <a href="../password">Forgot password ?</a>
           </div>
           <div class="footer">
             <span>Don't have an account ? <a href="../inscriptions">Create an account</a></span>
@@ -920,6 +923,149 @@ Inscription = (0, _tsDecorate._)([
         }
     })
 ], Inscription);
+
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3LFGP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _password = require("./password");
+parcelHelpers.exportAll(_password, exports);
+
+},{"./password":"lVhP0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lVhP0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "NewPassword", ()=>NewPassword);
+var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
+var _core = require("@lithium-framework/core");
+var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+class NewPassword extends (0, _core.WebComponent) {
+}
+NewPassword = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "new-password-page",
+        template: (0, _core.html)`${(newPassword)=>{
+            return (0, _core.html)`
+        <div class="login">
+          <div class="header">
+            <h1>Change your password</h1>
+          </div>
+          <div class="main-body">
+            <div class="input-field">
+              <pf-icons-envelope></pf-icons-envelope>
+              <input type="email" placeholder="Email">
+            </div>
+            <div class="input-field">
+              <pf-icons-lock></pf-icons-lock class="icon">
+              <input type="password" placeholder="Password">
+            </div>
+            <button class="button-login">Save change</button>
+          </div>
+        </div>
+      `;
+        }}`,
+        styles: [
+            (0, _core.css)`
+      .login{
+        width: 500px;
+        height: 500px;
+        background-color: #ffffff;
+        position: absolute;
+        top: 25%;
+        left: 15%;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 7%;
+      }
+      .main-body {
+        display: grid;
+        gap: 5px;
+        width: 65%;
+      }
+      .input-field {
+        border: 1px solid #eff3f8;
+        padding: 10px 10px;
+        border-radius: 3px;
+        background-color: #fafbfe;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+      input[type="email"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="email"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="password"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="password"]:placeholder{
+        color: #a2adbe;
+      }
+      input[type="radio"] {
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border: 1px solid #eff3f8;
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: pointer;
+        margin: 0;
+      }
+
+      input[type="radio"]:checked {
+        background-color: #0066cc; 
+        border: 1px solid #0066cc;
+      }
+      label{
+        color: #a2adbe;
+      }
+      .button-login {
+        background-color: #0066cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        border: none;
+        font-size: 18px;
+        color: #ffffff;
+      }
+      .button-login:hover{
+        background-color: #004080;
+      }
+      .remember-password {
+        display: flex;
+        gap: 50px;
+      }
+      .radio {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      a{
+        text-decoration: none;
+        font-weight: bold;
+      }
+    `
+        ],
+        shadowOptions: {
+            mode: "open"
+        }
+    })
+], NewPassword);
 
 },{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["kHMg9","1XyRs"], "1XyRs", "parcelRequirec605")
 

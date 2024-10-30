@@ -142,14 +142,14 @@
       this[globalName] = mainExports;
     }
   }
-})({"1UYOq":[function(require,module,exports) {
+})({"8kEjH":[function(require,module,exports) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d6ea1d42532a7575";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "44caa142d30d5b6f";
+module.bundle.HMR_BUNDLE_ID = "aeeef6e80ba2f4f8";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -583,62 +583,15 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     });
 }
 
-},{}],"bAY0y":[function(require,module,exports) {
+},{}],"2NvnX":[function(require,module,exports) {
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 var _components = require("../../components");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<login-page>
-    <h3>Hello</h3>
-  </login-page>`;
+    return (0, _core.html)`<new-password-page></new-password-page>`;
 }}`;
-document.addEventListener("DOMContentLoaded", ()=>{
-    const form = document.querySelector("form");
-    const messageContainer = document.createElement("div");
-    form?.appendChild(messageContainer);
-    if (form) form.addEventListener("submit", (e)=>{
-        e.preventDefault();
-        const inputs = document.querySelectorAll("input");
-        const email = inputs[0].value;
-        const password = inputs[1].value;
-        if (!email || !password) {
-            messageContainer.textContent = "Veuillez remplir tous les champs.";
-            return;
-        }
-        const data = {
-            email,
-            password
-        };
-        console.log(data);
-        fetch("http://localhost:3000/connexion/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        }).then((response)=>{
-            if (!response.ok) throw new Error("Erreur serveur.");
-            return response.json();
-        }).then((data)=>{
-            if (data.length > 0) {
-                for (let item of data){
-                    localStorage.setItem("first_name", item.first_name);
-                    localStorage.setItem("email", item.email);
-                    localStorage.setItem("role", item.status);
-                    localStorage.setItem("isLogged", "true");
-                    console.log("mise en m\xe9moire dans le locale storage" + item.first_name + item.email);
-                }
-                window.location.href = "http://localhost:1234";
-            } else messageContainer.textContent = "Utilisateur non trouv\xe9 ou mot de passe incorrect.";
-            console.log("R\xe9ponse du serveur:", data);
-        }).catch((error)=>{
-            messageContainer.innerHTML = "Vous n'\xeates pas encore inscris, veuillez vous <a href='inscriptions'><strong>inscrire</string></a>";
-            console.error("Erreur lors de la requ\xeate fetch:", error);
-        });
-    });
-});
 (0, _core.render)(template);
 
 },{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE"}],"HH6XE":[function(require,module,exports) {
@@ -1114,6 +1067,6 @@ NewPassword = (0, _tsDecorate._)([
     })
 ], NewPassword);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1UYOq","bAY0y"], "bAY0y", "parcelRequirec605")
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8kEjH","2NvnX"], "2NvnX", "parcelRequirec605")
 
-//# sourceMappingURL=index.d30d5b6f.js.map
+//# sourceMappingURL=index.0ba2f4f8.js.map

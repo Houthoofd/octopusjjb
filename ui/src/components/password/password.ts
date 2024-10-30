@@ -5,12 +5,12 @@ import 'unofficial-pf-v5-wc-icons';
 import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login';
 
 @customElement({
-  name:'login-page',
-  template: html`${(login: Login) => {
+  name:'new-password-page',
+  template: html`${(newPassword: NewPassword) => {
     return html`
         <div class="login">
           <div class="header">
-            <h1>Log in to your account</h1>
+            <h1>Change your password</h1>
           </div>
           <div class="main-body">
             <div class="input-field">
@@ -21,17 +21,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
               <pf-icons-lock></pf-icons-lock class="icon">
               <input type="password" placeholder="Password">
             </div>
-            <button class="button-login">Log in</button>
-          </div>
-          <div class="remember-password">
-            <div class="radio">
-              <input type="radio">
-              <label for="remember me">Remember me</label>
-            </div>
-            <a href="../password">Forgot password ?</a>
-          </div>
-          <div class="footer">
-            <span>Don't have an account ? <a href="../inscriptions">Create an account</a></span>
+            <button class="button-login">Save change</button>
           </div>
         </div>
       `
@@ -135,6 +125,6 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
   ],
   shadowOptions: { mode: 'open' }
 })
-export class Login extends WebComponent{
+export class NewPassword extends WebComponent{
 
 }

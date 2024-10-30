@@ -9,6 +9,7 @@ import { default as connexionRouter } from './connexion';
 import { default as coursRouter } from './cours';
 import { default as inscriptionsCoursRouter } from './inscriptions';
 import { default as inscriptionsCoursEssaiesRouter } from './reservations';
+import { default as newPasswordRouter } from './new-password';
 
 // Routes principales
 router.use('/users', usersRouter);
@@ -17,5 +18,10 @@ router.use('/connexion', connexionRouter);
 router.use('/cours', coursRouter);
 router.use('/inscriptions', inscriptionsCoursRouter);
 router.use('/reservations', inscriptionsCoursEssaiesRouter);
+router.use('/password', newPasswordRouter);
+
+
+
+
 
 export default router;

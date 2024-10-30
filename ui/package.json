@@ -7,7 +7,8 @@
     "src/pages/profile/index.html",
     "src/pages/compte/index.html",
     "src/pages/inscriptions/index.html",
-    "src/pages/informations/index.html"
+    "src/pages/informations/index.html",
+    "src/pages/password/index.html"
   ],
   "scripts": {
     "clean": "rmdir /s /q dist ; rmdir /s /q .parcel-cache",
