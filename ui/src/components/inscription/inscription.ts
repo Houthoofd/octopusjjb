@@ -8,33 +8,70 @@ import 'unofficial-pf-v5-wc-icons';
   template: html`${(inscription: Inscription) => {
     return html`
       <div class="register">
-          <div class="header">
-            <h1>Create a new account</h1>
-          </div>
-          <div class="main-body">
-            <div class='input-field'>
-              <input type="email" placeholder="Email">
-            </div>
-            <div class='input-field'>
-              <input type="password" placeholder="Password">
-            </div>
-            <div class='input-field'>
-              <input type="date" placeholder="date">
-            </div>
-            <div class='input-field'>
-              <input type="text" placeholder="Prénom">
-            </div>
-            <div class='input-field'>
-              <input type="text" placeholder="Nom">
-            </div>
-            <button class="button-register" type="submit">Inscription</button>
+        <div class="header">
+          <h1>Create a new account</h1>
+        </div>
+        <div class="main-body">
+          
+          <div class='input-field'>
+            <input type="email" placeholder="Email" 
+              @input="${inscription.handleEmailInput}"
+              required>
+            ${inscription.isEmailValid ? '' : html`<p class="error">Invalid email address</p>`}
           </div>
 
-          <div class="footer">
-            <span>Already have an account ? <a href="../connexion">Log in</a></span>
+      
+          <div class='input-field'>
+            <input type="password" placeholder="Password" 
+              @input="${inscription.handlePasswordInput}"
+              required minlength="6"
+              pattern="^(?=.*[!@#$%^&*(),.?\:{}|<>])[A-Za-z\d@$!%*?&]{6,}$">
+            <div class="password-strength">
+              <div class="strength-bar" style="width: ${inscription.passwordStrength}%"></div>
+            </div>
+            ${inscription.isPasswordValid ? '' : html`<p class="error">Password must contain at least 6 characters, including a special character</p>`}
           </div>
+
+        
+          <div class='input-field'>
+            <input type="password" placeholder="Confirm Password" 
+              @input="${inscription.handleConfirmPasswordInput}"
+              required>
+            ${inscription.doPasswordsMatch ? '' : html`<p class="error">Passwords do not match</p>`}
+          </div>
+
+         
+          <div class='input-field'>
+            <input type="date" placeholder="Date of Birth" 
+              @input="${inscription.handleDateInput}"
+              required>
+          </div>
+
+          
+          <div class='input-field'>
+            <input type="text" placeholder="Prénom" 
+              @input="${inscription.handleFirstNameInput}" 
+              required>
+          </div>
+
+          
+          <div class='input-field'>
+            <input type="text" placeholder="Nom" 
+              @input="${inscription.handleLastNameInput}" 
+              required>
+          </div>
+
+          
+          <button class="button-register" type="submit" 
+            @click="${inscription.handleSubmit}"
+            ?disabled="${!inscription.isFormValid}">Inscription</button>
         </div>
-    `
+
+        <div class="footer">
+          <span>Already have an account? <a href="../connexion">Log in</a></span>
+        </div>
+      </div>
+    `;
   }}`,
   styles: [ 
     css`
@@ -141,10 +178,104 @@ import 'unofficial-pf-v5-wc-icons';
         text-decoration: none;
         font-weight: bold;
       }
+      .error {
+        color: red;
+        font-size: 12px;
+      }
+      .password-strength {
+        height: 8px;
+        background-color: #e0e0e0;
+        margin-top: 5px;
+        border-radius: 4px;
+      }
+      .strength-bar {
+        height: 100%;
+        background-color: #76c7c0;
+        border-radius: 4px;
+        transition: width 0.3s ease-in-out;
+      }
     `
   ],
   shadowOptions: { mode: 'open' }
 })
-export class Inscription extends WebComponent{
+export class Inscription extends WebComponent {
+  @state() isEmailValid: boolean = true;
+  @state() isPasswordValid: boolean = true;
+  @state() doPasswordsMatch: boolean = true;
+  @state() isFormValid: boolean = false;
+  @state() passwordStrength: number = 0;
 
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  firstName: string = '';
+  lastName: string = '';
+  birthDate: string = '';
+
+  handleEmailInput(event: InputEvent) {
+    //const input = event.target as HTMLInputElement;
+    //this.email = input.value;
+    //this.isEmailValid = this.email.includes('@');
+    //this.checkFormValidity();
+  }
+
+  handlePasswordInput(event: InputEvent) {
+    //const input = event.target as HTMLInputElement;
+    //this.password = input.value;
+    //this.isPasswordValid = input.validity.valid;
+    //this.updatePasswordStrength();
+    //this.checkFormValidity();
+  }
+
+  handleConfirmPasswordInput(event: InputEvent) {
+    // const input = event.target as HTMLInputElement;
+    // this.confirmPassword = input.value;
+    // this.doPasswordsMatch = this.password === this.confirmPassword;
+    // this.checkFormValidity();
+  }
+
+  handleFirstNameInput(event: InputEvent) {
+    // const input = event.target as HTMLInputElement;
+    // this.firstName = input.value;
+    // this.checkFormValidity();
+  }
+
+  handleLastNameInput(event: InputEvent) {
+    // const input = event.target as HTMLInputElement;
+    // this.lastName = input.value;
+    // this.checkFormValidity();
+  }
+
+  handleDateInput(event: InputEvent) {
+    // const input = event.target as HTMLInputElement;
+    // this.birthDate = input.value;
+    // this.checkFormValidity();
+  }
+
+  updatePasswordStrength() {
+    // let strength = 0;
+    // if (this.password.length >= 6) strength += 20;
+    // if (/[A-Z]/.test(this.password)) strength += 20;
+    // if (/[0-9]/.test(this.password)) strength += 20;
+    // if (/[^A-Za-z0-9]/.test(this.password)) strength += 20;
+    // if (this.password.length >= 10) strength += 20;
+    // this.passwordStrength = strength;
+  }
+
+  checkFormValidity() {
+    // this.isFormValid = this.isEmailValid && this.isPasswordValid && this.doPasswordsMatch && this.firstName !== '' && this.lastName !== '' && this.birthDate !== '';
+  }
+
+  handleSubmit() {
+    // if (this.isFormValid) {
+    //   console.log('Form submitted', {
+    //     email: this.email,
+    //     password: this.password,
+    //     firstName: this.firstName,
+    //     lastName: this.lastName,
+    //     birthDate: this.birthDate
+    //   });
+      
+    // }
+  }
 }

@@ -5,36 +5,59 @@ import 'unofficial-pf-v5-wc-icons';
 import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login';
 
 @customElement({
-  name:'login-page',
+  name: 'login-page',
   template: html`${(login: Login) => {
     return html`
-        <div class="login">
-          <div class="header">
-            <h1>Log in to your account</h1>
-          </div>
-          <div class="main-body">
-            <div class="input-field">
-              <pf-icons-envelope></pf-icons-envelope>
-              <input type="email" placeholder="Email">
-            </div>
-            <div class="input-field">
-              <pf-icons-lock></pf-icons-lock class="icon">
-              <input type="password" placeholder="Password">
-            </div>
-            <button class="button-login">Log in</button>
-          </div>
-          <div class="remember-password">
-            <div class="radio">
-              <input type="radio">
-              <label for="remember me">Remember me</label>
-            </div>
-            <a href="../password">Forgot password ?</a>
-          </div>
-          <div class="footer">
-            <span>Don't have an account ? <a href="../inscriptions">Create an account</a></span>
-          </div>
+      <div class="login">
+        <div class="header">
+          <h1>Log in to your account</h1>
         </div>
-      `
+        <div class="main-body">
+          <div class="input-field">
+            <pf-icons-envelope></pf-icons-envelope>
+            <input 
+              type="email" 
+              placeholder="Email" 
+              @input="${(login) => login.handleEmailInput()}" 
+              value="${login.email}"
+            >
+          </div>
+          <div class="input-field">
+            <pf-icons-lock></pf-icons-lock>
+            <input 
+              type="password" 
+              placeholder="Password" 
+              @input="${(login) => login.handlePasswordInput()}" 
+              value="${login.password}"
+            >
+          </div>
+          <button 
+            class="button-login" 
+            ?disabled="${!login.isFormValid}"
+            @click="${() => login.handleLogin()}"
+          >
+            Log in
+          </button>
+        </div>
+        <div class="remember-password">
+          <div class="radio">
+            <input 
+              type="radio" 
+              @change="${() => login.toggleRememberMe()}" 
+              ?checked="${login.rememberMe}"
+            >
+            <label for="remember me">Remember me</label>
+          </div>
+          <a href="../password">Forgot password?</a>
+        </div>
+        <div class="footer">
+          <span>Don't have an account? <a href="../inscriptions">Create an account</a></span>
+        </div>
+        ${login.errorMessage 
+          ? html`<div class="error-message">${login.errorMessage}</div>` 
+          : ''}
+      </div>
+    `;
   }}`,
   styles: [ 
     css`
@@ -51,6 +74,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
         justify-content: center;
         align-items: center;
         gap: 7%;
+        border-radius: 5px;
       }
       .main-body {
         display: grid;
@@ -135,6 +159,58 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
   ],
   shadowOptions: { mode: 'open' }
 })
-export class Login extends WebComponent{
+export class Login extends WebComponent {
+  
 
+  @state() email: string = '';
+  @state() password: string = '';
+  @state() rememberMe: boolean = false;
+  @state() isFormValid: boolean = false;
+  @state() errorMessage: string | null = null;
+
+  @state() isCustom: boolean = false;
+
+  attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
+    
+
+    super.attributeChangedCallback(name, oldValue, newValue);
+  }
+
+  handleEmailInput(login) {
+    const inputs = this.shadowRoot?.querySelectorAll('input');
+    const emailValue = inputs?.[0].value || '';
+    //const input = event.target as HTMLInputElement;
+    //console.log(input)
+    //this.email = input.value;
+    //this.validateForm();
+  }
+
+  handlePasswordInput(login) {
+    const inputs = this.shadowRoot?.querySelectorAll('input');
+    const password = inputs?.[1].value || '';
+    console.log(password)
+    //const input = event.target as HTMLInputElement;
+    //console.log(input)
+    //this.password = input.value;
+    //this.validateForm();
+  }
+
+  validateForm() {
+    this.isFormValid = this.email !== '' && this.password !== '';
+    this.errorMessage = this.isFormValid ? null : 'Please enter both email and password.';
+  }
+
+  handleLogin() {
+    if (this.isFormValid) {
+      console.log('Login successful');
+      this.errorMessage = null;
+
+    } else {
+      this.errorMessage = 'Please fill in all fields.';
+    }
+  }
+
+  toggleRememberMe() {
+    this.rememberMe = !this.rememberMe;
+  }
 }
