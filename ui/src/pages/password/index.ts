@@ -10,7 +10,15 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
 
-  return html`<new-password-page></new-password-page>`;
+  return html`<new-password-page>
+
+  </new-password-page>
+  <notification-box success="true">
+    <slot>
+      <h3>Vous êtes inscris</h3>
+    </slot>
+  </notification-box>
+  `;
 }}`
 
 

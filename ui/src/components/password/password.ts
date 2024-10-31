@@ -14,11 +14,9 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
           </div>
           <div class="main-body">
             <div class="input-field">
-              <pf-icons-envelope></pf-icons-envelope>
               <input type="email" placeholder="Email">
             </div>
             <div class="input-field">
-              <pf-icons-lock></pf-icons-lock class="icon">
               <input type="password" placeholder="Password">
             </div>
             <button class="button-login">Save change</button>

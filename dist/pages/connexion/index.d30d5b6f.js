@@ -647,14 +647,17 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Login", ()=>(0, _login1.Login));
 parcelHelpers.export(exports, "Inscription", ()=>(0, _inscription1.Inscription));
 parcelHelpers.export(exports, "NewPassword", ()=>(0, _password1.NewPassword));
+parcelHelpers.export(exports, "Notification", ()=>(0, _notification1.Notification));
 var _login = require("./login");
 var _inscription = require("./inscription");
 var _password = require("./password");
+var _notification = require("./notification");
 var _login1 = require("./login/login");
 var _inscription1 = require("./inscription/inscription");
 var _password1 = require("./password/password");
+var _notification1 = require("./notification/notification");
 
-},{"./login":"5oa14","./inscription":"18JMv","./password":"3LFGP","./login/login":"2p6U7","./inscription/inscription":"hpzNP","./password/password":"lVhP0","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5oa14":[function(require,module,exports) {
+},{"./login":"5oa14","./inscription":"18JMv","./password":"3LFGP","./notification":"4uMQr","./login/login":"2p6U7","./inscription/inscription":"hpzNP","./password/password":"lVhP0","./notification/notification":"7Dep4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5oa14":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _login = require("./login");
@@ -999,11 +1002,9 @@ NewPassword = (0, _tsDecorate._)([
           </div>
           <div class="main-body">
             <div class="input-field">
-              <pf-icons-envelope></pf-icons-envelope>
               <input type="email" placeholder="Email">
             </div>
             <div class="input-field">
-              <pf-icons-lock></pf-icons-lock class="icon">
               <input type="password" placeholder="Password">
             </div>
             <button class="button-login">Save change</button>
@@ -1113,6 +1114,151 @@ NewPassword = (0, _tsDecorate._)([
         }
     })
 ], NewPassword);
+
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4uMQr":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _notification = require("./notification");
+parcelHelpers.exportAll(_notification, exports);
+
+},{"./notification":"7Dep4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7Dep4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Notification", ()=>Notification);
+var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
+var _core = require("@lithium-framework/core");
+var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
+var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+class Notification extends (0, _core.WebComponent) {
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === "custom") this.isCustom = newValue === "true";
+        if (name === "info") this.isInfo = newValue === "true";
+        if (name === "success") this.isSuccess = newValue === "true";
+        if (name === "warning") this.isWarning = newValue === "true";
+        if (name === "danger") this.isDanger = newValue === "true";
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    constructor(...args){
+        super(...args);
+        this.custom = null;
+        this.info = null;
+        this.success = null;
+        this.warning = null;
+        this.danger = null;
+        this.isCustom = false;
+        this.isInfo = false;
+        this.isSuccess = false;
+        this.isWarning = false;
+        this.isDanger = false;
+    }
+}
+(0, _tsDecorate._)([
+    (0, _core.attr)()
+], Notification.prototype, "custom", void 0);
+(0, _tsDecorate._)([
+    (0, _core.attr)()
+], Notification.prototype, "info", void 0);
+(0, _tsDecorate._)([
+    (0, _core.attr)()
+], Notification.prototype, "success", void 0);
+(0, _tsDecorate._)([
+    (0, _core.attr)()
+], Notification.prototype, "warning", void 0);
+(0, _tsDecorate._)([
+    (0, _core.attr)()
+], Notification.prototype, "danger", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Notification.prototype, "isCustom", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Notification.prototype, "isInfo", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Notification.prototype, "isSuccess", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Notification.prototype, "isWarning", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Notification.prototype, "isDanger", void 0);
+Notification = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "notification-box",
+        template: (0, _core.html)`${(notification)=>{
+            return (0, _core.html)`
+      <div class="${[
+                "notification",
+                notification.isCustom ? "-custom" : "",
+                notification.isInfo ? "-info" : "",
+                notification.isSuccess ? "-success" : "",
+                notification.isWarning ? "-warning" : "",
+                notification.isDanger ? "-danger" : ""
+            ].join("")}">
+        <div class="icon">
+          ${notification.isCustom ? (0, _core.html)`<pf-icons-bell></pf-icons-bell>` : ""}
+          ${notification.isInfo ? (0, _core.html)`<pf-icons-info-circle></pf-icons-info-circle>` : ""}
+          ${notification.isSuccess ? (0, _core.html)`<pf-icons-check-circle></pf-icons-check-circle>` : ""}
+          ${notification.isWarning ? (0, _core.html)`<pf-icons-exclamation-triangle></pf-icons-exclamation-triangle>` : ""}
+          ${notification.isDanger ? (0, _core.html)`<pf-icons-exclamation-circle></pf-icons-exclamation-circle>` : ""}
+        </div>
+        <div class="main-body">
+          <div class="title">
+            ${notification.isCustom ? (0, _core.html)`<pf-icons-bell></pf-icons-bell>` : ""}
+            ${notification.isInfo ? (0, _core.html)`<h3>Information</h3>` : ""}
+            ${notification.isSuccess ? (0, _core.html)`<h3>Success</h3>` : ""}
+            ${notification.isWarning ? (0, _core.html)`<h3>Warning</h3>` : ""}
+            ${notification.isDanger ? (0, _core.html)`<h3>Danger</h3>` : ""}
+          </div>
+          <span class="custom-text">
+            <slot></slot>
+          </span>
+        </div>
+        <div class="toggle-close">
+          <pf-icons-times></pf-icons-times>
+        </div>
+      </div>
+    `;
+        }}`,
+        styles: [
+            (0, _core.css)`
+      .notification-success{
+        width: 300px;
+        background-color: #ffffff;
+        position: fixed;
+        top: 0;
+        right: 0;
+        margin-top: 10px;
+        margin-right: 10px;
+        padding: 10px 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        color: #3e8635;
+      }
+      .layer-success {
+        width: 5%;
+        background-color: #4CAF50;
+        border-radius: 3px;
+      }
+      .main-body{
+        
+      }
+      .toggle-close{
+        color: #9E9E9E;
+        cursor: pointer;
+      }
+      .icon {
+        transform: translateY(2px);
+      }
+    `
+        ],
+        shadowOptions: {
+            mode: "open"
+        }
+    })
+], Notification);
 
 },{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["1UYOq","bAY0y"], "bAY0y", "parcelRequirec605")
 
