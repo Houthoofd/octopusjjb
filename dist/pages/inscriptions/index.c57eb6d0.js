@@ -929,7 +929,22 @@ class Inscription extends (0, _core.WebComponent) {
         this.lastName = lastName;
     }
     checkValidity() {
-        console.log(this.email, this.password, this.confPassword, this.date, this.firstName, this.lastName);
+        const formData = {};
+        // Vérifier chaque propriété et l'ajouter à l'objet si elle est définie
+        if (this.email) formData.email = this.email;
+        else console.log("L'email est manquant.");
+        if (this.password) formData.password = this.password;
+        else console.log("Le mot de passe est manquant.");
+        if (this.date) formData.date = this.date;
+        else console.log("La date est manquante.");
+        if (this.firstName) formData.firstName = this.firstName;
+        else console.log("Le pr\xe9nom est manquant.");
+        if (this.lastName) formData.lastName = this.lastName;
+        else console.log("Le nom de famille est manquant.");
+        // Afficher l'objet dans la console pour vérification
+        console.log("Donn\xe9es du formulaire valides:", formData);
+        // Vous pouvez renvoyer l'objet pour une utilisation ultérieure
+        return formData;
     }
     constructor(...args){
         super(...args);
