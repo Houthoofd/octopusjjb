@@ -850,93 +850,121 @@ var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 class Inscription extends (0, _core.WebComponent) {
-    handleEmailInput(event) {
-    //const input = event.target as HTMLInputElement;
-    //this.email = input.value;
-    //this.isEmailValid = this.email.includes('@');
+    handleEmailBlur() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const emailInput = inputs?.[0];
+        const email = emailInput.value || "";
+        if (!email.includes("@")) {
+            console.log('L\'email doit contenir le caract\xe8re "@"');
+            this.isEmailValid = false;
+        } else {
+            console.log("Email valide");
+            this.isEmailValid = true;
+            this.email = email;
+            console.log(this.email);
+        }
     //this.checkFormValidity();
     }
-    handlePasswordInput(event) {
-    //const input = event.target as HTMLInputElement;
-    //this.password = input.value;
-    //this.isPasswordValid = input.validity.valid;
-    //this.updatePasswordStrength();
-    //this.checkFormValidity();
+    handlePasswordBlur() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const passwordInput = inputs?.[1];
+        const password = passwordInput.value || "";
+        const errorMessage = this.CheckStrength(password);
+        if (errorMessage) {
+            console.log(errorMessage);
+            this.isPasswordValid = false;
+        } else {
+            console.log("Mot de passe valide");
+            this.isPasswordValid = true;
+            this.password = password;
+            console.log(this.password);
+        }
     }
-    handleConfirmPasswordInput(event) {
-    // const input = event.target as HTMLInputElement;
-    // this.confirmPassword = input.value;
-    // this.doPasswordsMatch = this.password === this.confirmPassword;
-    // this.checkFormValidity();
+    CheckStrength(password) {
+        const min = 6;
+        const max = 20;
+        if (password.length < min || password.length > max) return `Le mot de passe doit comporter entre ${min} et ${max} caract\xe8res.`;
+        const specialCharacters = /[!@#\$%\^\&*\)\(+=._-]+/;
+        if (!specialCharacters.test(password)) return "Le mot de passe doit contenir au moins un caract\xe8re sp\xe9cial.";
+        const hasUpperCase = /[A-Z]/;
+        if (!hasUpperCase.test(password)) return "Le mot de passe doit contenir au moins une majuscule.";
+        const hasNumber = /[0-9]/;
+        if (!hasNumber.test(password)) return "Le mot de passe doit contenir au moins un chiffre.";
+        return null;
     }
-    handleFirstNameInput(event) {
-    // const input = event.target as HTMLInputElement;
-    // this.firstName = input.value;
-    // this.checkFormValidity();
+    handleConfirmPasswordBlur() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const confirmPasswordInput = inputs?.[2];
+        const confPassword = confirmPasswordInput.value || "";
+        console.log(this.password, confPassword);
+        // Vérifie si les mots de passe sont égaux
+        if (confPassword !== this.password) {
+            console.log("Les mots de passe ne correspondent pas");
+            this.isConfirmPasswordIsValid = false;
+        } else {
+            console.log("Les mots de passe correspondent");
+            this.isConfirmPasswordIsValid = true;
+            this.confPassword = confPassword;
+        }
     }
-    handleLastNameInput(event) {
-    // const input = event.target as HTMLInputElement;
-    // this.lastName = input.value;
-    // this.checkFormValidity();
+    handleDateBlur() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const dateInput = inputs?.[3];
+        const date = dateInput.value || "";
+        // Peut-être vérifié si le format est bien respecter //
+        this.date = date;
     }
-    handleDateInput(event) {
-    // const input = event.target as HTMLInputElement;
-    // this.birthDate = input.value;
-    // this.checkFormValidity();
+    handleFirstNameBlur() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const firstNameInput = inputs?.[4];
+        const firstName = firstNameInput.value || "";
+        // Peut-être vérifié si le format est bien respecter //
+        this.firstName = firstName;
     }
-    updatePasswordStrength() {
-    // let strength = 0;
-    // if (this.password.length >= 6) strength += 20;
-    // if (/[A-Z]/.test(this.password)) strength += 20;
-    // if (/[0-9]/.test(this.password)) strength += 20;
-    // if (/[^A-Za-z0-9]/.test(this.password)) strength += 20;
-    // if (this.password.length >= 10) strength += 20;
-    // this.passwordStrength = strength;
+    handleLastNameBlur() {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const lastNameInput = inputs?.[5];
+        const lastName = lastNameInput.value || "";
+        // Peut-être vérifié si le format est bien respecter //
+        this.lastName = lastName;
     }
-    checkFormValidity() {
-    // this.isFormValid = this.isEmailValid && this.isPasswordValid && this.doPasswordsMatch && this.firstName !== '' && this.lastName !== '' && this.birthDate !== '';
-    }
-    handleSubmit() {
-    // if (this.isFormValid) {
-    //   console.log('Form submitted', {
-    //     email: this.email,
-    //     password: this.password,
-    //     firstName: this.firstName,
-    //     lastName: this.lastName,
-    //     birthDate: this.birthDate
-    //   });
-    // }
+    checkValidity() {
+        console.log(this.email, this.password, this.confPassword, this.date, this.firstName, this.lastName);
     }
     constructor(...args){
         super(...args);
-        this.isEmailValid = true;
-        this.isPasswordValid = true;
-        this.doPasswordsMatch = true;
-        this.isFormValid = false;
-        this.passwordStrength = 0;
+        this.valid = null;
+        this.invalid = null;
+        this.isEmailValid = null;
+        this.isPasswordValid = null;
+        this.isStrongPassword = null;
+        this.isConfirmPasswordIsValid = null;
         this.email = "";
         this.password = "";
-        this.confirmPassword = "";
+        this.confPassword = "";
+        this.date = "";
         this.firstName = "";
         this.lastName = "";
-        this.birthDate = "";
     }
 }
 (0, _tsDecorate._)([
     (0, _core.state)()
+], Inscription.prototype, "valid", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Inscription.prototype, "invalid", void 0);
+(0, _tsDecorate._)([
+    (0, _core.attr)()
 ], Inscription.prototype, "isEmailValid", void 0);
 (0, _tsDecorate._)([
-    (0, _core.state)()
+    (0, _core.attr)()
 ], Inscription.prototype, "isPasswordValid", void 0);
 (0, _tsDecorate._)([
-    (0, _core.state)()
-], Inscription.prototype, "doPasswordsMatch", void 0);
+    (0, _core.attr)()
+], Inscription.prototype, "isStrongPassword", void 0);
 (0, _tsDecorate._)([
-    (0, _core.state)()
-], Inscription.prototype, "isFormValid", void 0);
-(0, _tsDecorate._)([
-    (0, _core.state)()
-], Inscription.prototype, "passwordStrength", void 0);
+    (0, _core.attr)()
+], Inscription.prototype, "isConfirmPasswordIsValid", void 0);
 Inscription = (0, _tsDecorate._)([
     (0, _core.customElement)({
         name: "inscription-page",
@@ -948,58 +976,109 @@ Inscription = (0, _tsDecorate._)([
         </div>
         <div class="main-body">
           
-          <div class='input-field'>
-            <input type="email" placeholder="Email" 
-              @input="${inscription.handleEmailInput}"
-              required>
-            ${inscription.isEmailValid ? "" : (0, _core.html)`<p class="error">Invalid email address</p>`}
+          <div class=${[
+                "input-field",
+                inscription.isEmailValid === null ? "" : inscription.isEmailValid ? "-valide" : "-invalide"
+            ].join("")}>
+            <input class=${[
+                "input",
+                inscription.isEmailValid === null ? "" : inscription.isEmailValid ? "-valide" : "-invalide"
+            ].join("")}
+              type="email" 
+              placeholder="Email"
+              @blur="${()=>inscription.handleEmailBlur()}" 
+              required 
+              value="${inscription.email || ""}">
+
+            <div class="${[
+                "info",
+                inscription.isEmailValid === null ? "" : inscription.isEmailValid ? "-valide" : "-invalide"
+            ].join("")}">
+              ${inscription.isEmailValid === null ? "" : inscription.isEmailValid ? (0, _core.html)`<div class="valide"><pf-icons-check-circle></pf-icons-check-circle></div>` : (0, _core.html)`<span>Votre adresse email doit contenir le caractère '@'</span>`}
+            </div>
           </div>
 
+
+
+
+
       
-          <div class='input-field'>
-            <input type="password" placeholder="Password" 
-              @input="${inscription.handlePasswordInput}"
-              required minlength="6"
-              pattern="^(?=.*[!@#$%^&*(),.?\:{}|<>])[A-Za-z\d@$!%*?&]{6,}$">
-            <div class="password-strength">
-              <div class="strength-bar" style="width: ${inscription.passwordStrength}%"></div>
+          <div class=${[
+                "input-field",
+                inscription.isPasswordValid === null ? "" : inscription.isPasswordValid ? "-valide" : "-invalide"
+            ].join("")}>
+            <input class=${[
+                "input",
+                inscription.isPasswordValid === null ? "" : inscription.isPasswordValid ? "-valide" : "-invalide"
+            ].join("")}
+              type="email" 
+              placeholder="password"
+              @blur="${()=>inscription.handlePasswordBlur()}" 
+              required 
+              value="${inscription.password || ""}">
+
+            <div class="${[
+                "info",
+                inscription.isPasswordValid === null ? "" : inscription.isPasswordValid ? "-valide" : "-invalide"
+            ].join("")}">
+              ${inscription.isPasswordValid === null ? "" : inscription.isPasswordValid ? (0, _core.html)`<div class="valide"><pf-icons-check-circle></pf-icons-check-circle></div>` : (0, _core.html)`<span>Votre adresse mot de passe doit contenir le caractère</span>`}
             </div>
-            ${inscription.isPasswordValid ? "" : (0, _core.html)`<p class="error">Password must contain at least 6 characters, including a special character</p>`}
           </div>
 
         
-          <div class='input-field'>
-            <input type="password" placeholder="Confirm Password" 
-              @input="${inscription.handleConfirmPasswordInput}"
-              required>
-            ${inscription.doPasswordsMatch ? "" : (0, _core.html)`<p class="error">Passwords do not match</p>`}
+          <div class=${[
+                "input-field",
+                inscription.isConfirmPasswordIsValid === null ? "" : inscription.isConfirmPasswordIsValid ? "-valide" : "-invalide"
+            ].join("")}>
+            <input class=${[
+                "input",
+                inscription.isConfirmPasswordIsValid === null ? "" : inscription.isConfirmPasswordIsValid ? "-valide" : "-invalide"
+            ].join("")}
+              type="email" 
+              placeholder="password"
+              @blur="${()=>inscription.handleConfirmPasswordBlur()}" 
+              required 
+              value="${inscription.confPassword || ""}">
+
+            <div class="${[
+                "info",
+                inscription.isConfirmPasswordIsValid === null ? "" : inscription.isConfirmPasswordIsValid ? "-valide" : "-invalide"
+            ].join("")}">
+              ${inscription.isConfirmPasswordIsValid === null ? "" : inscription.isConfirmPasswordIsValid ? (0, _core.html)`<div class="valide"><pf-icons-check-circle></pf-icons-check-circle></div>` : (0, _core.html)`<span>Votre adresse email doit contenir le caractère '@'</span>`}
+            </div>
           </div>
 
          
           <div class='input-field'>
             <input type="date" placeholder="Date of Birth" 
-              @input="${inscription.handleDateInput}"
+              @blur="${()=>{
+                inscription.handleDateBlur();
+            }}"
               required>
           </div>
 
           
           <div class='input-field'>
             <input type="text" placeholder="Prénom" 
-              @input="${inscription.handleFirstNameInput}" 
+              @blur="${()=>{
+                inscription.handleFirstNameBlur();
+            }}" 
               required>
           </div>
 
           
           <div class='input-field'>
             <input type="text" placeholder="Nom" 
-              @input="${inscription.handleLastNameInput}" 
+              @blur="${()=>{
+                inscription.handleLastNameBlur();
+            }}"
               required>
           </div>
 
           
-          <button class="button-register" type="submit" 
-            @click="${inscription.handleSubmit}"
-            ?disabled="${!inscription.isFormValid}">Inscription</button>
+          <button class="button-register"
+            type="submit"
+            @click="${()=>inscription.checkValidity()}">Inscription</button>
         </div>
 
         <div class="footer">
@@ -1046,6 +1125,11 @@ Inscription = (0, _tsDecorate._)([
         width: 38ch;
         padding: 10px 10px;
       }
+      /* Style quand l'email est valide */
+      input[type="email"]:valid {
+        background-color: #f1f8e9 !important;
+      }
+
       input[type="email"]::placeholder {
         color: #a2adbe;
       }
@@ -1129,6 +1213,55 @@ Inscription = (0, _tsDecorate._)([
         border-radius: 4px;
         transition: width 0.3s ease-in-out;
       }
+      .valide{
+        color: #3e8635;
+      }
+      .info{
+        display: none;
+      }
+      .info.default .valide,
+      .info.default span {
+        display: none; /* Rien n'est affiché par défaut */
+      }
+
+      .info.valid .valide {
+        display: block; /* Affiche l'icône de validation */
+      }
+
+      .info.invalid .valide {
+        display: none; /* Masque l'icône en cas d'email invalide */
+      }
+
+      .info.invalid span {
+        display: block; /* Affiche le message d'erreur */
+      }
+      .input-field-valide{
+        background-color: #f1f8e9;
+        border: 1px solid #eff3f8;
+        padding: 10px 10px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+      .input-field-invalide{
+        background-color: #ffebee;
+        border: 1px solid #eff3f8;
+        padding: 10px 10px;
+        border-radius: 3px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+      .input-valide{
+        background-color: #f1f8e9; 
+      }
+      .input-invalide{
+        background-color: #ffebee;
+      }
+
     `
         ],
         shadowOptions: {
