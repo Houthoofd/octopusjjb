@@ -1,36 +1,44 @@
 import express from 'express';
-import path from 'path';
-import fs from 'fs';
-import {Client as SQLClient} from '../packages/db/client';
+import bcrypt from 'bcrypt';
+import { Client as SQLClient } from '../packages/db/client';
 
 const router = express.Router();
 
+router.post('/', async (req, res) => {
+    const { firstName, lastName, email, password, date } = req.body;
 
-// Endpoint pour la vérification de l'utilisateur
-router.post('/', (req, res) => {
-    res.send({message: "ljflzeg"})
-//   const { first_name } = req.body;
+    console.log(firstName, lastName, email, password, date)
 
-//   if (!first_name) {
-//     return res.status(400).send('Le prénom est requis');
-//   }
+    if (!firstName || !lastName || !email || !password || !date) {
+        return res.status(400).send('Tous les champs sont requis');
+    }
 
-//   const query = 'SELECT * FROM utilisateurs WHERE first_name = ?';
+    const client = new SQLClient();
 
-//   const client = new SQLClient();
+    try {
+        const userExistsQuery = 'SELECT * FROM utilisateurs WHERE email = ?';
+        const existingUsers = await client.query(userExistsQuery, [email]);
 
-//   client.query(query, [first_name])
-//     .then(results => {
-//       if (results.length > 0) {
-//         res.json(results);
-//       } else {
-//         res.status(404).send('Utilisateur non trouvé');
-//       }
-//     })
-//     .catch(err => {
-//       console.error('Erreur lors du chargement des utilisateurs', err);
-//       res.status(500).send('Erreur lors du chargement des utilisateurs');
-//     });
+        if (existingUsers.length > 0) {
+            return res.status(400).send('Un utilisateur avec cet email existe déjà');
+        }
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const insertQuery = `
+            INSERT INTO utilisateurs (first_name, last_name, email, password, date_of_birth, status, grade)
+            VALUES (?, ?, ?, ?, ?, 'user', 'ceinture blanche')
+        `;
+
+        await client.query(insertQuery, [firstName, lastName, email, hashedPassword, date]);
+
+        res.status(201).send('Utilisateur enregistré avec succès');
+
+    } catch (error) {
+        console.error('Erreur lors de l\'inscription', error);
+        res.status(500).send('Erreur lors de l\'inscription');
+    }
 });
 
 export default router;

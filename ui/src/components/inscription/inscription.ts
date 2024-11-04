@@ -121,7 +121,7 @@ import 'unofficial-pf-v5-wc-icons';
           
           <button class="button-register"
             type="submit"
-            @click="${() => inscription.checkValidity()}">Inscription</button>
+            @click="${() => inscription.sendData()}">Inscription</button>
         </div>
 
         <div class="footer">
@@ -418,7 +418,6 @@ export class Inscription extends WebComponent {
     const firstNameInput = inputs?.[4];
     const firstName = firstNameInput.value || '';
 
-    // Peut-être vérifié si le format est bien respecter //
     this.firstName = firstName;
   }
   handleLastNameBlur(){
@@ -426,54 +425,81 @@ export class Inscription extends WebComponent {
     const lastNameInput = inputs?.[5];
     const lastName = lastNameInput.value || '';
 
-    // Peut-être vérifié si le format est bien respecter //
     this.lastName = lastName;
   }
 
   checkValidity() {
     const formData: { [key: string]: string } = {};
   
-    // Vérifier chaque propriété et l'ajouter à l'objet si elle est définie
+
     if (this.email) {
       formData.email = this.email;
     } else {
       console.log("L'email est manquant.");
+      return null;
     }
   
     if (this.password) {
       formData.password = this.password;
     } else {
       console.log("Le mot de passe est manquant.");
+      return null;
     }
   
     if (this.date) {
       formData.date = this.date;
     } else {
       console.log("La date est manquante.");
+      return null;
     }
   
     if (this.firstName) {
       formData.firstName = this.firstName;
     } else {
       console.log("Le prénom est manquant.");
+      return null;
     }
   
     if (this.lastName) {
       formData.lastName = this.lastName;
     } else {
       console.log("Le nom de famille est manquant.");
+      return null;
     }
   
-    // Afficher l'objet dans la console pour vérification
     console.log('Données du formulaire valides:', formData);
-  
-    // Vous pouvez renvoyer l'objet pour une utilisation ultérieure
+    
     return formData;
   }
   
-
-
-
-
-
+  async sendData() {
+    const formData = this.checkValidity();
+  
+    if (!formData) {
+      console.log('Données invalides, la requête ne sera pas envoyée.');
+      return;
+    }
+  
+    console.log('Envoi des données:', formData);
+    try {
+      const response = await fetch('http://localhost:3000/inscriptions', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),  // Envoie des données JSON
+      });
+  
+      if (response.ok) {
+          const result = await response.json();
+          console.log("Utilisateur enregistré avec succès !", result);
+      } else {
+          console.error("Erreur lors de l'enregistrement :", response.statusText);
+          alert("Une erreur s'est produite. Veuillez réessayer.");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la requête :", error);
+      alert("Impossible d'enregistrer la réservation.");
+    }
+  }
 }
