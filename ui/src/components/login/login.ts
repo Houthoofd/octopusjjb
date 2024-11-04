@@ -170,6 +170,9 @@ export class Login extends WebComponent {
 
   @state() isCustom: boolean = false;
 
+  Mail:string = '';
+  Password:string = '';
+
   attributeChangedCallback(name: string, oldValue: string | null, newValue: string | null): void {
     
 
@@ -179,34 +182,72 @@ export class Login extends WebComponent {
   handleEmailInput(login) {
     const inputs = this.shadowRoot?.querySelectorAll('input');
     const emailValue = inputs?.[0].value || '';
-    //const input = event.target as HTMLInputElement;
-    //console.log(input)
-    //this.email = input.value;
-    //this.validateForm();
+   
+    //this.email = emailValue;
+    this.Mail = emailValue;
+    this.validateForm();
   }
 
   handlePasswordInput(login) {
     const inputs = this.shadowRoot?.querySelectorAll('input');
     const password = inputs?.[1].value || '';
     console.log(password)
-    //const input = event.target as HTMLInputElement;
-    //console.log(input)
-    //this.password = input.value;
-    //this.validateForm();
+
+    //this.password = password;
+    this.Password = password;
+    this.validateForm();
   }
 
+  // Validation du formulaire
   validateForm() {
-    this.isFormValid = this.email !== '' && this.password !== '';
-    this.errorMessage = this.isFormValid ? null : 'Please enter both email and password.';
+    console.log(this.Mail,this.Password)
+    this.isFormValid = this.Mail !== '' && this.Password !== '';
+    this.errorMessage = this.isFormValid ? null : 'Veuillez entrer à la fois un email et un mot de passe.';
   }
 
-  handleLogin() {
+  // Fonction pour envoyer les données au serveur
+  async sendData() {
     if (this.isFormValid) {
-      console.log('Login successful');
-      this.errorMessage = null;
+      const data = {
+        email: this.Mail,
+        password: this.Password,
+      };
+      console.log(data)
+      try {
+        const response = await fetch('http://localhost:3000/connexion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
 
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Connexion réussie", result);
+
+          // Redirection ou traitement du succès
+          window.location.href = '/pages/cours';
+
+        } else {
+          console.error("Erreur lors de la connexion :", response.statusText);
+          this.errorMessage = "Échec de la connexion. Veuillez vérifier vos informations.";
+        }
+
+      } catch (error) {
+        console.error("Erreur lors de la requête :", error);
+        this.errorMessage = "Une erreur est survenue. Veuillez réessayer plus tard.";
+      }
     } else {
-      this.errorMessage = 'Please fill in all fields.';
+      this.errorMessage = 'Veuillez remplir tous les champs.';
+    }
+  }
+
+  // Gestion de la soumission du formulaire
+  handleLogin() {
+    this.validateForm();
+    if (this.isFormValid) {
+      this.sendData();
     }
   }
 

@@ -621,29 +621,59 @@ class Login extends (0, _core.WebComponent) {
     handleEmailInput(login) {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const emailValue = inputs?.[0].value || "";
-    //const input = event.target as HTMLInputElement;
-    //console.log(input)
-    //this.email = input.value;
-    //this.validateForm();
+        //this.email = emailValue;
+        this.Mail = emailValue;
+        this.validateForm();
     }
     handlePasswordInput(login) {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const password = inputs?.[1].value || "";
         console.log(password);
-    //const input = event.target as HTMLInputElement;
-    //console.log(input)
-    //this.password = input.value;
-    //this.validateForm();
+        //this.password = password;
+        this.Password = password;
+        this.validateForm();
     }
+    // Validation du formulaire
     validateForm() {
-        this.isFormValid = this.email !== "" && this.password !== "";
-        this.errorMessage = this.isFormValid ? null : "Please enter both email and password.";
+        console.log(this.Mail, this.Password);
+        this.isFormValid = this.Mail !== "" && this.Password !== "";
+        this.errorMessage = this.isFormValid ? null : "Veuillez entrer \xe0 la fois un email et un mot de passe.";
     }
-    handleLogin() {
+    // Fonction pour envoyer les données au serveur
+    async sendData() {
         if (this.isFormValid) {
-            console.log("Login successful");
-            this.errorMessage = null;
-        } else this.errorMessage = "Please fill in all fields.";
+            const data = {
+                email: this.Mail,
+                password: this.Password
+            };
+            console.log(data);
+            try {
+                const response = await fetch("http://localhost:3000/connexion", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log("Connexion r\xe9ussie", result);
+                    // Redirection ou traitement du succès
+                    window.location.href = "/pages/cours";
+                } else {
+                    console.error("Erreur lors de la connexion :", response.statusText);
+                    this.errorMessage = "\xc9chec de la connexion. Veuillez v\xe9rifier vos informations.";
+                }
+            } catch (error) {
+                console.error("Erreur lors de la requ\xeate :", error);
+                this.errorMessage = "Une erreur est survenue. Veuillez r\xe9essayer plus tard.";
+            }
+        } else this.errorMessage = "Veuillez remplir tous les champs.";
+    }
+    // Gestion de la soumission du formulaire
+    handleLogin() {
+        this.validateForm();
+        if (this.isFormValid) this.sendData();
     }
     toggleRememberMe() {
         this.rememberMe = !this.rememberMe;
@@ -656,6 +686,8 @@ class Login extends (0, _core.WebComponent) {
         this.isFormValid = false;
         this.errorMessage = null;
         this.isCustom = false;
+        this.Mail = "";
+        this.Password = "";
     }
 }
 (0, _tsDecorate._)([
