@@ -621,7 +621,6 @@ class Login extends (0, _core.WebComponent) {
     handleEmailInput(login) {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const emailValue = inputs?.[0].value || "";
-        //this.email = emailValue;
         this.Mail = emailValue;
         this.validateForm();
     }
@@ -629,17 +628,14 @@ class Login extends (0, _core.WebComponent) {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const password = inputs?.[1].value || "";
         console.log(password);
-        //this.password = password;
         this.Password = password;
         this.validateForm();
     }
-    // Validation du formulaire
     validateForm() {
         console.log(this.Mail, this.Password);
         this.isFormValid = this.Mail !== "" && this.Password !== "";
         this.errorMessage = this.isFormValid ? null : "Veuillez entrer \xe0 la fois un email et un mot de passe.";
     }
-    // Fonction pour envoyer les données au serveur
     async sendData() {
         if (this.isFormValid) {
             const data = {
@@ -658,7 +654,6 @@ class Login extends (0, _core.WebComponent) {
                 if (response.ok) {
                     const result = await response.json();
                     console.log("Connexion r\xe9ussie", result);
-                    // Redirection ou traitement du succès
                     window.location.href = "/pages/cours";
                 } else {
                     console.error("Erreur lors de la connexion :", response.statusText);

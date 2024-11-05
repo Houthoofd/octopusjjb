@@ -183,7 +183,6 @@ export class Login extends WebComponent {
     const inputs = this.shadowRoot?.querySelectorAll('input');
     const emailValue = inputs?.[0].value || '';
    
-    //this.email = emailValue;
     this.Mail = emailValue;
     this.validateForm();
   }
@@ -193,19 +192,16 @@ export class Login extends WebComponent {
     const password = inputs?.[1].value || '';
     console.log(password)
 
-    //this.password = password;
     this.Password = password;
     this.validateForm();
   }
 
-  // Validation du formulaire
   validateForm() {
     console.log(this.Mail,this.Password)
     this.isFormValid = this.Mail !== '' && this.Password !== '';
     this.errorMessage = this.isFormValid ? null : 'Veuillez entrer à la fois un email et un mot de passe.';
   }
 
-  // Fonction pour envoyer les données au serveur
   async sendData() {
     if (this.isFormValid) {
       const data = {
@@ -226,7 +222,6 @@ export class Login extends WebComponent {
           const result = await response.json();
           console.log("Connexion réussie", result);
 
-          // Redirection ou traitement du succès
           window.location.href = '/pages/cours';
 
         } else {
