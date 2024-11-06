@@ -588,37 +588,11 @@ var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+var _components = require("../../components");
 let template = (0, _core.html)`${(context)=>{
     return (0, _core.html)`<pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left >
     <div slot = "drawer-panel">
-      <pf-navigation>
-        <pf-navigation-list>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "cours";
-    }}>
-                Cours
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "informations";
-    }}>
-                Informations supplémentaires
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "compte";
-    }}>
-                Compte
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "profile";
-    }}>
-                Profile
-            </pf-navigation-list-item>
-        </pf-navigation-list>
-      </pf-navigation>
+      <navigation-panel></navigation-panel>
     </div>
     <div>
       <pf-panel header scrollable>
@@ -649,6 +623,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["aDpIY","4rHzT"], "4rHzT", "parcelRequirec605")
+},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE"}]},["aDpIY","4rHzT"], "4rHzT", "parcelRequirec605")
 
 //# sourceMappingURL=index.9576617d.js.map

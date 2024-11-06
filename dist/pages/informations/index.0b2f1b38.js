@@ -584,72 +584,107 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"6WVIp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Information", ()=>Information);
+var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
+var _components = require("../../components");
+class Information extends (0, _core.WebComponent) {
+    async preloadData() {
+        try {
+            const userDataString = localStorage.getItem("userData");
+            if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
+            const userData = JSON.parse(userDataString);
+            console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
+            const response = await fetch("http://localhost:3000/informations", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+            if (!response.ok) throw new Error("Erreur serveur.");
+            const data = await response.json();
+            // Enveloppe l'objet dans un tableau
+            const dataArray = [
+                data
+            ]; // Si `data` est un objet, on le met directement dans un tableau
+            console.log("Donn\xe9es mises dans un tableau:", dataArray, dataArray.length);
+            return dataArray.length > 0 ? dataArray : []; // Retourne le tableau, ou un tableau vide si aucun élément
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+            return [];
+        }
+    }
+    formatDateFromISO(isoDateString) {
+        const date = new Date(isoDateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    }
+    convertToISODate(dateString) {
+        const [year, month, day] = dateString.split("-");
+        return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
+    }
+    constructor(...args){
+        super(...args);
+        this.data = [];
+    }
+}
+Information = (0, _tsDecorate._)([
+    (0, _core.customElement)({
+        name: "page-informations",
+        template: (0, _core.html)`${(information)=>{
+            return (0, _core.html)`
+      <pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left>
+          <div slot = "drawer-panel">
+            <navigation-panel></navigation-panel>
+          </div>
+          <pf-panel header scrollable>
+            <h1 slot="header">Informations</h1>
+            <div class="table-infos">
+              ${(0, _core.asyncAppend)(information.preloadData(), (result)=>{
+                return (0, _core.html)`${(0, _core.repeat)(result, (0, _core.html)`${(info)=>{
+                    console.log(info);
+                    return (0, _core.html)`
+                          <div class="row">
+                            <div class="type-de-cours">${information.formatDateFromISO(info.date_of_birth)}</div>
+                            <div class="heure-debut">${info.email}</div>
+                            <div class="heure-fin">${info.first_name}</div>
+                            <div class="type-de-cours">${info.gender}</div>
+                            <div class="heure-debut">${info.grade}</div>
+                            <div class="heure-fin">${info.last_name}</div>
+                            <div class="heure-fin">${info.role}</div>
+                          </div>`;
+                }}`)}`;
+            })}
+            </div>
+          </pf-panel>
+        <pf-avatar></pf-avatar>
+      </pf-page>`;
+        }}`,
+        styles: [
+            (0, _core.css)`
+      .table-infos {
+        color: black;
+      }
+      .navigation{
+        color: black
+      }
+    `
+        ]
+    })
+], Information);
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left >
-    <div slot = "drawer-panel">
-      <pf-navigation>
-        <pf-navigation-list>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "cours";
-    }}>
-                Cours
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "informations";
-    }}>
-                Informations supplémentaires
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "compte";
-    }}>
-                Compte
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${()=>{
-        window.location.href = "profile";
-    }}>
-                Profile
-            </pf-navigation-list-item>
-        </pf-navigation-list>
-      </pf-navigation>
-    </div>
-    <div>
-      <pf-panel header scrollable>
-        <h1 slot = "header" >Informations</h1>
-        <div>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehiculex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat, nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodeleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada seposuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quaullamcorper, in commodo massa vulputate.
-          </span>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehiculex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat, nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodeleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada seposuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quaullamcorper, in commodo massa vulputate.
-          </span>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehiculex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat, nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodeleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada seposuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quaullamcorper, in commodo massa vulputate.
-          </span>
-        </div>
-      </pf-panel>
-    </div>
-    <pf-avatar></pf-avatar>
-  </pf-page>`;
+    return (0, _core.html)`<page-informations></page-informations>`;
 }}`;
-document.addEventListener("DOMContentLoaded", ()=>{
-    const logoutLink = document.getElementById("logout");
-    if (logoutLink) logoutLink.addEventListener("click", (e)=>{
-        e.preventDefault();
-        localStorage.clear();
-        sessionStorage.clear();
-        window.location.href = "/";
-    });
-});
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK"}]},["bQeHR","6WVIp"], "6WVIp", "parcelRequirec605")
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bQeHR","6WVIp"], "6WVIp", "parcelRequirec605")
 
 //# sourceMappingURL=index.0b2f1b38.js.map

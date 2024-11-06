@@ -7,9 +7,9 @@ import { default as connexionRouter } from './connexion';
 import { default as coursRouter } from './cours';
 import { default as inscriptionsCoursRouter } from './inscriptions';
 import { default as inscriptionsCoursEssaiesRouter } from './reservations';
-import { default as profileRouter } from './new-password';
-import { default as compteRouter } from './new-password';
-import { default as infosRouter } from './new-password';
+import { default as profileRouter } from './profile';
+import { default as compteRouter } from './compte';
+import { default as infosRouter } from './infos';
 import { default as newPasswordRouter } from './new-password';
 
 // Routes principales
@@ -20,7 +20,7 @@ router.use('/reservations', inscriptionsCoursEssaiesRouter);
 router.use('/password', newPasswordRouter);
 router.use('/profile', profileRouter);
 router.use('/compte', compteRouter);
-router.use('/infos', infosRouter);
+router.use('/informations', infosRouter);
 
 
 

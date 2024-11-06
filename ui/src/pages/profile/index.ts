@@ -2,6 +2,7 @@ import { render , html, ViewTemplate , ViewContext } from '@lithium-framework/co
 import '@lithium-framework/router-element'
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
+import '../../components';
 
 
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
@@ -9,26 +10,7 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
   return html`<pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left >
     <div slot = "drawer-panel">
-      <pf-navigation>
-        <pf-navigation-list>
-            <pf-navigation-list-item
-              @mousedown=${() => { window.location.href = "cours" }}>
-                Cours
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${() => { window.location.href = "informations" }}>
-                Informations supplémentaires
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${() => { window.location.href = "compte" }}>
-                Compte
-            </pf-navigation-list-item>
-            <pf-navigation-list-item
-              @mousedown=${() => { window.location.href = "profile" }}>
-                Profile
-            </pf-navigation-list-item>
-        </pf-navigation-list>
-      </pf-navigation>
+      <navigation-panel></navigation-panel>
     </div>
     <div>
       <pf-panel header scrollable>

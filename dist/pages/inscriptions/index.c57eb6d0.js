@@ -654,6 +654,15 @@ class Login extends (0, _core.WebComponent) {
                 if (response.ok) {
                     const result = await response.json();
                     console.log("Connexion r\xe9ussie", result);
+                    console.log(result);
+                    const userData = {
+                        nom: result.userData.last_name,
+                        prenom: result.userData.first_name,
+                        email: result.userData.email,
+                        role: result.userData.role,
+                        cours: result.userData.cours || []
+                    };
+                    localStorage.setItem("userData", JSON.stringify(userData));
                     window.location.href = "/pages/cours";
                 } else {
                     console.error("Erreur lors de la connexion :", response.statusText);

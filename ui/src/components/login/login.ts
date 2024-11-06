@@ -208,7 +208,8 @@ export class Login extends WebComponent {
         email: this.Mail,
         password: this.Password,
       };
-      console.log(data)
+      console.log(data);
+  
       try {
         const response = await fetch('http://localhost:3000/connexion', {
           method: 'POST',
@@ -217,18 +218,32 @@ export class Login extends WebComponent {
           },
           body: JSON.stringify(data),
         });
-
+  
         if (response.ok) {
           const result = await response.json();
           console.log("Connexion réussie", result);
-
+          console.log(result)
+  
+          
+          const userData = {
+            nom: result.userData.last_name,
+            prenom: result.userData.first_name,
+            email: result.userData.email,
+            role: result.userData.role,
+            cours: result.userData.cours || []
+          };
+  
+        
+          localStorage.setItem('userData', JSON.stringify(userData));
+  
+        
           window.location.href = '/pages/cours';
-
+  
         } else {
           console.error("Erreur lors de la connexion :", response.statusText);
           this.errorMessage = "Échec de la connexion. Veuillez vérifier vos informations.";
         }
-
+  
       } catch (error) {
         console.error("Erreur lors de la requête :", error);
         this.errorMessage = "Une erreur est survenue. Veuillez réessayer plus tard.";
@@ -237,6 +252,7 @@ export class Login extends WebComponent {
       this.errorMessage = 'Veuillez remplir tous les champs.';
     }
   }
+  
 
   // Gestion de la soumission du formulaire
   handleLogin() {
