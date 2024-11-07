@@ -715,6 +715,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 (0, _core.render)(template);
 
-},{"@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE","@swc/helpers/_/_ts_decorate":"lX6TJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["9tKsy","8xgw8"], "8xgw8", "parcelRequirec605")
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["9tKsy","8xgw8"], "8xgw8", "parcelRequirec605")
 
 //# sourceMappingURL=index.896d32c1.js.map
