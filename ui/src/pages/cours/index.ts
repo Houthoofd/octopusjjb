@@ -25,7 +25,6 @@ import '../../components';
               ${asyncAppend(cours.preloadData(), (result) => {
                 console.log(result);
                 return html`
-                  <div class="raw-infos">
                     ${repeat(
                       result,
                       html`${(cour) => {
@@ -37,10 +36,10 @@ import '../../components';
                             <div class="heure-debut">${cour.heure_debut}</div>
                             <div class="heure-fin">${cour.heure_fin}</div>
                             <pf-button @click="${() => cours.register(cour)}">Réservez</pf-button>
-                          </div>`;
+                            ${cours.isAdmin === true ? html`<div @click="${() => cours.displayParticipants(cour)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : html``}
+                          </div>`
                       }}`
-                    )}
-                  </div>`;
+                    )}`
               })}
             </div>
           </pf-panel>
@@ -51,9 +50,29 @@ import '../../components';
       css`
         .table-infos {
           color: black;
+          display: flex;
+          gap: 20px;
+          flex-direction: column;
         }
         .navigation {
           color: black;
+        }
+        .row{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 10px 10px;
+          background-color: #9e9e9e26;
+        }
+        .icon-down{
+          cursor: pointer;
+          background-color: #9E9E9E;
+          width: 24px;
+          height: 24px;
+          border-radius: 3px;
+        }
+        .icon{
+          transform: translate(4px, 4px);
         }
       `,
     ],
@@ -62,6 +81,13 @@ import '../../components';
 
 export class Cours extends WebComponent {
   data: any[] = [];
+
+  @state() isAdmin: boolean = null;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.getRole();
+  }
 
     async register(cour) {
         try {
@@ -115,10 +141,6 @@ export class Cours extends WebComponent {
         }
     }
 
-
-
-
-
     async preloadData(): Promise<any[]> {
         try {
             const response = await fetch('http://localhost:3000/cours/', {
@@ -137,6 +159,34 @@ export class Cours extends WebComponent {
             return [];
         }
     }
+
+    // Méthode pour récupérer le rôle et affecter isAdmin
+  getRole() {
+    const userDataString = localStorage.getItem('userData');
+    if (!userDataString) {
+      throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
+    }
+
+    const userData = JSON.parse(userDataString);
+    console.log('Données utilisateur récupérées:', userData);
+
+    // Récupérer le rôle de l'utilisateur
+    const userRole = userData.role;
+    console.log('Rôle de l\'utilisateur:', userRole);
+
+    // Vérifier si le rôle est 'administrator' ou 'super-administrator' et mettre à jour isAdmin
+    if (userRole === 'administrator' || userRole === 'super-administrator') {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
+
+    console.log('Est-ce un administrateur ? ', this.isAdmin);
+  }
+
+  displayParticipants(cour){
+    console.log(cour)
+  }
 
   formatDateFromISO(isoDateString: string): string {
     const date = new Date(isoDateString);
