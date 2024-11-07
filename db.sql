@@ -14,7 +14,8 @@ CREATE TABLE utilisateurs (
     gender ENUM('Male', 'Female') NOT NULL,
     date_of_birth DATE NOT NULL,
     status VARCHAR(19),
-    grade INT(20)
+    grade INT(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Créer la table des cours
