@@ -13,4 +13,7 @@ POST http://localhost:3000/connexion
 
 
 ### inscriptions
-POST http://localhost:3000/inscriptions/
+POST http://localhost:3000/cours/inscription/
+
+### cours
+GET http://localhost:3000/cours/

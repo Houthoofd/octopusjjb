@@ -594,9 +594,44 @@ var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 var _components = require("../../components");
 class Cours extends (0, _core.WebComponent) {
+    async register(cour) {
+        try {
+            const userDataString = localStorage.getItem("userData");
+            if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
+            const userData = JSON.parse(userDataString);
+            console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
+            const inscriptionData = {
+                user: userData,
+                cours: cour
+            };
+            console.log(inscriptionData);
+            // Faire la requête fetch
+            const response = await fetch("http://localhost:3000/cours/inscription", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(inscriptionData)
+            });
+            // Vérifier si la requête a réussi
+            if (!response.ok) throw new Error("Erreur serveur.");
+            // Récupérer les données JSON de la réponse
+            const data = await response.json();
+            console.log(data);
+            // Vérifier si la réponse contient un message et gérer en conséquence
+            if (data && data.message) {
+                console.log(data.message); // Affiche le message du serveur
+                if (data.message === "Inscription r\xe9ussie !") console.log("Bien inscrit au cours");
+                else console.log("Pas d'inscription ou r\xe9ponse inattendue.");
+            } else console.log("R\xe9ponse vide ou mal format\xe9e.");
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+            return [];
+        }
+    }
     async preloadData() {
         try {
-            const response = await fetch("http://localhost:3000/cours", {
+            const response = await fetch("http://localhost:3000/cours/", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -604,12 +639,7 @@ class Cours extends (0, _core.WebComponent) {
             });
             if (!response.ok) throw new Error("Erreur serveur.");
             const data = await response.json();
-            // Enveloppe l'objet dans un tableau
-            const dataArray = [
-                data
-            ];
-            console.log("Donn\xe9es r\xe9cup\xe8r\xe9es", dataArray);
-            return dataArray.length > 0 ? dataArray : []; // Retourne le tableau, ou un tableau vide si aucun élément
+            return data.length > 0 ? data : [];
         } catch (error) {
             console.error("Erreur lors de la requ\xeate fetch:", error);
             return [];
@@ -636,42 +666,51 @@ Cours = (0, _tsDecorate._)([
         name: "page-cours",
         template: (0, _core.html)`${(cours)=>{
             return (0, _core.html)`
-      <pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left>
-          <div slot = "drawer-panel">
+        <pf-page
+          masterhead-no-icon
+          masterhead-no-branding
+          drawer-inline
+          drawer-expanded
+          drawer-static
+          drawer-panel-left
+        >
+          <div slot="drawer-panel">
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
             <h1 slot="header">Informations</h1>
             <div class="table-infos">
               ${(0, _core.asyncAppend)(cours.preloadData(), (result)=>{
-                return (0, _core.html)`${(0, _core.repeat)(result, (0, _core.html)`${(info)=>{
-                    console.log(info);
+                console.log(result);
+                return (0, _core.html)`
+                  <div class="raw-infos">
+                    ${(0, _core.repeat)(result, (0, _core.html)`${(cour)=>{
+                    console.log(cour);
                     return (0, _core.html)`
                           <div class="row">
-                            <div class="type-de-cours">${cours.formatDateFromISO(info.date_of_birth)}</div>
-                            <div class="heure-debut">${info.email}</div>
-                            <div class="heure-fin">${info.first_name}</div>
-                            <div class="type-de-cours">${info.gender}</div>
-                            <div class="heure-debut">${info.grade}</div>
-                            <div class="heure-fin">${info.last_name}</div>
-                            <div class="heure-fin">${info.role}</div>
+                            <div class="type-de-cours">${cour.type_cours}</div>
+                            <div class="date">${cours.formatDateFromISO(cour.date_cours)}</div>
+                            <div class="heure-debut">${cour.heure_debut}</div>
+                            <div class="heure-fin">${cour.heure_fin}</div>
+                            <pf-button @click="${()=>cours.register(cour)}">Réservez</pf-button>
                           </div>`;
-                }}`)}`;
+                }}`)}
+                  </div>`;
             })}
             </div>
           </pf-panel>
-        <pf-avatar></pf-avatar>
-      </pf-page>`;
+          <pf-avatar></pf-avatar>
+        </pf-page>`;
         }}`,
         styles: [
             (0, _core.css)`
-      .table-infos {
-        color: black;
-      }
-      .navigation{
-        color: black
-      }
-    `
+        .table-infos {
+          color: black;
+        }
+        .navigation {
+          color: black;
+        }
+      `
         ]
     })
 ], Cours);

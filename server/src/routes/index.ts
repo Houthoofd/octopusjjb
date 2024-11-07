@@ -26,4 +26,6 @@ router.use('/informations', infosRouter);
 
 
 
+
+
 export default router;
