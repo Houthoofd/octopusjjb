@@ -31,11 +31,16 @@ router.post('/', async (req, res) => {
 
     const user = results[0]; // Récupération du premier résultat (l'utilisateur correspondant à l'email)
 
-    // Comparaison du mot de passe hashé avec celui fourni par l'utilisateur
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordMatch) {
-      return res.status(401).send('Mot de passe incorrect');
+    console.log(password,user.password)
+
+    const match = await bcrypt.compare(password, password);
+    if (match) {
+      // Le mot de passe est correct
+      console.log("Connexion réussie !");
+    }else {
+      // Le mot de passe est incorrect
+      console.log("Échec de la connexion !");
     }
 
     // Structure des données utilisateur à envoyer dans la réponse

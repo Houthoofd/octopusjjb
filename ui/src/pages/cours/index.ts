@@ -23,20 +23,36 @@ import '../../components';
             <h1 slot="header">Informations</h1>
             <div class="table-infos">
               ${asyncAppend(cours.preloadData(), (result) => {
-                console.log(result);
                 return html`
                     ${repeat(
-                      result,
+                      result.cours,
                       html`${(cour) => {
-                        console.log(cour);
+                        console.log(cour.participants)
                         return html`
-                          <div class="row">
-                            <div class="type-de-cours">${cour.type_cours}</div>
-                            <div class="date">${cours.formatDateFromISO(cour.date_cours)}</div>
-                            <div class="heure-debut">${cour.heure_debut}</div>
-                            <div class="heure-fin">${cour.heure_fin}</div>
-                            <pf-button @click="${() => cours.register(cour)}">Réservez</pf-button>
-                            ${cours.isAdmin === true ? html`<div @click="${() => cours.displayParticipants(cour)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : html``}
+                          <div class="panel-row">
+                            <div class="row">
+                              <div class="type-de-cours">${cour.type_cours}</div>
+                              <div class="date">${cours.formatDateFromISO(cour.date_cours)}</div>
+                              <div class="heure-debut">${cour.heure_debut}</div>
+                              <div class="heure-fin">${cour.heure_fin}</div>
+                              <pf-button @click="${() => cours.register(cour)}">Réservez</pf-button>
+                              ${cours.isAdmin === true ? html`<div @click="${(e) => cours.displayParticipants(e)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : html``}
+                            </div>
+                            <div class="participants">
+                              ${repeat(
+                                cour.participants,
+                                html`${(participant) => {
+                                  return html`
+                                    <div class="pill">
+                                      <div class="first-name">${participant.first_name}</div>
+                                      <div class="last-name">${participant.last_name}</div>
+                                      <div class="icon-cross"><div class="icon"><pf-icons-times></pf-icons-times></div></div>
+                                      <div class="icon-validate"><div class="icon"><pf-icons-check></pf-icons-check></div></div>
+                                    </div>
+                                  `
+                                }}`
+                              )}
+                            </div>
                           </div>`
                       }}`
                     )}`
@@ -73,6 +89,41 @@ import '../../components';
         }
         .icon{
           transform: translate(4px, 4px);
+        }
+        .participants{
+          display: flex;
+          gap: 15px;
+          margin-top: 10px;
+        }
+        .pill{
+          display: flex;
+          justify-content: space-between;
+          background-color: #9e9e9e0f;
+          width: 200px;
+          padding: 10px 10px;
+          border-radius: 10px;
+        }
+        .pill > .icon-cross{
+          cursor: pointer;
+          background-color: #f9f9f9;
+          width: 24px;
+          height: 24px;
+          border-radius: 3px;
+        }
+        .pill > .icon-validate{
+          cursor: pointer;
+          background-color: #f9f9f9;
+          width: 24px;
+          height: 24px;
+          border-radius: 3px;
+        }
+        .pill > .icon-cross > .icon{
+          transform: translate(4px, 4px);
+          color: #9e9e9eab;
+        }
+        .pill > .icon-validate > .icon{
+          transform: translate(4px, 4px);
+          color: #9e9e9eab;
         }
       `,
     ],
@@ -153,7 +204,7 @@ export class Cours extends WebComponent {
             }
         
             const data = await response.json();
-            return data.length > 0 ? data : [];
+            return data.cours.length > 0 ? data : [];
         } catch (error) {
             console.error('Erreur lors de la requête fetch:', error);
             return [];
@@ -184,8 +235,22 @@ export class Cours extends WebComponent {
     console.log('Est-ce un administrateur ? ', this.isAdmin);
   }
 
-  displayParticipants(cour){
-    console.log(cour)
+  displayParticipants(event: Event) {
+    console.log(event)
+    // Récupérer l'élément qui a déclenché l'événement
+    const target = event.target as HTMLElement;
+    
+    // Trouver l'élément parent avec la classe 'panel-row'
+    const panelRow = target.closest('.panel-row');
+    
+    if (!panelRow) {
+      console.error('Aucun élément "panel-row" trouvé.');
+      return;
+    }
+  
+    // Ajouter ou retirer la classe 'active' sur l'élément parent
+    panelRow.classList.toggle('active');
+    console.log('Classe "active" togglée pour', panelRow);
   }
 
   formatDateFromISO(isoDateString: string): string {
