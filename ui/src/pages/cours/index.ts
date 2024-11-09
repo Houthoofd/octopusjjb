@@ -27,7 +27,7 @@ import '../../components';
                     ${repeat(
                       result.cours,
                       html`${(cour) => {
-                        console.log(cour.participants)
+                        console.log(cour)
                         return html`
                           <div class="panel-row">
                             <div class="row">
@@ -36,22 +36,7 @@ import '../../components';
                               <div class="heure-debut">${cour.heure_debut}</div>
                               <div class="heure-fin">${cour.heure_fin}</div>
                               <pf-button @click="${() => cours.register(cour)}">Réservez</pf-button>
-                              ${cours.isAdmin === true ? html`<div @click="${(e) => cours.displayParticipants(e)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : html``}
-                            </div>
-                            <div class="participants">
-                              ${repeat(
-                                cour.participants,
-                                html`${(participant) => {
-                                  return html`
-                                    <div class="pill">
-                                      <div class="first-name">${participant.first_name}</div>
-                                      <div class="last-name">${participant.last_name}</div>
-                                      <div class="icon-cross"><div class="icon"><pf-icons-times></pf-icons-times></div></div>
-                                      <div class="icon-validate"><div class="icon"><pf-icons-check></pf-icons-check></div></div>
-                                    </div>
-                                  `
-                                }}`
-                              )}
+                              ${cours.isAdmin === true ? html`<div @click="${(cour) => cours.displayParticipants(cour)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : html``}
                             </div>
                           </div>`
                       }}`
@@ -140,57 +125,57 @@ export class Cours extends WebComponent {
     this.getRole();
   }
 
-    async register(cour) {
-        try {
-            const userDataString = localStorage.getItem('userData');
-            if (!userDataString) {
-                throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
-            }
-
-            const userData = JSON.parse(userDataString);
-            console.log('Données utilisateur récupérées:', userData);
-
-            const inscriptionData = {
-                user: userData, 
-                cours: cour
-            };
-            console.log(inscriptionData);
-
-            // Faire la requête fetch
-            const response = await fetch('http://localhost:3000/cours/inscription', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(inscriptionData)
-            });
-
-            // Vérifier si la requête a réussi
-            if (!response.ok) {
-                throw new Error('Erreur serveur.');
-            }
-
-            // Récupérer les données JSON de la réponse
-            const data = await response.json();
-            console.log(data);
-
-            // Vérifier si la réponse contient un message et gérer en conséquence
-            if (data && data.message) {
-                console.log(data.message);  // Affiche le message du serveur
-                if (data.message === "Inscription réussie !") {
-                    console.log("Bien inscrit au cours");
-                } else {
-                    console.log("Pas d'inscription ou réponse inattendue.");
-                }
-            } else {
-                console.log("Réponse vide ou mal formatée.");
-            }
-
-        } catch (error) {
-            console.error('Erreur lors de la requête fetch:', error);
-            return [];
+  async register(cour) {
+    try {
+        const userDataString = localStorage.getItem('userData');
+        if (!userDataString) {
+            throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
         }
+
+        const userData = JSON.parse(userDataString);
+        console.log('Données utilisateur récupérées:', userData);
+
+        const inscriptionData = {
+            user: userData, 
+            cours: cour
+        };
+        console.log(inscriptionData);
+
+        // Faire la requête fetch
+        const response = await fetch('http://localhost:3000/cours/inscription', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(inscriptionData)
+        });
+
+        // Vérifier si la requête a réussi
+        if (!response.ok) {
+            throw new Error('Erreur serveur.');
+        }
+
+        // Récupérer les données JSON de la réponse
+        const data = await response.json();
+        console.log(data);
+
+        // Vérifier si la réponse contient un message et gérer en conséquence
+        if (data && data.message) {
+            console.log(data.message);  // Affiche le message du serveur
+            if (data.message === "Inscription réussie !") {
+                console.log("Bien inscrit au cours");
+            } else {
+                console.log("Pas d'inscription ou réponse inattendue.");
+            }
+        } else {
+            console.log("Réponse vide ou mal formatée.");
+        }
+
+    } catch (error) {
+        console.error('Erreur lors de la requête fetch:', error);
+        return [];
     }
+  }
 
     async preloadData(): Promise<any[]> {
         try {
@@ -235,23 +220,123 @@ export class Cours extends WebComponent {
     console.log('Est-ce un administrateur ? ', this.isAdmin);
   }
 
-  displayParticipants(event: Event) {
-    console.log(event)
-    // Récupérer l'élément qui a déclenché l'événement
-    const target = event.target as HTMLElement;
-    
-    // Trouver l'élément parent avec la classe 'panel-row'
-    const panelRow = target.closest('.panel-row');
-    
-    if (!panelRow) {
-      console.error('Aucun élément "panel-row" trouvé.');
-      return;
+  async loadParticipants(courId) {
+    console.log(courId);
+    try {
+        const response = await fetch('http://localhost:3000/cours/participant', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cour_id: courId })
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur serveur.');
+        }
+
+        const data = await response.json();
+
+        // Vérifier si la réponse contient des participants
+        return data.participants && data.participants.length > 0 ? data.participants : [];
+    } catch (error) {
+        console.error('Erreur lors de la requête fetch:', error);
+        return [];
     }
-  
-    // Ajouter ou retirer la classe 'active' sur l'élément parent
-    panelRow.classList.toggle('active');
-    console.log('Classe "active" togglée pour', panelRow);
   }
+
+  
+
+  async displayParticipants(cour) {
+    console.log("Cours ID:", cour.id);
+  
+    // Utiliser querySelector pour sélectionner le bon panel-row correspondant au cours cliqué
+    const panelRow = this.shadowRoot?.querySelector(`.panel-row`);
+  
+    if (panelRow) {
+      // Ajouter ou retirer la classe "active"
+      panelRow.classList.toggle('active');
+      console.log('Classe "active" togglée pour:', panelRow);
+  
+      // Vérifier si la div avec les participants existe déjà
+      let participantsDiv = panelRow.querySelector('.new-participants');
+  
+      if (!participantsDiv) {
+        // Créer une nouvelle div à ajouter si elle n'existe pas
+        participantsDiv = document.createElement('div');
+        participantsDiv.classList.add('new-participants'); // Classe pour styliser la nouvelle div
+        panelRow.appendChild(participantsDiv); // Ajoute la div à la fin de panelRow
+      }
+  
+      // Charger les participants depuis l'API
+      try {
+        const participants = await this.loadParticipants(cour.id);
+  
+        // Vider la div des anciens participants
+        participantsDiv.innerHTML = '';
+  
+        // Vérifier si l'objet participants est vide
+        if (Object.keys(participants).length === 0) {
+          participantsDiv.textContent = 'Aucun participant trouvé.';
+        } else {
+          // Utiliser Object.values pour récupérer les participants
+          const participantsArray = Object.values(participants);
+  
+          // Créer les éléments pour chaque participant
+          participantsArray.forEach(participant => {
+            const pillDiv = document.createElement('div');
+            pillDiv.classList.add('pill');
+  
+            const firstNameDiv = document.createElement('div');
+            firstNameDiv.classList.add('first-name');
+            firstNameDiv.textContent = participant.first_name;
+  
+            const lastNameDiv = document.createElement('div');
+            lastNameDiv.classList.add('last-name');
+            lastNameDiv.textContent = participant.last_name;
+  
+            const iconCrossDiv = document.createElement('div');
+            iconCrossDiv.classList.add('icon-cross');
+            const crossIcon = document.createElement('div');
+            crossIcon.classList.add('icon');
+            crossIcon.innerHTML = `<pf-icons-times></pf-icons-times>`;
+            iconCrossDiv.appendChild(crossIcon);
+  
+            const iconValidateDiv = document.createElement('div');
+            iconValidateDiv.classList.add('icon-validate');
+            const checkIcon = document.createElement('div');
+            checkIcon.classList.add('icon');
+            checkIcon.innerHTML = `<pf-icons-check></pf-icons-check>`;
+            iconValidateDiv.appendChild(checkIcon);
+  
+            // Ajouter les éléments dans pillDiv
+            pillDiv.appendChild(firstNameDiv);
+            pillDiv.appendChild(lastNameDiv);
+            pillDiv.appendChild(iconCrossDiv);
+            pillDiv.appendChild(iconValidateDiv);
+  
+            // Ajouter le pillDiv dans la div des participants
+            participantsDiv.appendChild(pillDiv);
+          });
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des participants:', error);
+        participantsDiv.textContent = 'Erreur lors du chargement des participants.';
+      }
+  
+      console.log('Participants ajoutés dans la div:', participantsDiv);
+    } else {
+      console.error('Aucun élément "panel-row" trouvé pour ce cours.');
+    }
+  }
+  
+
+
+
+
+
+
+  
+  
+
 
   formatDateFromISO(isoDateString: string): string {
     const date = new Date(isoDateString);

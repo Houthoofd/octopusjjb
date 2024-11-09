@@ -663,19 +663,90 @@ class Cours extends (0, _core.WebComponent) {
         else this.isAdmin = false;
         console.log("Est-ce un administrateur ? ", this.isAdmin);
     }
-    displayParticipants(event) {
-        console.log(event);
-        // Récupérer l'élément qui a déclenché l'événement
-        const target = event.target;
-        // Trouver l'élément parent avec la classe 'panel-row'
-        const panelRow = target.closest(".panel-row");
-        if (!panelRow) {
-            console.error('Aucun \xe9l\xe9ment "panel-row" trouv\xe9.');
-            return;
+    async loadParticipants(courId) {
+        console.log(courId);
+        try {
+            const response = await fetch("http://localhost:3000/cours/participant", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    cour_id: courId
+                })
+            });
+            if (!response.ok) throw new Error("Erreur serveur.");
+            const data = await response.json();
+            // Vérifier si la réponse contient des participants
+            return data.participants && data.participants.length > 0 ? data.participants : [];
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+            return [];
         }
-        // Ajouter ou retirer la classe 'active' sur l'élément parent
-        panelRow.classList.toggle("active");
-        console.log('Classe "active" toggl\xe9e pour', panelRow);
+    }
+    async displayParticipants(cour) {
+        console.log("Cours ID:", cour.id);
+        // Utiliser querySelector pour sélectionner le bon panel-row correspondant au cours cliqué
+        const panelRow = this.shadowRoot?.querySelector(`.panel-row`);
+        if (panelRow) {
+            // Ajouter ou retirer la classe "active"
+            panelRow.classList.toggle("active");
+            console.log('Classe "active" toggl\xe9e pour:', panelRow);
+            // Vérifier si la div avec les participants existe déjà
+            let participantsDiv = panelRow.querySelector(".new-participants");
+            if (!participantsDiv) {
+                // Créer une nouvelle div à ajouter si elle n'existe pas
+                participantsDiv = document.createElement("div");
+                participantsDiv.classList.add("new-participants"); // Classe pour styliser la nouvelle div
+                panelRow.appendChild(participantsDiv); // Ajoute la div à la fin de panelRow
+            }
+            // Charger les participants depuis l'API
+            try {
+                const participants = await this.loadParticipants(cour.id);
+                // Vider la div des anciens participants
+                participantsDiv.innerHTML = "";
+                // Vérifier si l'objet participants est vide
+                if (Object.keys(participants).length === 0) participantsDiv.textContent = "Aucun participant trouv\xe9.";
+                else {
+                    // Utiliser Object.values pour récupérer les participants
+                    const participantsArray = Object.values(participants);
+                    // Créer les éléments pour chaque participant
+                    participantsArray.forEach((participant)=>{
+                        const pillDiv = document.createElement("div");
+                        pillDiv.classList.add("pill");
+                        const firstNameDiv = document.createElement("div");
+                        firstNameDiv.classList.add("first-name");
+                        firstNameDiv.textContent = participant.first_name;
+                        const lastNameDiv = document.createElement("div");
+                        lastNameDiv.classList.add("last-name");
+                        lastNameDiv.textContent = participant.last_name;
+                        const iconCrossDiv = document.createElement("div");
+                        iconCrossDiv.classList.add("icon-cross");
+                        const crossIcon = document.createElement("div");
+                        crossIcon.classList.add("icon");
+                        crossIcon.innerHTML = `<pf-icons-times></pf-icons-times>`;
+                        iconCrossDiv.appendChild(crossIcon);
+                        const iconValidateDiv = document.createElement("div");
+                        iconValidateDiv.classList.add("icon-validate");
+                        const checkIcon = document.createElement("div");
+                        checkIcon.classList.add("icon");
+                        checkIcon.innerHTML = `<pf-icons-check></pf-icons-check>`;
+                        iconValidateDiv.appendChild(checkIcon);
+                        // Ajouter les éléments dans pillDiv
+                        pillDiv.appendChild(firstNameDiv);
+                        pillDiv.appendChild(lastNameDiv);
+                        pillDiv.appendChild(iconCrossDiv);
+                        pillDiv.appendChild(iconValidateDiv);
+                        // Ajouter le pillDiv dans la div des participants
+                        participantsDiv.appendChild(pillDiv);
+                    });
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des participants:", error);
+                participantsDiv.textContent = "Erreur lors du chargement des participants.";
+            }
+            console.log("Participants ajout\xe9s dans la div:", participantsDiv);
+        } else console.error('Aucun \xe9l\xe9ment "panel-row" trouv\xe9 pour ce cours.');
     }
     formatDateFromISO(isoDateString) {
         const date = new Date(isoDateString);
@@ -719,7 +790,7 @@ Cours = (0, _tsDecorate._)([
               ${(0, _core.asyncAppend)(cours.preloadData(), (result)=>{
                 return (0, _core.html)`
                     ${(0, _core.repeat)(result.cours, (0, _core.html)`${(cour)=>{
-                    console.log(cour.participants);
+                    console.log(cour);
                     return (0, _core.html)`
                           <div class="panel-row">
                             <div class="row">
@@ -728,19 +799,7 @@ Cours = (0, _tsDecorate._)([
                               <div class="heure-debut">${cour.heure_debut}</div>
                               <div class="heure-fin">${cour.heure_fin}</div>
                               <pf-button @click="${()=>cours.register(cour)}">Réservez</pf-button>
-                              ${cours.isAdmin === true ? (0, _core.html)`<div @click="${(e)=>cours.displayParticipants(e)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : (0, _core.html)``}
-                            </div>
-                            <div class="participants">
-                              ${(0, _core.repeat)(cour.participants, (0, _core.html)`${(participant)=>{
-                        return (0, _core.html)`
-                                    <div class="pill">
-                                      <div class="first-name">${participant.first_name}</div>
-                                      <div class="last-name">${participant.last_name}</div>
-                                      <div class="icon-cross"><div class="icon"><pf-icons-times></pf-icons-times></div></div>
-                                      <div class="icon-validate"><div class="icon"><pf-icons-check></pf-icons-check></div></div>
-                                    </div>
-                                  `;
-                    }}`)}
+                              ${cours.isAdmin === true ? (0, _core.html)`<div @click="${(cour)=>cours.displayParticipants(cour)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>` : (0, _core.html)``}
                             </div>
                           </div>`;
                 }}`)}`;
