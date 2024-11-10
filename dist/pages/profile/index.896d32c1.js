@@ -600,7 +600,7 @@ class Profile extends (0, _core.WebComponent) {
             if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
             const userData = JSON.parse(userDataString);
             console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
-            const response = await fetch("http://localhost:3000/compte", {
+            const response = await fetch("http://localhost:3000/profile", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

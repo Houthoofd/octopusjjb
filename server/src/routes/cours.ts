@@ -131,6 +131,80 @@ router.post('/inscription', async (req, res) => {
   }
 });
 
+router.post('/participant/cancel', async (req, res) => {
+  const { cours_id, nom, prenom } = req.body;
+
+  try {
+
+    const client = new SQLClient();
+
+    // Requête pour récupérer l'ID du participant en fonction du nom et prénom
+    const participantQuery = `
+      SELECT id FROM participants WHERE first_name = ? AND last_name = ?
+    `;
+    
+    const result = await client.query(participantQuery, [prenom, nom]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Participant non trouvé.' });
+    }
+
+    // Récupérer l'ID du participant
+    const participant_id = result[0].id;
+
+    // Requête pour mettre à jour le statut du participant dans la table inscription
+    const updateQuery = `
+      UPDATE inscription
+      SET status = FALSE
+      WHERE cours_id = ? AND participant_id = ?
+    `;
+    
+    await client.query(updateQuery, [cours_id, participant_id]);
+
+    res.status(200).json({ success: true, message: 'Présence annulée avec succès.' });
+  } catch (error) {
+    console.error('Erreur lors de l\'annulation du participant:', error);
+    res.status(500).json({ success: false, message: 'Erreur serveur.' });
+  }
+});
+
+router.post('/participant/validation', async (req, res) => {
+  const { cours_id, nom, prenom } = req.body;
+
+  try {
+    const client = new SQLClient();
+
+    // Requête pour récupérer l'ID du participant en fonction du nom et prénom
+    const participantQuery = `
+      SELECT id FROM participants WHERE first_name = ? AND last_name = ?
+    `;
+    
+    const result = await client.query(participantQuery, [prenom, nom]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ success: false, message: 'Participant non trouvé.' });
+    }
+
+    // Récupérer l'ID du participant
+    const participant_id = result[0].id;
+
+    // Requête pour mettre à jour le statut du participant dans la table inscription
+    const updateQuery = `
+      UPDATE inscription
+      SET status = TRUE
+      WHERE cours_id = ? AND participant_id = ?
+    `;
+    
+    await client.query(updateQuery, [cours_id, participant_id]);
+
+    res.status(200).json({ success: true, message: 'Participant validé avec succès.' });
+  } catch (error) {
+    console.error('Erreur lors de la validation du participant:', error);
+    res.status(500).json({ success: false, message: 'Erreur serveur.' });
+  }
+});
+
+
 
 
 
