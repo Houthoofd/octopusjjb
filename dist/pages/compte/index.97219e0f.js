@@ -1668,7 +1668,31 @@ var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 class Navigation extends (0, _core.WebComponent) {
+    connectedCallback() {
+        super.connectedCallback();
+        this.getRole();
+    }
+    getRole() {
+        const userDataString = localStorage.getItem("userData");
+        if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
+        const userData = JSON.parse(userDataString);
+        console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
+        // Récupérer le rôle de l'utilisateur
+        const userRole = userData.role;
+        console.log("R\xf4le de l'utilisateur:", userRole);
+        // Vérifier si le rôle est 'administrator' ou 'super-administrator' et mettre à jour isAdmin
+        if (userRole === "administrator" || userRole === "super-administrator") this.isAdmin = true;
+        else this.isAdmin = false;
+        console.log("Est-ce un administrateur ? ", this.isAdmin);
+    }
+    constructor(...args){
+        super(...args);
+        this.isAdmin = null;
+    }
 }
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Navigation.prototype, "isAdmin", void 0);
 Navigation = (0, _tsDecorate._)([
     (0, _core.customElement)({
         name: "navigation-panel",
@@ -1680,6 +1704,7 @@ Navigation = (0, _tsDecorate._)([
             <div class="item"><a href="/pages/informations">infos</a></div>
             <div class="item"><a href="/pages/compte">compte</a></div>
             <div class="item"><a href="/pages/profile">profile</a></div>
+             ${navigation.isAdmin === true ? (0, _core.html)`<div class="item"><a href="/pages/dashboard">dashboard</a></div>` : (0, _core.html)``}
           </div>
         </div>`;
         }}`,

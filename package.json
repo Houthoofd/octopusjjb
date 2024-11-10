@@ -12,7 +12,8 @@
         "ui/src/pages/inscriptions/index.html",
         "ui/src/pages/connexion/index.html",
         "ui/src/pages/cours/index.html",
-        "ui/src/pages/password/index.html"
+        "ui/src/pages/password/index.html",
+         "ui/src/pages/dashboard/index.html"
       ],
       "distDir": "server/public"
     },

@@ -13,6 +13,7 @@ import 'unofficial-pf-v5-wc-icons';
             <div class="item"><a href="/pages/informations">infos</a></div>
             <div class="item"><a href="/pages/compte">compte</a></div>
             <div class="item"><a href="/pages/profile">profile</a></div>
+             ${navigation.isAdmin === true ? html`<div class="item"><a href="/pages/dashboard">dashboard</a></div>` : html``}
           </div>
         </div>`;
   }}`,
@@ -44,5 +45,31 @@ import 'unofficial-pf-v5-wc-icons';
   ]
 })
 export class Navigation extends WebComponent{
+  @state() isAdmin: boolean = null;
+  connectedCallback() {
+    super.connectedCallback();
+    this.getRole();
+  }
+  getRole() {
+    const userDataString = localStorage.getItem('userData');
+    if (!userDataString) {
+      throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
+    }
 
+    const userData = JSON.parse(userDataString);
+    console.log('Données utilisateur récupérées:', userData);
+
+    // Récupérer le rôle de l'utilisateur
+    const userRole = userData.role;
+    console.log('Rôle de l\'utilisateur:', userRole);
+
+    // Vérifier si le rôle est 'administrator' ou 'super-administrator' et mettre à jour isAdmin
+    if (userRole === 'administrator' || userRole === 'super-administrator') {
+      this.isAdmin = true;
+    } else {
+      this.isAdmin = false;
+    }
+
+    console.log('Est-ce un administrateur ? ', this.isAdmin);
+  }
 }
