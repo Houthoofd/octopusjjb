@@ -686,16 +686,28 @@ class Cours extends (0, _core.WebComponent) {
     }
     async displayParticipants(cour) {
         console.log("Cours ID:", cour.id);
-        // Utiliser querySelector pour sélectionner le bon panel-row correspondant au cours cliqué
-        const panelRow = this.shadowRoot?.querySelector(`.panel-row`);
+        // Utiliser querySelector pour sélectionner le panel-row correspondant au cours cliqué
+        const panelRow = this.shadowRoot?.querySelector(`.panel-row[data-cours-id="${cour.id}"]`);
+        console.log(panelRow);
         if (panelRow) {
-            // Ajouter ou retirer la classe "active"
-            panelRow.classList.toggle("active");
-            console.log('Classe "active" toggl\xe9e pour:', panelRow);
+            // Si panel-row est déjà active, la désactiver et ne rien faire de plus
+            if (panelRow.classList.contains("active")) {
+                panelRow.classList.remove("active");
+                console.log("Panel d\xe9sactiv\xe9.");
+                return; // Sortir de la fonction car on ne veut pas recharger les participants
+            }
+            // Sinon, activer le panel
+            panelRow.classList.add("active");
+            console.log("Panel activ\xe9:", panelRow);
             // Vérifier si la div avec les participants existe déjà
             let participantsDiv = panelRow.querySelector(".new-participants");
+            // Si la div existe déjà et a des participants, ne pas recharger les données
+            if (participantsDiv && participantsDiv.children.length > 0) {
+                console.log("Participants d\xe9j\xe0 charg\xe9s. Aucun rechargement n\xe9cessaire.");
+                return;
+            }
+            // Si la div des participants n'existe pas, la créer
             if (!participantsDiv) {
-                // Créer une nouvelle div à ajouter si elle n'existe pas
                 participantsDiv = document.createElement("div");
                 participantsDiv.classList.add("new-participants"); // Classe pour styliser la nouvelle div
                 panelRow.appendChild(participantsDiv); // Ajoute la div à la fin de panelRow
@@ -792,7 +804,7 @@ Cours = (0, _tsDecorate._)([
                     ${(0, _core.repeat)(result.cours, (0, _core.html)`${(cour)=>{
                     console.log(cour);
                     return (0, _core.html)`
-                          <div class="panel-row">
+                          <div class="panel-row" data-cours-id="${cour.id}">
                             <div class="row">
                               <div class="type-de-cours">${cour.type_cours}</div>
                               <div class="date">${cours.formatDateFromISO(cour.date_cours)}</div>
@@ -871,6 +883,13 @@ Cours = (0, _tsDecorate._)([
         .pill > .icon-validate > .icon{
           transform: translate(4px, 4px);
           color: #9e9e9eab;
+        }
+        .panel-row .new-participants {
+          display: none; /* Cacher la div par défaut */
+        }
+
+        .panel-row.active .new-participants {
+          display: block; /* Afficher la div quand panel-row est active */
         }
       `
         ]

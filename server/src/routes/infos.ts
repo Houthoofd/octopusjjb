@@ -4,10 +4,10 @@ import { Client as SQLClient } from '../packages/db/client';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  const { email, prenom, nom, role } = req.body; 
+  const { email, prenom, nom} = req.body; 
   console.log("Requête reçue avec les données :", req.body);
 
-  if (!email || !prenom || !nom || !role) {
+  if (!email || !prenom || !nom) {
     return res.status(400).send('Tous les champs sont requis.');
   }
 
@@ -17,14 +17,16 @@ router.post('/', async (req, res) => {
     // Requête pour récupérer l'utilisateur
     const query = `
       SELECT * FROM utilisateurs 
-      WHERE email = ? AND first_name = ? AND last_name = ? AND status = ?`;
-    const values = [email, prenom, nom, role];
+      WHERE email = ? AND first_name = ? AND last_name = ?`;
+    const values = [email, prenom, nom];
 
     const results = await client.query(query, values);
 
     if (results.length === 0) {
       return res.status(404).send('Utilisateur non trouvé.');
     }
+
+    console.log(results)
 
     // L'objet userInfo avec uniquement 'grade' pour le nom du grade, initialisé à null
     const userInfo = {
