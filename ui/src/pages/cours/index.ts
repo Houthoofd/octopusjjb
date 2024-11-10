@@ -88,6 +88,12 @@ import '../../components';
           padding: 10px 10px;
           border-radius: 10px;
         }
+        .pill.valide{
+          background-color: green;
+        }
+        .pill.invalide{
+          background-color: red;
+        }
         .pill > .icon-cross{
           cursor: pointer;
           background-color: #f9f9f9;
@@ -250,17 +256,6 @@ export class Cours extends WebComponent {
     }
   }
 
-  // Fonction pour supprimer un participant
-  removeParticipant(participantId) {
-    console.log(`Supprimer le participant avec l'ID: ${participantId}`);
-    // Logique pour supprimer le participant
-  }
-
-  // Fonction pour valider un participant
-  validateParticipant(participantId) {
-    console.log(`Valider le participant avec l'ID: ${participantId}`);
-   // Logique pour valider le participant
-  }
 
   
 
@@ -341,9 +336,8 @@ export class Cours extends WebComponent {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
-                    cour_id: cour.id,      // L'ID du cours
-                    nom: participant[1],   // Nom du participant
-                    prenom: participant[0] // Prénom du participant
+                    courId: cour.id,      // L'ID du cours
+                    participantId: participant.participant_id
                   })
                 });
             
@@ -356,11 +350,11 @@ export class Cours extends WebComponent {
                 const data = await response.json();
             
                 // Vérifier si la suppression a été effectuée avec succès (basé sur la réponse du serveur)
-                if (data.success) {
+                if (data.message) {
                   console.log('Participant supprimé avec succès.');
                   
                   // Ici, tu peux mettre à jour l'interface utilisateur, comme retirer le participant de l'affichage
-                  iconCrossDiv.parentElement.remove(); // Par exemple, retirer la div contenant le participant
+                  iconCrossDiv.parentElement.classList.toggle("invalide"); // Par exemple, retirer la div contenant le participant
                 } else {
                   console.error('Erreur lors de la suppression du participant :', data.message);
                 }
@@ -381,15 +375,15 @@ export class Cours extends WebComponent {
 
             // Attacher une fonction à l'événement "click" de l'icône "check"
             iconValidateDiv.addEventListener('click', async () => {
+              console.log(cour.id,participant.participant_id)
               try {
                 // Effectuer la requête POST pour supprimer le participant
                 const response = await fetch('http://localhost:3000/cours/participant/validation', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
-                    cour_id: cour.id,      // L'ID du cours
-                    nom: participant[1],   // Nom du participant
-                    prenom: participant[0] // Prénom du participant
+                    courId: cour.id,      // L'ID du cours
+                    participantId: participant.participant_id
                   })
                 });
             
@@ -402,11 +396,11 @@ export class Cours extends WebComponent {
                 const data = await response.json();
             
                 // Vérifier si la suppression a été effectuée avec succès (basé sur la réponse du serveur)
-                if (data.success) {
+                if (data.message) {
                   console.log('Participant validé avec succès.');
                   
                   // Ici, tu peux mettre à jour l'interface utilisateur, comme retirer le participant de l'affichage
-                  iconCrossDiv.parentElement.remove(); // Par exemple, retirer la div contenant le participant
+                  iconCrossDiv.parentElement.classList.toggle("valide");
                 } else {
                   console.error('Erreur lors de la suppression du participant :', data.message);
                 }

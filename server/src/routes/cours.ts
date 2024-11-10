@@ -131,78 +131,65 @@ router.post('/inscription', async (req, res) => {
   }
 });
 
+// Route pour valider la présence d'un participant
 router.post('/participant/cancel', async (req, res) => {
-  const { cours_id, nom, prenom } = req.body;
+  const { courId, participantId } = req.body; // Récupère les données envoyées par le front
+  
+  if (!courId || !participantId) {
+    return res.status(400).json({ message: 'Cour ID et Participant ID sont requis.' });
+  }
 
   try {
-
     const client = new SQLClient();
+    // Exécution de la requête d'update avec les paramètres
+    const result = await client.query(
+      'UPDATE inscriptions SET status = FALSE WHERE cours_id = ? AND utilisateur_id = ?',
+      [courId, participantId]
+    );
 
-    // Requête pour récupérer l'ID du participant en fonction du nom et prénom
-    const participantQuery = `
-      SELECT id FROM participants WHERE first_name = ? AND last_name = ?
-    `;
-    
-    const result = await client.query(participantQuery, [prenom, nom]);
-
-    if (result.length === 0) {
-      return res.status(404).json({ success: false, message: 'Participant non trouvé.' });
+    // Vérifie si des lignes ont été réellement modifiées
+    if (result.changedRows === 0) {
+      return res.status(404).json({ message: 'Aucun changement n\'a eu lieu, vérifie si le participant est déjà validé.' });
     }
 
-    // Récupérer l'ID du participant
-    const participant_id = result[0].id;
-
-    // Requête pour mettre à jour le statut du participant dans la table inscription
-    const updateQuery = `
-      UPDATE inscription
-      SET status = FALSE
-      WHERE cours_id = ? AND participant_id = ?
-    `;
-    
-    await client.query(updateQuery, [cours_id, participant_id]);
-
-    res.status(200).json({ success: true, message: 'Présence annulée avec succès.' });
+    // Si un changement a eu lieu
+    return res.status(200).json({ message: 'Participant supprimé avec succès.' });
   } catch (error) {
-    console.error('Erreur lors de l\'annulation du participant:', error);
-    res.status(500).json({ success: false, message: 'Erreur serveur.' });
+    console.error('Erreur lors de la mise à jour du statut :', error);
+    return res.status(500).json({ message: 'Erreur serveur.' });
   }
 });
 
 router.post('/participant/validation', async (req, res) => {
-  const { cours_id, nom, prenom } = req.body;
+  const { courId, participantId } = req.body; // Récupère les données envoyées par le front
+  
+  if (!courId || !participantId) {
+    return res.status(400).json({ message: 'Cour ID et Participant ID sont requis.' });
+  }
 
   try {
     const client = new SQLClient();
+    // Exécution de la requête d'update avec les paramètres
+    const result = await client.query(
+      'UPDATE inscriptions SET status = TRUE WHERE cours_id = ? AND utilisateur_id = ?',
+      [courId, participantId]
+    );
 
-    // Requête pour récupérer l'ID du participant en fonction du nom et prénom
-    const participantQuery = `
-      SELECT id FROM participants WHERE first_name = ? AND last_name = ?
-    `;
-    
-    const result = await client.query(participantQuery, [prenom, nom]);
-
-    if (result.length === 0) {
-      return res.status(404).json({ success: false, message: 'Participant non trouvé.' });
+    // Vérifie si des lignes ont été réellement modifiées
+    if (result.changedRows === 0) {
+      return res.status(404).json({ message: 'Aucun changement n\'a eu lieu, vérifie si le participant est déjà validé.' });
     }
 
-    // Récupérer l'ID du participant
-    const participant_id = result[0].id;
-
-    // Requête pour mettre à jour le statut du participant dans la table inscription
-    const updateQuery = `
-      UPDATE inscription
-      SET status = TRUE
-      WHERE cours_id = ? AND participant_id = ?
-    `;
-    
-    await client.query(updateQuery, [cours_id, participant_id]);
-
-    res.status(200).json({ success: true, message: 'Participant validé avec succès.' });
+    // Si un changement a eu lieu
+    return res.status(200).json({ message: 'Participant validé avec succès.' });
   } catch (error) {
-    console.error('Erreur lors de la validation du participant:', error);
-    res.status(500).json({ success: false, message: 'Erreur serveur.' });
+    console.error('Erreur lors de la mise à jour du statut :', error);
+    return res.status(500).json({ message: 'Erreur serveur.' });
   }
 });
+
+
+
 
 
 

@@ -684,16 +684,6 @@ class Cours extends (0, _core.WebComponent) {
             return [];
         }
     }
-    // Fonction pour supprimer un participant
-    removeParticipant(participantId) {
-        console.log(`Supprimer le participant avec l'ID: ${participantId}`);
-    // Logique pour supprimer le participant
-    }
-    // Fonction pour valider un participant
-    validateParticipant(participantId) {
-        console.log(`Valider le participant avec l'ID: ${participantId}`);
-    // Logique pour valider le participant
-    }
     async displayParticipants(cour) {
         console.log("Cours ID:", cour.id);
         // Utiliser querySelector pour sélectionner le panel-row correspondant au cours cliqué
@@ -758,9 +748,8 @@ class Cours extends (0, _core.WebComponent) {
                                         "Content-Type": "application/json"
                                     },
                                     body: JSON.stringify({
-                                        cour_id: cour.id,
-                                        nom: participant[1],
-                                        prenom: participant[0] // Prénom du participant
+                                        courId: cour.id,
+                                        participantId: participant.participant_id
                                     })
                                 });
                                 // Vérifier si la réponse est ok (code 200-299)
@@ -768,10 +757,10 @@ class Cours extends (0, _core.WebComponent) {
                                 // Extraire les données JSON de la réponse
                                 const data = await response.json();
                                 // Vérifier si la suppression a été effectuée avec succès (basé sur la réponse du serveur)
-                                if (data.success) {
+                                if (data.message) {
                                     console.log("Participant supprim\xe9 avec succ\xe8s.");
                                     // Ici, tu peux mettre à jour l'interface utilisateur, comme retirer le participant de l'affichage
-                                    iconCrossDiv.parentElement.remove(); // Par exemple, retirer la div contenant le participant
+                                    iconCrossDiv.parentElement.classList.toggle("invalide"); // Par exemple, retirer la div contenant le participant
                                 } else console.error("Erreur lors de la suppression du participant :", data.message);
                             } catch (error) {
                                 console.error("Erreur lors de la requ\xeate fetch :", error);
@@ -785,6 +774,7 @@ class Cours extends (0, _core.WebComponent) {
                         iconValidateDiv.appendChild(checkIcon);
                         // Attacher une fonction à l'événement "click" de l'icône "check"
                         iconValidateDiv.addEventListener("click", async ()=>{
+                            console.log(cour.id, participant.participant_id);
                             try {
                                 // Effectuer la requête POST pour supprimer le participant
                                 const response = await fetch("http://localhost:3000/cours/participant/validation", {
@@ -793,9 +783,8 @@ class Cours extends (0, _core.WebComponent) {
                                         "Content-Type": "application/json"
                                     },
                                     body: JSON.stringify({
-                                        cour_id: cour.id,
-                                        nom: participant[1],
-                                        prenom: participant[0] // Prénom du participant
+                                        courId: cour.id,
+                                        participantId: participant.participant_id
                                     })
                                 });
                                 // Vérifier si la réponse est ok (code 200-299)
@@ -803,10 +792,10 @@ class Cours extends (0, _core.WebComponent) {
                                 // Extraire les données JSON de la réponse
                                 const data = await response.json();
                                 // Vérifier si la suppression a été effectuée avec succès (basé sur la réponse du serveur)
-                                if (data.success) {
+                                if (data.message) {
                                     console.log("Participant valid\xe9 avec succ\xe8s.");
                                     // Ici, tu peux mettre à jour l'interface utilisateur, comme retirer le participant de l'affichage
-                                    iconCrossDiv.parentElement.remove(); // Par exemple, retirer la div contenant le participant
+                                    iconCrossDiv.parentElement.classList.toggle("valide");
                                 } else console.error("Erreur lors de la suppression du participant :", data.message);
                             } catch (error) {
                                 console.error("Erreur lors de la requ\xeate fetch :", error);
@@ -929,6 +918,12 @@ Cours = (0, _tsDecorate._)([
           width: 200px;
           padding: 10px 10px;
           border-radius: 10px;
+        }
+        .pill.valide{
+          background-color: green;
+        }
+        .pill.invalide{
+          background-color: red;
         }
         .pill > .icon-cross{
           cursor: pointer;
