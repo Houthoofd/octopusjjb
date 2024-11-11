@@ -29,12 +29,10 @@ router.get('/', async (req, res) => {
     // Boucle pour récupérer les informations de chaque utilisateur
     for (const user of results) {
       const userInfo = {
-        email: user.email,
+        id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
-        role: user.status,
         gender: user.gender,
-        date_of_birth: user.date_of_birth,
         grade: null // Initialisé à null
       };
 
@@ -59,6 +57,53 @@ router.get('/', async (req, res) => {
     return res.status(500).send('Erreur lors de la récupération des informations.');
   }
 });
+
+router.post('/infos', async (req, res) => {
+  const { user_id } = req.body; // Récupération de l'ID de l'utilisateur depuis le corps de la requête
+  console.log(user_id);
+
+  const client = new SQLClient();
+
+  try {
+    // Requête pour récupérer un utilisateur en fonction de son ID
+    const query = `SELECT * FROM utilisateurs WHERE id = ?`;
+
+    const results = await client.query(query, [user_id]); // Utilisation de l'ID de l'utilisateur
+
+    if (results.length === 0) {
+      return res.status(404).send('Utilisateur non trouvé.');
+    }
+
+    console.log(results);
+
+    // Initialisation de l'objet pour stocker les informations de l'utilisateur
+    const userInfo = {
+      email: results[0].email,
+      first_name: results[0].first_name,
+      last_name: results[0].last_name,
+      role: results[0].status,
+      gender: results[0].gender,
+      date_of_birth: results[0].date_of_birth,
+      grade: null // Initialisé à null
+    };
+
+    // Requête pour récupérer le nom du grade à partir de l'ID du grade
+    const gradeQuery = `SELECT grade FROM grades WHERE id = ?`;
+    const gradeResults = await client.query(gradeQuery, [results[0].grade]);
+
+    if (gradeResults.length > 0) {
+      userInfo.grade = gradeResults[0].grade; // Ajout du nom du grade
+    }
+
+    console.log("Informations utilisateur trouvées :", userInfo);
+    return res.status(200).json(userInfo);
+
+  } catch (err) {
+    console.error('Erreur lors de la récupération des informations de l\'utilisateur :', err);
+    return res.status(500).send('Erreur lors de la récupération des informations.');
+  }
+});
+
 
 
 

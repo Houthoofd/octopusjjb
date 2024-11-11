@@ -611,6 +611,108 @@ class Dashboard extends (0, _core.WebComponent) {
             return [];
         }
     }
+    async loadInfosUser(userId) {
+        console.log(userId);
+        try {
+            const response = await fetch("http://localhost:3000/users/infos", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    user_id: userId
+                })
+            });
+            if (!response.ok) throw new Error("Erreur serveur.");
+            const data = await response.json();
+            console.log(data);
+            // Vérifier si la réponse contient des participants
+            return data;
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+            return [];
+        }
+    }
+    async displayMoreInfos(user) {
+        console.log("User ID:", user.id);
+        // Utiliser querySelector pour sélectionner le panel-row correspondant au cours cliqué
+        const panelRow = this.shadowRoot?.querySelector(`.panel-row[data-user-id="${user.id}"]`);
+        console.log(panelRow);
+        if (panelRow) {
+            // Si le panel est déjà activé, le désactiver
+            if (panelRow.classList.contains("active")) {
+                panelRow.classList.remove("active");
+                console.log("Panel d\xe9sactiv\xe9.");
+                return;
+            }
+            // Activer le panel
+            panelRow.classList.add("active");
+            console.log("Panel activ\xe9:", panelRow);
+            // Vérifier si la div avec les informations existe déjà
+            let participantsDiv = panelRow.querySelector(".new-participants");
+            // Si la div n'existe pas, la créer
+            if (!participantsDiv) {
+                participantsDiv = document.createElement("div");
+                participantsDiv.classList.add("new-participants");
+                panelRow.appendChild(participantsDiv);
+            }
+            // Si les informations sont déjà chargées, ne pas recharger
+            if (participantsDiv.children.length > 0) {
+                console.log("Informations d\xe9j\xe0 charg\xe9es. Aucun rechargement n\xe9cessaire.");
+                return;
+            }
+            // Charger les informations utilisateur depuis l'API
+            try {
+                const userInfo = await this.loadInfosUser(user.id);
+                console.log(userInfo);
+                // Vider les anciens participants (ou informations)
+                participantsDiv.innerHTML = "";
+                // Vérifier si des informations utilisateurs existent
+                if (Object.keys(userInfo).length === 0) participantsDiv.textContent = "Aucune information trouv\xe9e.";
+                else {
+                    // Créer et afficher les informations utilisateur
+                    const pillDiv = document.createElement("div");
+                    pillDiv.classList.add("pill");
+                    const firstNameDiv = document.createElement("div");
+                    firstNameDiv.classList.add("first-name");
+                    firstNameDiv.textContent = `Pr\xe9nom : ${userInfo.first_name}`;
+                    const lastNameDiv = document.createElement("div");
+                    lastNameDiv.classList.add("last-name");
+                    lastNameDiv.textContent = `Nom : ${userInfo.last_name}`;
+                    const emailDiv = document.createElement("div");
+                    emailDiv.classList.add("email");
+                    emailDiv.textContent = `Email : ${userInfo.email}`;
+                    const roleDiv = document.createElement("div");
+                    roleDiv.classList.add("role");
+                    roleDiv.textContent = `R\xf4le : ${userInfo.role}`;
+                    const genderDiv = document.createElement("div");
+                    genderDiv.classList.add("gender");
+                    genderDiv.textContent = `Genre : ${userInfo.gender}`;
+                    const dobDiv = document.createElement("div");
+                    dobDiv.classList.add("dob");
+                    const dob = new Date(userInfo.date_of_birth).toLocaleDateString(); // Formatage de la date
+                    dobDiv.textContent = `Date de naissance : ${dob}`;
+                    const gradeDiv = document.createElement("div");
+                    gradeDiv.classList.add("grade");
+                    gradeDiv.textContent = `Grade : ${userInfo.grade}`;
+                    // Ajouter les éléments dans pillDiv
+                    pillDiv.appendChild(firstNameDiv);
+                    pillDiv.appendChild(lastNameDiv);
+                    pillDiv.appendChild(emailDiv);
+                    pillDiv.appendChild(roleDiv);
+                    pillDiv.appendChild(genderDiv);
+                    pillDiv.appendChild(dobDiv);
+                    pillDiv.appendChild(gradeDiv);
+                    // Ajouter le pillDiv dans participantsDiv
+                    participantsDiv.appendChild(pillDiv);
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des informations :", error);
+                participantsDiv.textContent = "Erreur lors du chargement des informations.";
+            }
+            console.log("Informations ajout\xe9es dans la div:", participantsDiv);
+        } else console.error('Aucun \xe9l\xe9ment "panel-row" trouv\xe9 pour cet utilisateur.');
+    }
 }
 Dashboard = (0, _tsDecorate._)([
     (0, _core.customElement)({
@@ -646,6 +748,7 @@ Dashboard = (0, _tsDecorate._)([
                               <div class="heure-debut">${user.first_name}</div>
                               <div class="heure-fin">${user.gender}</div>
                               <div class="heure-fin">${user.grade}</div>
+                              <div @click="${(user)=>dashboard.displayMoreInfos(user)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>
                             </div>
                           </div>`;
                 }}`)}`;
@@ -682,6 +785,13 @@ Dashboard = (0, _tsDecorate._)([
         }
         .icon{
           transform: translate(4px, 4px);
+        }
+        .panel-row .new-participants {
+          display: none; /* Cacher la div par défaut */
+        }
+
+        .panel-row.active .new-participants {
+          display: block; /* Afficher la div quand panel-row est active */
         }
       `
         ]
