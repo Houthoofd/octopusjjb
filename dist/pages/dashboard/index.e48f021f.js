@@ -670,41 +670,84 @@ class Dashboard extends (0, _core.WebComponent) {
                 // Vérifier si des informations utilisateurs existent
                 if (Object.keys(userInfo).length === 0) participantsDiv.textContent = "Aucune information trouv\xe9e.";
                 else {
-                    // Créer et afficher les informations utilisateur
-                    const pillDiv = document.createElement("div");
-                    pillDiv.classList.add("pill");
-                    const firstNameDiv = document.createElement("div");
-                    firstNameDiv.classList.add("first-name");
-                    firstNameDiv.textContent = `Pr\xe9nom : ${userInfo.first_name}`;
-                    const lastNameDiv = document.createElement("div");
-                    lastNameDiv.classList.add("last-name");
-                    lastNameDiv.textContent = `Nom : ${userInfo.last_name}`;
-                    const emailDiv = document.createElement("div");
-                    emailDiv.classList.add("email");
-                    emailDiv.textContent = `Email : ${userInfo.email}`;
-                    const roleDiv = document.createElement("div");
-                    roleDiv.classList.add("role");
-                    roleDiv.textContent = `R\xf4le : ${userInfo.role}`;
-                    const genderDiv = document.createElement("div");
-                    genderDiv.classList.add("gender");
-                    genderDiv.textContent = `Genre : ${userInfo.gender}`;
-                    const dobDiv = document.createElement("div");
-                    dobDiv.classList.add("dob");
-                    const dob = new Date(userInfo.date_of_birth).toLocaleDateString(); // Formatage de la date
-                    dobDiv.textContent = `Date de naissance : ${dob}`;
-                    const gradeDiv = document.createElement("div");
-                    gradeDiv.classList.add("grade");
-                    gradeDiv.textContent = `Grade : ${userInfo.grade}`;
-                    // Ajouter les éléments dans pillDiv
-                    pillDiv.appendChild(firstNameDiv);
-                    pillDiv.appendChild(lastNameDiv);
-                    pillDiv.appendChild(emailDiv);
-                    pillDiv.appendChild(roleDiv);
-                    pillDiv.appendChild(genderDiv);
-                    pillDiv.appendChild(dobDiv);
-                    pillDiv.appendChild(gradeDiv);
-                    // Ajouter le pillDiv dans participantsDiv
-                    participantsDiv.appendChild(pillDiv);
+                    // Créer un formulaire pour les informations utilisateur
+                    const form = document.createElement("form");
+                    form.classList.add("user-info-form");
+                    // Fonction pour créer un input avec un label
+                    const createInputField = (labelText, fieldName, value, disabled = false)=>{
+                        const div = document.createElement("div");
+                        div.classList.add("form-group");
+                        const label = document.createElement("label");
+                        label.textContent = labelText;
+                        const input = document.createElement("input");
+                        input.type = "text";
+                        input.name = fieldName;
+                        input.value = value || "";
+                        input.disabled = disabled;
+                        input.classList.add("form-control");
+                        div.appendChild(label);
+                        div.appendChild(input);
+                        return div;
+                    };
+                    // Ajouter les champs au formulaire
+                    form.appendChild(createInputField("Pr\xe9nom", "first_name", userInfo.first_name));
+                    form.appendChild(createInputField("Nom", "last_name", userInfo.last_name));
+                    form.appendChild(createInputField("Email", "email", userInfo.email));
+                    form.appendChild(createInputField("R\xf4le", "role", userInfo.role, true)); // Champ désactivé
+                    form.appendChild(createInputField("Genre", "gender", userInfo.gender));
+                    form.appendChild(createInputField("Date de naissance", "date_of_birth", new Date(userInfo.date_of_birth).toLocaleDateString()));
+                    form.appendChild(createInputField("Grade", "grade", userInfo.grade));
+                    // Créer un bouton de modification
+                    const editButton = document.createElement("button");
+                    editButton.type = "button";
+                    editButton.textContent = "Modifier les informations";
+                    editButton.classList.add("edit-btn");
+                    // Créer un bouton de sauvegarde (il sera caché au départ)
+                    const saveButton = document.createElement("button");
+                    saveButton.type = "button";
+                    saveButton.textContent = "Sauvegarder";
+                    saveButton.classList.add("save-btn");
+                    saveButton.style.display = "none"; // Caché au départ
+                    // Ajouter les boutons au formulaire
+                    form.appendChild(editButton);
+                    form.appendChild(saveButton);
+                    // Ajouter le formulaire dans participantsDiv
+                    participantsDiv.appendChild(form);
+                    // Fonction pour activer les champs d'édition
+                    const enableFormFields = (enable)=>{
+                        form.querySelectorAll("input").forEach((input)=>{
+                            if (input.name !== "role") input.disabled = !enable;
+                        });
+                    };
+                    // Gérer l'événement du bouton de modification
+                    editButton.addEventListener("click", ()=>{
+                        enableFormFields(true); // Activer les champs
+                        saveButton.style.display = "block"; // Montrer le bouton "Sauvegarder"
+                        editButton.style.display = "none"; // Cacher le bouton "Modifier"
+                    });
+                    // Gérer l'événement du bouton de sauvegarde
+                    saveButton.addEventListener("click", async ()=>{
+                        // Récupérer les données du formulaire
+                        const updatedData = {
+                            first_name: form.first_name.value,
+                            last_name: form.last_name.value,
+                            email: form.email.value,
+                            gender: form.gender.value,
+                            date_of_birth: form.date_of_birth.value,
+                            grade: form.grade.value
+                        };
+                        try {
+                            // Sauvegarder les nouvelles données via l'API
+                            //await this.updateUserInfos(user.id, updatedData);
+                            console.log("Informations mises \xe0 jour avec succ\xe8s:", updatedData);
+                            // Désactiver les champs après la sauvegarde
+                            enableFormFields(false);
+                            saveButton.style.display = "none"; // Cacher le bouton "Sauvegarder"
+                            editButton.style.display = "block"; // Afficher le bouton "Modifier"
+                        } catch (error) {
+                            console.error("Erreur lors de la mise \xe0 jour des informations:", error);
+                        }
+                    });
                 }
             } catch (error) {
                 console.error("Erreur lors du chargement des informations :", error);
