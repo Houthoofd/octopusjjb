@@ -702,6 +702,11 @@ class Dashboard extends (0, _core.WebComponent) {
                     editButton.type = "button";
                     editButton.textContent = "Modifier les informations";
                     editButton.classList.add("edit-btn");
+                    // Créer un bouton d'inforations supplémentaires //
+                    const MoreInfosButton = document.createElement("button");
+                    MoreInfosButton.type = "button";
+                    MoreInfosButton.textContent = "Pr\xe9sences";
+                    MoreInfosButton.classList.add("more-infos-btn");
                     // Créer un bouton de sauvegarde (il sera caché au départ)
                     const saveButton = document.createElement("button");
                     saveButton.type = "button";
@@ -713,6 +718,7 @@ class Dashboard extends (0, _core.WebComponent) {
                     form.appendChild(saveButton);
                     // Ajouter le formulaire dans participantsDiv
                     participantsDiv.appendChild(form);
+                    participantsDiv.appendChild(MoreInfosButton);
                     // Fonction pour activer les champs d'édition
                     const enableFormFields = (enable)=>{
                         form.querySelectorAll("input").forEach((input)=>{
@@ -724,6 +730,18 @@ class Dashboard extends (0, _core.WebComponent) {
                         enableFormFields(true); // Activer les champs
                         saveButton.style.display = "block"; // Montrer le bouton "Sauvegarder"
                         editButton.style.display = "none"; // Cacher le bouton "Modifier"
+                    });
+                    MoreInfosButton.addEventListener("click", ()=>{
+                        // Informations à envoyer
+                        const infos = {
+                            firstName: userInfo.first_name,
+                            lastName: userInfo.last_name,
+                            email: userInfo.email // Exemple : Email de l'utilisateur
+                        };
+                        // Encoder les informations dans l'URL
+                        const queryString = new URLSearchParams(infos).toString();
+                        // Rediriger l'utilisateur vers la page cible avec les informations dans l'URL
+                        window.location.href = `http://localhost:1234/pages/profile?${queryString}`;
                     });
                     // Gérer l'événement du bouton de sauvegarde
                     saveButton.addEventListener("click", async ()=>{

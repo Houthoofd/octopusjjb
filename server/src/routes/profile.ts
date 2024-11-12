@@ -55,8 +55,10 @@ interface Courses {
 
 router.post('/', async (req, res) => {
   const { email, nom, prenom } = req.body;
+  const { emailByUrl, nomByUrl, prenomByUrl } = req.query;
 
   console.log("Données reçues:", { email, nom, prenom });
+  console.log("Données reçues via url:", { emailByUrl, nomByUrl, prenomByUrl });
 
   try {
     const client = new SQLClient();

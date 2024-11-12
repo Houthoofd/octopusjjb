@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
+import { userInfo, userInfo, userInfo } from 'os';
 
 @customElement({
     name: 'page-dashboard',
@@ -221,6 +222,12 @@ export class Dashboard extends WebComponent {
           editButton.type = 'button';
           editButton.textContent = 'Modifier les informations';
           editButton.classList.add('edit-btn');
+
+          // Créer un bouton d'inforations supplémentaires //
+          const MoreInfosButton = document.createElement('button');
+          MoreInfosButton.type = 'button';
+          MoreInfosButton.textContent = 'Présences';
+          MoreInfosButton.classList.add('more-infos-btn');
   
           // Créer un bouton de sauvegarde (il sera caché au départ)
           const saveButton = document.createElement('button');
@@ -235,6 +242,7 @@ export class Dashboard extends WebComponent {
   
           // Ajouter le formulaire dans participantsDiv
           participantsDiv.appendChild(form);
+          participantsDiv.appendChild(MoreInfosButton)
   
           // Fonction pour activer les champs d'édition
           const enableFormFields = (enable) => {
@@ -251,6 +259,22 @@ export class Dashboard extends WebComponent {
             saveButton.style.display = 'block'; // Montrer le bouton "Sauvegarder"
             editButton.style.display = 'none'; // Cacher le bouton "Modifier"
           });
+
+          MoreInfosButton.addEventListener('click', () => {
+            // Informations à envoyer
+            const infos = {
+              firstName: userInfo.first_name,  // Exemple : Prénom de l'utilisateur
+              lastName: userInfo.last_name,    // Exemple : Nom de l'utilisateur
+              email: userInfo.email  // Exemple : Email de l'utilisateur
+            };
+          
+            // Encoder les informations dans l'URL
+            const queryString = new URLSearchParams(infos).toString();
+          
+            // Rediriger l'utilisateur vers la page cible avec les informations dans l'URL
+            window.location.href = `http://localhost:1234/pages/profile?${queryString}`;
+          });
+          
   
           // Gérer l'événement du bouton de sauvegarde
           saveButton.addEventListener('click', async () => {
@@ -288,7 +312,7 @@ export class Dashboard extends WebComponent {
       console.error('Aucun élément "panel-row" trouvé pour cet utilisateur.');
     }
   }
-}  
+} 
 
 
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
