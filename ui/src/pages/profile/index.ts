@@ -14,23 +14,26 @@ import '../../components';
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Compte</h1>
+            <h1 slot="header">Profile</h1>
             <div class="table-infos">
               ${asyncAppend(profile.preloadData(), (result) => {
-                  return html`${
+                  console.log(result)
+                  return html`
+                    <div class="row header">
+                      <div class="col">Mois</div>
+                      <div class="col">Total de cours</div>
+                      <div class="col">Taux de présences</div>
+                    </div>
+                    ${
                     repeat(
-                      result,
+                      result.totalCourses,
                       html`${(info) => {
-                        console.log(info)
+                        console.log(info.month, info.total_courses)
                         return html`
                           <div class="row">
-                            <div class="type-de-cours">${profile.formatDateFromISO(info.created_at)}</div>
-                            <div class="heure-debut">${info.email}</div>
-                            <div class="heure-fin">${info.first_name}</div>
-                            <div class="type-de-cours">${info.gender}</div>
-                            <div class="heure-debut">${info.grade}</div>
-                            <div class="heure-fin">${info.last_name}</div>
-                            <div class="heure-fin">${info.role}</div>
+                            <div class="col">${info.month}</div>
+                            <div class="col">${info.total_courses}</div>
+                            <div class="col">${profile.calculatePresenceRate(info.presences, info.total_courses)}</div>
                           </div>`;
                       }}`
                     )
@@ -50,6 +53,25 @@ import '../../components';
       .navigation{
         color: black
       }
+      .table-infos .row {
+  display: flex;
+  padding: 10px 0;
+}
+
+.table-infos .row.header {
+  font-weight: bold;
+  background-color: #f4f4f4;
+}
+
+.table-infos .col {
+  flex: 1;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-infos .row:hover {
+  background-color: #f9f9f9;
+}
     `
   ]
 })
@@ -82,17 +104,31 @@ export class Profile extends WebComponent {
   
       const data = await response.json();
   
-      // Enveloppe l'objet dans un tableau
-      const dataArray = [data]; // Si `data` est un objet, on le met directement dans un tableau
-  
-      console.log('Données mises dans un tableau:', dataArray, dataArray.length);
-  
-      return dataArray.length > 0 ? dataArray : []; // Retourne le tableau, ou un tableau vide si aucun élément
+      return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
     } catch (error) {
       console.error('Erreur lors de la requête fetch:', error);
       return [];
     }
   }
+
+  calculatePresenceRate(presences, totalCours) {
+    const totalParticipants = presences.length;
+    const participantsPresent = presences.filter(p => p.status === 1).length;
+    
+    console.log(totalParticipants, participantsPresent, totalCours)
+    // Si aucun cours ou participant, on retourne 0%
+    if (totalCours === 0 || totalParticipants === 0) {
+      return '0%';
+    }
+  
+    // Calculer le taux de présences par rapport au nombre total de cours
+    const presenceRate = (participantsPresent / (totalCours)) * 100;
+    
+    return `${presenceRate.toFixed(2)}%`;
+  }
+  
+  
+
 
   formatDateFromISO(isoDateString: string): string {
     const date = new Date(isoDateString);
@@ -113,48 +149,9 @@ export class Profile extends WebComponent {
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
-  return html`<pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left >
-    <div slot = "drawer-panel">
-      <navigation-panel></navigation-panel>
-    </div>
-    <div>
-      <pf-panel header scrollable>
-        <h1 slot = "header" >Profile</h1>
-        <div>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehiculex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat, nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodeleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada seposuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quaullamcorper, in commodo massa vulputate.
-          </span>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehiculex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat, nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodeleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada seposuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quaullamcorper, in commodo massa vulputate.
-          </span>
-          <span>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus pretium est a porttitor vehicula. Quisque vel commodo urna. Morbi mattis rutrum ante, id vehiculex accumsan ut. Morbi viverra, eros vel porttitor facilisis, eros purus aliquet erat, nec lobortis felis elit pulvinar sem. Vivamus vulputate, risus eget commodeleifend, eros nibh porta quam, vitae lacinia leo libero at magna. Maecenas aliquam sagittis orci, et posuere nisi ultrices sit amet. Aliquam ex odio, malesuada seposuere quis, pellentesque at mauris. Phasellus venenatis massa ex, eget pulvinar libero auctor pretium. Aliquam erat volutpat. Duis euismod justo in quaullamcorper, in commodo massa vulputate.
-          </span>
-        </div>
-      </pf-panel>
-    </div>
-    <pf-avatar></pf-avatar>
-  </pf-page>`;
+  return html`<page-profile></page-profile>`;
 
 }}`
-
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const logoutLink = document.getElementById('logout');
-
-    if (logoutLink) {
-        logoutLink.addEventListener('click', (e) => {
-            
-            e.preventDefault();
-
-            localStorage.clear();
-            sessionStorage.clear();
-
-            window.location.href = '/';
-        });
-    }
-});
-
 
 
 render(template);
