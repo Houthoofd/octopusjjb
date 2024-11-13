@@ -79,32 +79,60 @@ import '../../components';
 export class Profile extends WebComponent {
   data: any[] = [];
 
+  // Fonction pour récupérer les paramètres depuis l'URL
+  getQueryParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      email: params.get('email'),
+      prenom: params.get('prenom'),
+      nom: params.get('nom'),
+    };
+  }
 
+  // Méthode pour précharger les données de l'utilisateur
   async preloadData(): Promise<any[]> {
     try {
-      const userDataString = localStorage.getItem('userData');
-      if (!userDataString) {
-        throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
+      const queryParams = this.getQueryParams();
+
+      // Vérifier si les paramètres sont présents dans l'URL
+      if (!queryParams.email || !queryParams.prenom || !queryParams.nom) {
+        // Si les paramètres sont manquants, essayer de les récupérer depuis localStorage
+        const userDataString = localStorage.getItem('userData');
+        if (!userDataString) {
+          throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
+        }
+        const userData = JSON.parse(userDataString);
+        console.log('Données utilisateur récupérées depuis localStorage:', userData);
+
+        // Récupérer les données via un fetch pour l'utilisateur connecté
+        const response = await fetch('http://localhost:3000/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur serveur.');
+        }
+
+        const data = await response.json();
+        return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
+      } else {
+        // Si les paramètres sont présents dans l'URL, les utiliser pour faire un fetch
+        console.log("Données reçues depuis l'URL:", queryParams);
+
+        const response = await fetch(`http://localhost:3000/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`);
+        
+        if (!response.ok) {
+          throw new Error('Erreur serveur.');
+        }
+
+        const data = await response.json();
+        return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
       }
-  
-      const userData = JSON.parse(userDataString);
-      console.log('Données utilisateur récupérées:', userData);
-  
-      const response = await fetch('http://localhost:3000/profile', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-  
-      if (!response.ok) {
-        throw new Error('Erreur serveur.');
-      }
-  
-      const data = await response.json();
-  
-      return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
     } catch (error) {
       console.error('Erreur lors de la requête fetch:', error);
       return [];
@@ -114,21 +142,17 @@ export class Profile extends WebComponent {
   calculatePresenceRate(presences, totalCours) {
     const totalParticipants = presences.length;
     const participantsPresent = presences.filter(p => p.status === 1).length;
-    
-    console.log(totalParticipants, participantsPresent, totalCours)
+
+    console.log(totalParticipants, participantsPresent, totalCours);
     // Si aucun cours ou participant, on retourne 0%
     if (totalCours === 0 || totalParticipants === 0) {
       return '0%';
     }
-  
+
     // Calculer le taux de présences par rapport au nombre total de cours
     const presenceRate = (participantsPresent / (totalCours)) * 100;
-    
     return `${presenceRate.toFixed(2)}%`;
   }
-  
-  
-
 
   formatDateFromISO(isoDateString: string): string {
     const date = new Date(isoDateString);
@@ -142,8 +166,8 @@ export class Profile extends WebComponent {
     const [year, month, day] = dateString.split('-');
     return new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
   }
-  
 }
+
 
 
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{

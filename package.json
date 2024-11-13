@@ -13,7 +13,7 @@
         "ui/src/pages/connexion/index.html",
         "ui/src/pages/cours/index.html",
         "ui/src/pages/password/index.html",
-         "ui/src/pages/dashboard/index.html"
+        "ui/src/pages/dashboard/index.html"
       ],
       "distDir": "server/public"
     },
@@ -39,7 +39,9 @@
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "latest": "^0.2.0",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
@@ -57,7 +59,9 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.3",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.4.2",
     "assert": "^2.1.0",

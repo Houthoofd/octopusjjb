@@ -732,16 +732,50 @@ class Dashboard extends (0, _core.WebComponent) {
                         editButton.style.display = "none"; // Cacher le bouton "Modifier"
                     });
                     MoreInfosButton.addEventListener("click", ()=>{
-                        // Informations à envoyer
-                        const infos = {
-                            firstName: userInfo.first_name,
-                            lastName: userInfo.last_name,
-                            email: userInfo.email // Exemple : Email de l'utilisateur
-                        };
-                        // Encoder les informations dans l'URL
-                        const queryString = new URLSearchParams(infos).toString();
-                        // Rediriger l'utilisateur vers la page cible avec les informations dans l'URL
+                        console.log("more infos");
+                        function getQueryParams() {
+                            // Si `userInfo` est déjà défini en amont, pas besoin de le récupérer à nouveau ici
+                            return {
+                                email: userInfo.email,
+                                prenom: userInfo.first_name,
+                                nom: userInfo.last_name
+                            };
+                        }
+                        // Récupérer les paramètres de l'URL
+                        const queryParams = getQueryParams();
+                        console.log(queryParams);
+                        // Créer la query string avec les paramètres récupérés
+                        const queryString = new URLSearchParams(queryParams).toString();
+                        console.log("queryString" + queryString);
                         window.location.href = `http://localhost:1234/pages/profile?${queryString}`;
+                        // Si les paramètres sont présents (si `email` ou `prenom` ou `nom` sont non vides), c'est pour un utilisateur spécifique
+                        if (queryParams.email && queryParams.prenom && queryParams.nom) fetch(`http://localhost:1234/pages/profile?${queryString}`).then((response)=>response.json()).then((data)=>{
+                            console.log("Statistiques de l'utilisateur:", data);
+                            // Logique pour afficher les stats de l'utilisateur
+                            // Vous pouvez rediriger après avoir reçu les données si nécessaire
+                            window.location.href = `http://localhost:1234/pages/profile?${queryString}`;
+                        }).catch((error)=>console.error("Erreur:", error));
+                        else {
+                            // Sinon, c'est pour l'admin lui-même, on récupère ses infos depuis le localStorage
+                            const email = localStorage.getItem("email");
+                            const firstName = localStorage.getItem("firstName");
+                            const lastName = localStorage.getItem("lastName");
+                            console.log("fetch via body");
+                            fetch("http://localhost:1234/pages/profile", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    email,
+                                    firstName,
+                                    lastName
+                                })
+                            }).then((response)=>response.json()).then((data)=>{
+                                console.log("Statistiques de l'admin:", data);
+                            // Logique pour afficher les stats de l'admin
+                            }).catch((error)=>console.error("Erreur:", error));
+                        }
                     });
                     // Gérer l'événement du bouton de sauvegarde
                     saveButton.addEventListener("click", async ()=>{

@@ -72,6 +72,7 @@ export class Compte extends WebComponent {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(userData),
       });
   

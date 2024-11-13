@@ -1,12 +1,34 @@
 import express from 'express';
-import path from 'path';
-import fs from 'fs';
-import {Client as SQLClient} from '../packages/db/client';
+import jwt from 'jsonwebtoken';
+import { Client as SQLClient } from '../packages/db/client';
 
 const router = express.Router();
 
+// Middleware pour vérifier le token JWT
+const verifyToken = (req:any, res:any, next:any) => {
+  const token = req.cookies.token;
 
-router.post('/', async (req, res) => {
+  if (!token) {
+    return res.status(403).send('Token manquant, veuillez vous connecter.');
+  }
+
+  const secretKey = process.env.TOKEN_SECRET;
+  if (!secretKey) {
+    return res.status(500).send('Clé secrète JWT manquante.');
+  }
+
+  jwt.verify(token, secretKey, (err:any, decoded:any) => {
+    if (err) {
+      return res.status(403).send('Token invalide ou expiré.');
+    }
+
+    req.user = decoded;  // Ajoute l'utilisateur décodé à la requête
+    next();
+  });
+};
+
+// Appliquer le middleware de vérification du token sur ce routeur
+router.post('/', verifyToken, async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
@@ -43,6 +65,5 @@ router.post('/', async (req, res) => {
     return res.status(500).send('Erreur lors de la récupération des informations.');
   }
 });
-
 
 export default router;

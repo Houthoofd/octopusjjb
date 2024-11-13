@@ -594,22 +594,45 @@ var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 var _components = require("../../components");
 class Profile extends (0, _core.WebComponent) {
+    // Fonction pour récupérer les paramètres depuis l'URL
+    getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            email: params.get("email"),
+            prenom: params.get("prenom"),
+            nom: params.get("nom")
+        };
+    }
+    // Méthode pour précharger les données de l'utilisateur
     async preloadData() {
         try {
-            const userDataString = localStorage.getItem("userData");
-            if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
-            const userData = JSON.parse(userDataString);
-            console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
-            const response = await fetch("http://localhost:3000/profile", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(userData)
-            });
-            if (!response.ok) throw new Error("Erreur serveur.");
-            const data = await response.json();
-            return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
+            const queryParams = this.getQueryParams();
+            // Vérifier si les paramètres sont présents dans l'URL
+            if (!queryParams.email || !queryParams.prenom || !queryParams.nom) {
+                // Si les paramètres sont manquants, essayer de les récupérer depuis localStorage
+                const userDataString = localStorage.getItem("userData");
+                if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
+                const userData = JSON.parse(userDataString);
+                console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es depuis localStorage:", userData);
+                // Récupérer les données via un fetch pour l'utilisateur connecté
+                const response = await fetch("http://localhost:3000/profile", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                });
+                if (!response.ok) throw new Error("Erreur serveur.");
+                const data = await response.json();
+                return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
+            } else {
+                // Si les paramètres sont présents dans l'URL, les utiliser pour faire un fetch
+                console.log("Donn\xe9es re\xe7ues depuis l'URL:", queryParams);
+                const response = await fetch(`http://localhost:3000/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`);
+                if (!response.ok) throw new Error("Erreur serveur.");
+                const data = await response.json();
+                return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
+            }
         } catch (error) {
             console.error("Erreur lors de la requ\xeate fetch:", error);
             return [];

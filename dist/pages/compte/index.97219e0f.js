@@ -652,22 +652,30 @@ class Login extends (0, _core.WebComponent) {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify(data)
                 });
+                // Vérification de la réponse HTTP
                 if (response.ok) {
                     const result = await response.json();
                     console.log("Connexion r\xe9ussie", result);
                     console.log(result);
                     const userData = {
-                        nom: result.userData.last_name,
-                        prenom: result.userData.first_name,
+                        nom: result.userData.nom,
+                        prenom: result.userData.prenom,
                         email: result.userData.email,
-                        role: result.userData.role,
-                        cours: result.userData.cours || []
+                        role: result.userData.role
                     };
+                    // Stockage des informations utilisateur dans localStorage
                     localStorage.setItem("userData", JSON.stringify(userData));
+                    if (result.token) {
+                        console.log("Token JWT:", result.token);
+                        localStorage.setItem("token", result.token); // Optionnel : stocker le token dans le localStorage
+                    } else console.error("Erreur de connexion");
+                    // Redirection vers la page des cours
                     window.location.href = "/pages/cours";
                 } else {
+                    // Gestion des erreurs de statut (par exemple, 401 Unauthorized)
                     console.error("Erreur lors de la connexion :", response.statusText);
                     this.errorMessage = "\xc9chec de la connexion. Veuillez v\xe9rifier vos informations.";
                 }
