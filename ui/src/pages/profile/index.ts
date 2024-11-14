@@ -28,7 +28,7 @@ import '../../components';
                     repeat(
                       result.totalCourses,
                       html`${(info) => {
-                        console.log(info.month, info.total_courses)
+                        console.log(info.month,info.total_courses, info.presences, profile.calculatePresenceRate(info.presences,info.total_courses))
                         return html`
                           <div class="row">
                             <div class="col">${info.month}</div>
@@ -124,7 +124,14 @@ export class Profile extends WebComponent {
         // Si les paramètres sont présents dans l'URL, les utiliser pour faire un fetch
         console.log("Données reçues depuis l'URL:", queryParams);
 
-        const response = await fetch(`http://localhost:3000/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`);
+        const response = await fetch(`http://localhost:3000/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
         
         if (!response.ok) {
           throw new Error('Erreur serveur.');
@@ -151,6 +158,7 @@ export class Profile extends WebComponent {
 
     // Calculer le taux de présences par rapport au nombre total de cours
     const presenceRate = (participantsPresent / (totalCours)) * 100;
+    console.log(presenceRate, participantsPresent, totalCours)
     return `${presenceRate.toFixed(2)}%`;
   }
 

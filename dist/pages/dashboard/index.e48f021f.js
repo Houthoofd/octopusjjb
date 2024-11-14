@@ -600,7 +600,8 @@ class Dashboard extends (0, _core.WebComponent) {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
-                }
+                },
+                credentials: "include"
             });
             if (!response.ok) throw new Error("Erreur serveur.");
             const data = await response.json();
@@ -621,7 +622,8 @@ class Dashboard extends (0, _core.WebComponent) {
                 },
                 body: JSON.stringify({
                     user_id: userId
-                })
+                }),
+                credentials: "include"
             });
             if (!response.ok) throw new Error("Erreur serveur.");
             const data = await response.json();

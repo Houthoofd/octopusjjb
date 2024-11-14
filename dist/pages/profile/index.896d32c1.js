@@ -620,6 +620,7 @@ class Profile extends (0, _core.WebComponent) {
                     headers: {
                         "Content-Type": "application/json"
                     },
+                    credentials: "include",
                     body: JSON.stringify(userData)
                 });
                 if (!response.ok) throw new Error("Erreur serveur.");
@@ -628,7 +629,13 @@ class Profile extends (0, _core.WebComponent) {
             } else {
                 // Si les paramètres sont présents dans l'URL, les utiliser pour faire un fetch
                 console.log("Donn\xe9es re\xe7ues depuis l'URL:", queryParams);
-                const response = await fetch(`http://localhost:3000/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`);
+                const response = await fetch(`http://localhost:3000/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`, {
+                    method: "GET",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
                 if (!response.ok) throw new Error("Erreur serveur.");
                 const data = await response.json();
                 return data.totalCourses.length > 0 ? data : []; // Retourne le tableau, ou un tableau vide si aucun élément
@@ -646,6 +653,7 @@ class Profile extends (0, _core.WebComponent) {
         if (totalCours === 0 || totalParticipants === 0) return "0%";
         // Calculer le taux de présences par rapport au nombre total de cours
         const presenceRate = participantsPresent / totalCours * 100;
+        console.log(presenceRate, participantsPresent, totalCours);
         return `${presenceRate.toFixed(2)}%`;
     }
     formatDateFromISO(isoDateString) {
@@ -685,7 +693,7 @@ Profile = (0, _tsDecorate._)([
                       <div class="col">Taux de présences</div>
                     </div>
                     ${(0, _core.repeat)(result.totalCourses, (0, _core.html)`${(info)=>{
-                    console.log(info.month, info.total_courses);
+                    console.log(info.month, info.total_courses, info.presences, profile.calculatePresenceRate(info.presences, info.total_courses));
                     return (0, _core.html)`
                           <div class="row">
                             <div class="col">${info.month}</div>
