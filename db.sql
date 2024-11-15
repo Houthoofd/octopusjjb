@@ -9,14 +9,16 @@ CREATE TABLE utilisateurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    gender ENUM('Male', 'Female') NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    gender INT,
     date_of_birth DATE NOT NULL,
-    status VARCHAR(19),
-    grade INT(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    status VARCHAR(19) DEFAULT 'user',
+    grade VARCHAR(20) DEFAULT 'ceinture blanche',
+    abonnement INT,
+    FOREIGN KEY (gender) REFERENCES genres(id),
+    FOREIGN KEY (abonnement) REFERENCES plans_tarifaires(id)
 );
+
 
 -- Créer la table des cours
 CREATE TABLE cours (
@@ -26,6 +28,17 @@ CREATE TABLE cours (
     heure_debut TIME NOT NULL,
     heure_fin TIME NOT NULL
 );
+
+-- Créer la table des inscriptions
+CREATE TABLE inscriptions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    utilisateur_id INT,  -- Clé étrangère vers la table utilisateurs
+    cours_id INT,        -- Clé étrangère vers la table cours
+    date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id),
+    FOREIGN KEY (cours_id) REFERENCES cours(id)
+);
+
 
 -- Créer une table temporaire pour les dates
 CREATE TEMPORARY TABLE dates (
@@ -61,6 +74,33 @@ SELECT
     END AS heure_fin
 FROM dates
 WHERE DAYOFWEEK(date_cours) IN (1, 2, 5, 7);
+
+-- Création table plan tarifaires --
+
+CREATE TABLE plans_tarifaires (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom_plan VARCHAR(50) NOT NULL,
+    prix DECIMAL(10, 2) NOT NULL,
+    periode VARCHAR(20) NOT NULL, -- Exemple: "mois", "trimestre", "an"
+    description TEXT
+);
+
+-- Insérer les trois plans tarifaires
+INSERT INTO plans_tarifaires (nom_plan, prix, periode, description)
+VALUES
+    ('Paiement mensuel', 25.00, 'mois', 'Abonnement de 25 EUR par mois'),
+    ('Paiement trimestriel', 100.00, 'trimestre', 'Abonnement de 100 EUR tous les 3 mois'),
+    ('Paiement annuel', 300.00, 'an', 'Abonnement de 300 EUR pour une année complète');
+
+
+CREATE TABLE genres (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  genre_name VARCHAR(50) NOT NULL
+);
+
+-- Insérer les deux genres
+INSERT INTO genres (genre_name) VALUES ('Masculin');
+INSERT INTO genres (genre_name) VALUES ('Féminin');
 
 -- Créer la table des grades
 CREATE TABLE grades (
@@ -102,28 +142,7 @@ INSERT INTO grades (grade) VALUES
 ('ceinture noire neuf barettes (ceinture rouge)'),
 ('ceinture noire dix barettes (ceinture rouge)');
 
--- Créer la table des inscriptions
-CREATE TABLE inscriptions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    cours_id INT NOT NULL,
-    utilisateur_id INT NOT NULL,
-    date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status BOOLEAN DEFAULT NULL,
-    FOREIGN KEY (cours_id) REFERENCES cours(id),
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id)
-);
 
-
-
--- Créer la table des réservations
-CREATE TABLE reservations (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    utilisateur_id INT,
-    cours_id INT,
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE,
-    FOREIGN KEY (cours_id) REFERENCES cours(id) ON DELETE CASCADE,
-    UNIQUE (utilisateur_id, cours_id)
-);
 
 
 insert into utilisateurs (id, first_name, last_name, email, gender, date_of_birth, status, grade) values (1, 'Cinéma', 'Burkinshaw', 'sburkinshaw0@reference.com', 'Male', '2002-08-09', 'administrator', 10);

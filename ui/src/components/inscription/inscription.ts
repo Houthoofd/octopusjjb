@@ -118,6 +118,45 @@ import 'unofficial-pf-v5-wc-icons';
               required>
           </div>
 
+          <div class="dropdown">
+            <details>
+            <summary id="dropdownButtonPrice">Choisir un plan</summary>
+            <div class="dropdown-menu">
+              <!-- Les éléments du menu seront ajoutés ici -->
+              ${asyncAppend(inscription.preloadData(`http://localhost:3000/informations/abonnement`), (result) => {
+                return html`${repeat(
+                  result,
+                  html`${(plan) => {
+                    return html`<div class="dropdown-item" data-plan="${plan.nom_plan}" data-prix="${plan.prix}" @click="${(plan) => inscription.handleDropDownValueTarif(plan)}">
+                      ${plan.nom_plan} - ${plan.prix} €
+                    </div>`;
+                  }}`
+                )}`;
+              })}
+            </div>
+          </details>
+        </div>
+
+        <div class="dropdown">
+            <details>
+            <summary id="dropdownButtonGenre">Choisir un plan</summary>
+            <div class="dropdown-menu">
+              <!-- Les éléments du menu seront ajoutés ici -->
+              ${asyncAppend(inscription.preloadData(`http://localhost:3000/informations/gender`), (result) => {
+                return html`${repeat(
+                  result,
+                  html`${(info) => {
+                    return html`<div class="dropdown-item" data-plan="${info.genre}" @click="${(info) => inscription.handleDropDownValueGenre(info)}">
+                      ${info.genre}
+                    </div>`;
+                  }}`
+                )}`;
+              })}
+            </div>
+          </details>
+        </div>
+
+
           
           <button class="button-register"
             type="submit"
@@ -134,7 +173,7 @@ import 'unofficial-pf-v5-wc-icons';
     css`
       .register{
         width: 500px;
-        height: 570px;
+        height: 680px;
         background-color: #ffffff;
         position: absolute;
         top: 25%;
@@ -304,6 +343,59 @@ import 'unofficial-pf-v5-wc-icons';
       .input-invalide{
         background-color: #ffebee;
       }
+      /* Conteneur du dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Bouton du dropdown */
+.dropdown-toggle {
+      background-color: #fafbfe;
+  color: #a2adcd;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* Liste cachée par défaut */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Eléments du dropdown */
+.dropdown-item {
+  padding: 12px 16px;
+  text-align: left;
+  color: black;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+/* Changer la couleur au survol */
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Affichage du menu lorsque l'utilisateur clique sur le bouton */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 
     `
   ],
@@ -325,6 +417,83 @@ export class Inscription extends WebComponent {
   date: string = '';
   firstName: string = '';
   lastName: string = '';
+  genre: string = '';
+  tarif: string = '';
+
+  handleDropDownValueTarif(plan) {
+    // Sélectionner les éléments dans le Shadow DOM
+    const dropdownButton = this.shadowRoot?.getElementById('dropdownButtonPrice');
+    const dropdownMenu = this.shadowRoot?.getElementById('dropdownMenu');
+    
+    // Mettre à jour le texte du bouton avec la sélection
+    dropdownButton.textContent = `${plan.nom_plan} - ${plan.prix} €`;
+    this.tarif = plan.nom_plan;
+    console.log(this.tarif)
+    
+    // Vérifier si le menu est déjà ouvert ou non et ajuster son état
+    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
+      // Ouvrir le menu si il est fermé (display: none ou initialement vide)
+      dropdownMenu.style.display = 'block';
+    } else {
+      // Fermer le menu si il est déjà ouvert
+      dropdownMenu.style.display = 'none';
+    }
+  }
+
+  handleDropDownValueGenre(info) {
+    // Sélectionner les éléments dans le Shadow DOM
+    const dropdownButton = this.shadowRoot?.getElementById('dropdownButtonGenre');
+    const dropdownMenu = this.shadowRoot?.getElementById('dropdownMenu');
+    
+    // Mettre à jour le texte du bouton avec la sélection
+    dropdownButton.textContent = `${info.genre}`;
+    this.genre = info.genre;
+    console.log(this.genre)
+    
+    // Vérifier si le menu est déjà ouvert ou non et ajuster son état
+    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
+      // Ouvrir le menu si il est fermé (display: none ou initialement vide)
+      dropdownMenu.style.display = 'block';
+    } else {
+      // Fermer le menu si il est déjà ouvert
+      dropdownMenu.style.display = 'none';
+    }
+  }
+  
+
+  
+
+  async preloadData(url:string): Promise<any[]> {
+    console.log(url)
+    try {
+      // Faire la requête pour récupérer les plans tarifaires depuis l'URL
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'include', // Inclure les cookies et autres credentials si nécessaire
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      // Vérifier si la réponse est correcte
+      if (!response.ok) {
+        throw new Error('Erreur serveur lors de la récupération des plans tarifaires.');
+      }
+  
+      // Récupérer les données au format JSON
+      const data = await response.json();
+  
+      console.log("Plans tarifaires reçus:", data);
+  
+      // Retourner les données reçues, ou un tableau vide si aucun élément
+      return data.length > 0 ? data : [];
+  
+    } catch (error) {
+      console.error('Erreur lors de la requête fetch:', error);
+      return [];
+    }
+  }
+  
 
   handleEmailBlur() {
     const inputs = this.shadowRoot?.querySelectorAll('input');
@@ -466,9 +635,23 @@ export class Inscription extends WebComponent {
       console.log("Le nom de famille est manquant.");
       return null;
     }
+
+    if (this.tarif) {
+      formData.tarif = this.tarif;
+    } else {
+      console.log("Le choix d'abonnement manquant.");
+      return null;
+    }
+
+    if (this.genre) {
+      formData.genre = this.genre;
+    } else {
+      console.log("Le sexe est manquant.");
+      return null;
+    }
   
     console.log('Données du formulaire valides:', formData);
-    
+    console.log(formData.genre, formData.tarif)
     return formData;
   }
   

@@ -218,6 +218,7 @@ export class Dashboard extends WebComponent {
           form.appendChild(createInputField('Genre', 'gender', userInfo.gender));
           form.appendChild(createInputField('Date de naissance', 'date_of_birth', new Date(userInfo.date_of_birth).toLocaleDateString()));
           form.appendChild(createInputField('Grade', 'grade', userInfo.grade));
+          form.appendChild(createInputField('Abonnement', 'abonnement', userInfo.abonnement));
   
           // Créer un bouton de modification
           const editButton = document.createElement('button');

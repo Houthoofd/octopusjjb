@@ -1,13 +1,18 @@
+-- Création de la table des utilisateurs avec la clé étrangère pour le genre et le tarif
 CREATE TABLE utilisateurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    gender ENUM('Male', 'Female') NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,  -- Unicité de l'email
+    gender INT,  -- Clé étrangère pour le genre
     date_of_birth DATE NOT NULL,
-	status VARCHAR(19),
-	grade INT(20)
+    status VARCHAR(19) DEFAULT 'user',
+    grade VARCHAR(20) DEFAULT 'ceinture blanche',
+    abonnement INT,   -- Clé étrangère pour le tarif (plan)
+    FOREIGN KEY (gender) REFERENCES genres(id)
+    FOREIGN KEY (abonnement) REFERENCES plans_tarifaires(id)
 );
+
 insert into utilisateurs (id, first_name, last_name, email, gender, date_of_birth, status, grade) values (1, 'Cinéma', 'Burkinshaw', 'sburkinshaw0@reference.com', 'Male', '2002-08-09', 'administrator', 10);
 insert into utilisateurs (id, first_name, last_name, email, gender, date_of_birth, status, grade) values (2, 'Thérèsa', 'Farrall', 'hfarrall1@youku.com', 'Male', '1992-12-03', 'user', 4);
 insert into utilisateurs (id, first_name, last_name, email, gender, date_of_birth, status, grade) values (3, 'Mélanie', 'Paolacci', 'opaolacci2@indiegogo.com', 'Male', '1995-09-26', 'super-administrator', 13);

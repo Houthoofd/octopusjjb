@@ -897,6 +897,57 @@ var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 class Inscription extends (0, _core.WebComponent) {
+    handleDropDownValueTarif(plan) {
+        // Sélectionner les éléments dans le Shadow DOM
+        const dropdownButton = this.shadowRoot?.getElementById("dropdownButtonPrice");
+        const dropdownMenu = this.shadowRoot?.getElementById("dropdownMenu");
+        // Mettre à jour le texte du bouton avec la sélection
+        dropdownButton.textContent = `${plan.nom_plan} - ${plan.prix} \u{20AC}`;
+        this.tarif = plan.nom_plan;
+        console.log(this.tarif);
+        // Vérifier si le menu est déjà ouvert ou non et ajuster son état
+        if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") // Ouvrir le menu si il est fermé (display: none ou initialement vide)
+        dropdownMenu.style.display = "block";
+        else // Fermer le menu si il est déjà ouvert
+        dropdownMenu.style.display = "none";
+    }
+    handleDropDownValueGenre(info) {
+        // Sélectionner les éléments dans le Shadow DOM
+        const dropdownButton = this.shadowRoot?.getElementById("dropdownButtonGenre");
+        const dropdownMenu = this.shadowRoot?.getElementById("dropdownMenu");
+        // Mettre à jour le texte du bouton avec la sélection
+        dropdownButton.textContent = `${info.genre}`;
+        this.genre = info.genre;
+        console.log(this.genre);
+        // Vérifier si le menu est déjà ouvert ou non et ajuster son état
+        if (dropdownMenu.style.display === "none" || dropdownMenu.style.display === "") // Ouvrir le menu si il est fermé (display: none ou initialement vide)
+        dropdownMenu.style.display = "block";
+        else // Fermer le menu si il est déjà ouvert
+        dropdownMenu.style.display = "none";
+    }
+    async preloadData(url) {
+        console.log(url);
+        try {
+            // Faire la requête pour récupérer les plans tarifaires depuis l'URL
+            const response = await fetch(url, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+            // Vérifier si la réponse est correcte
+            if (!response.ok) throw new Error("Erreur serveur lors de la r\xe9cup\xe9ration des plans tarifaires.");
+            // Récupérer les données au format JSON
+            const data = await response.json();
+            console.log("Plans tarifaires re\xe7us:", data);
+            // Retourner les données reçues, ou un tableau vide si aucun élément
+            return data.length > 0 ? data : [];
+        } catch (error) {
+            console.error("Erreur lors de la requ\xeate fetch:", error);
+            return [];
+        }
+    }
     handleEmailBlur() {
         const inputs = this.shadowRoot?.querySelectorAll("input");
         const emailInput = inputs?.[0];
@@ -1000,7 +1051,18 @@ class Inscription extends (0, _core.WebComponent) {
             console.log("Le nom de famille est manquant.");
             return null;
         }
+        if (this.tarif) formData.tarif = this.tarif;
+        else {
+            console.log("Le choix d'abonnement manquant.");
+            return null;
+        }
+        if (this.genre) formData.genre = this.genre;
+        else {
+            console.log("Le sexe est manquant.");
+            return null;
+        }
         console.log("Donn\xe9es du formulaire valides:", formData);
+        console.log(formData.genre, formData.tarif);
         return formData;
     }
     async sendData() {
@@ -1044,6 +1106,8 @@ class Inscription extends (0, _core.WebComponent) {
         this.date = "";
         this.firstName = "";
         this.lastName = "";
+        this.genre = "";
+        this.tarif = "";
     }
 }
 (0, _tsDecorate._)([
@@ -1174,6 +1238,39 @@ Inscription = (0, _tsDecorate._)([
               required>
           </div>
 
+          <div class="dropdown">
+            <details>
+            <summary id="dropdownButtonPrice">Choisir un plan</summary>
+            <div class="dropdown-menu">
+              <!-- Les éléments du menu seront ajoutés ici -->
+              ${(0, _core.asyncAppend)(inscription.preloadData(`http://localhost:3000/informations/abonnement`), (result)=>{
+                return (0, _core.html)`${(0, _core.repeat)(result, (0, _core.html)`${(plan)=>{
+                    return (0, _core.html)`<div class="dropdown-item" data-plan="${plan.nom_plan}" data-prix="${plan.prix}" @click="${(plan)=>inscription.handleDropDownValueTarif(plan)}">
+                      ${plan.nom_plan} - ${plan.prix} €
+                    </div>`;
+                }}`)}`;
+            })}
+            </div>
+          </details>
+        </div>
+
+        <div class="dropdown">
+            <details>
+            <summary id="dropdownButtonGenre">Choisir un plan</summary>
+            <div class="dropdown-menu">
+              <!-- Les éléments du menu seront ajoutés ici -->
+              ${(0, _core.asyncAppend)(inscription.preloadData(`http://localhost:3000/informations/gender`), (result)=>{
+                return (0, _core.html)`${(0, _core.repeat)(result, (0, _core.html)`${(info)=>{
+                    return (0, _core.html)`<div class="dropdown-item" data-plan="${info.genre}" @click="${(info)=>inscription.handleDropDownValueGenre(info)}">
+                      ${info.genre}
+                    </div>`;
+                }}`)}`;
+            })}
+            </div>
+          </details>
+        </div>
+
+
           
           <button class="button-register"
             type="submit"
@@ -1190,7 +1287,7 @@ Inscription = (0, _tsDecorate._)([
             (0, _core.css)`
       .register{
         width: 500px;
-        height: 570px;
+        height: 680px;
         background-color: #ffffff;
         position: absolute;
         top: 25%;
@@ -1360,6 +1457,59 @@ Inscription = (0, _tsDecorate._)([
       .input-invalide{
         background-color: #ffebee;
       }
+      /* Conteneur du dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Bouton du dropdown */
+.dropdown-toggle {
+      background-color: #fafbfe;
+  color: #a2adcd;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%;
+}
+
+/* Liste cachée par défaut */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Eléments du dropdown */
+.dropdown-item {
+  padding: 12px 16px;
+  text-align: left;
+  color: black;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+/* Changer la couleur au survol */
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Affichage du menu lorsque l'utilisateur clique sur le bouton */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 
     `
         ],

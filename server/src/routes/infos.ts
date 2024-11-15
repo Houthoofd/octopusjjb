@@ -52,7 +52,6 @@ router.post('/', verifyToken, async (req, res) => {
 
     console.log(results)
 
-    // L'objet userInfo avec uniquement 'grade' pour le nom du grade, initialisé à null
     const userInfo = {
       email: results[0].email,
       first_name: results[0].first_name,
@@ -60,7 +59,7 @@ router.post('/', verifyToken, async (req, res) => {
       role: results[0].status,
       gender: results[0].gender,
       date_of_birth: results[0].date_of_birth,
-      grade: null // Initialisé à null
+      grade: null,
     };
 
     // Requête pour récupérer le nom du grade à partir de l'ID du grade
@@ -80,6 +79,67 @@ router.post('/', verifyToken, async (req, res) => {
   } catch (err) {
     console.error('Erreur lors de la récupération des informations utilisateur:', err);
     return res.status(500).send('Erreur lors de la récupération des informations.');
+  }
+});
+
+// Appliquer le middleware de vérification du token sur ce routeur
+router.get('/abonnement', async (req, res) => {
+  const client = new SQLClient();
+
+  try {
+    // Requête pour récupérer les noms des abonnements et leurs prix
+    const query = `
+      SELECT nom_plan, prix
+      FROM plans_tarifaires`;
+    
+    const results = await client.query(query);
+
+    if (results.length === 0) {
+      return res.status(404).send('Aucun plan tarifaire trouvé.');
+    }
+
+    // Extraire les noms des abonnements et les prix sous forme d'objets
+    const abonnements = results.map(plan => ({
+      nom_plan: plan.nom_plan,
+      prix: plan.prix
+    }));
+
+    console.log("Plans tarifaires trouvés :", abonnements);
+    return res.status(200).json(abonnements);
+
+  } catch (err) {
+    console.error('Erreur lors de la récupération des plans tarifaires:', err);
+    return res.status(500).send('Erreur lors de la récupération des plans tarifaires.');
+  }
+});
+
+// Appliquer le middleware de vérification du token sur ce routeur
+router.get('/gender', async (req, res) => {
+  const client = new SQLClient();
+
+  try {
+    // Requête pour récupérer les noms des abonnements et leurs prix
+    const query = `
+      SELECT genre_name
+      FROM genres`;
+    
+    const results = await client.query(query);
+
+    if (results.length === 0) {
+      return res.status(404).send('Aucun plan tarifaire trouvé.');
+    }
+
+    // Extraire les noms des abonnements et les prix sous forme d'objets
+    const genres = results.map(genre => ({
+      genre: genre.genre_name
+    }));
+
+    console.log("Plans genres trouvés :", genres);
+    return res.status(200).json(genres);
+
+  } catch (err) {
+    console.error('Erreur lors de la récupération des plans tarifaires:', err);
+    return res.status(500).send('Erreur lors de la récupération des plans tarifaires.');
   }
 });
 
