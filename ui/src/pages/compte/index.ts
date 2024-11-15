@@ -13,7 +13,9 @@ import '../../components';
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Compte</h1>
+            <div slot="header">
+              <h1 class="title">Compte</h1>
+            </div>
             <div class="table-infos">
               ${asyncAppend(compte.preloadData(), (result) => {
                   return html`${
@@ -23,14 +25,47 @@ import '../../components';
                         console.log(info)
                         return html`
                           <div class="row">
-                            <div class="type-de-cours">${compte.formatDateFromISO(info.created_at)}</div>
-                            <div class="heure-debut">${info.email}</div>
-                            <div class="heure-fin">${info.first_name}</div>
-                            <div class="type-de-cours">${info.gender}</div>
-                            <div class="heure-debut">${info.grade}</div>
-                            <div class="heure-fin">${info.last_name}</div>
-                            <div class="heure-fin">${info.role}</div>
-                          </div>`;
+                            <div class="date-of-birth">
+                              <label for="date_of_birth">Date de naissance:</label>
+                              <input type="text" id="date_of_birth" value="${compte.formatDateFromISO(info.date_of_birth)}" readonly disabled/>
+                            </div>
+
+                            <div class="email">
+                              <label for="email">Email:</label>
+                              <input type="email" id="email" value="${info.email}"/>
+                            </div>
+
+                            <div class="first-name">
+                              <label for="first_name">Prénom:</label>
+                              <input type="text" id="first_name" value="${info.first_name}"/>
+                            </div>
+
+                            <div class="gender">
+                              <label for="gender">Genre:</label>
+                              <input type="text" id="gender" value="${info.gender}"/>
+                            </div>
+
+                            <div class="grade">
+                              <label for="grade">Grade:</label>
+                              <input type="text" id="grade" value="${info.grade}"/>
+                            </div>
+
+                            <div class="last-name">
+                              <label for="last_name">Nom:</label>
+                              <input type="text" id="last_name" value="${info.last_name}"/>
+                            </div>
+
+                            <div class="role">
+                              <label for="role">Rôle:</label>
+                              <input type="text" id="role" value="${info.role}" readonly disabled/>
+                            </div>
+
+                            <div class="abonnement">
+                              <label for="abonnement">Abonnement:</label>
+                              <input type="text" id="abonnement" value="${info.abonnement}"/>
+                            </div>
+                          </div>
+                          `;
                       }}`
                     )
                   }`
@@ -48,6 +83,9 @@ import '../../components';
       }
       .navigation{
         color: black
+      }
+      .title{
+        color: black;
       }
     `
   ]
@@ -67,7 +105,7 @@ export class Compte extends WebComponent {
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
-      const response = await fetch('http://localhost:3000/compte', {
+      const response = await fetch('http://localhost:3000/informations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,11 +147,16 @@ export class Compte extends WebComponent {
   
 }
 
+
+
 let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
   return html`<page-compte></page-compte>`;
 
 }}`
+
+
+
 
 render(template);

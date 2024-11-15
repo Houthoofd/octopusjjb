@@ -21,7 +21,9 @@ import { userInfo, userInfo, userInfo } from 'os';
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Dashboard</h1>
+            <div slot="header">
+              <h1 class="title">Dashboard</h1>
+            </div>
             <input
               type="text"
               placeholder="Rechercher un utilisateur"
@@ -53,6 +55,9 @@ import { userInfo, userInfo, userInfo } from 'os';
     }}`,
     styles: [
       css`
+        .title{
+          color: black;
+        }
         .table-infos {
           color: black;
           display: flex;

@@ -586,21 +586,21 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"6WVIp":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Information", ()=>Information);
+parcelHelpers.export(exports, "Informations", ()=>Informations);
 var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
 var _core = require("@lithium-framework/core");
 var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 var _components = require("../../components");
-class Information extends (0, _core.WebComponent) {
+class Informations extends (0, _core.WebComponent) {
     async preloadData() {
         try {
             const userDataString = localStorage.getItem("userData");
             if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
             const userData = JSON.parse(userDataString);
             console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
-            const response = await fetch("http://localhost:3000/informations", {
+            const response = await fetch("http://localhost:3000/compte", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -637,64 +637,33 @@ class Information extends (0, _core.WebComponent) {
         this.data = [];
     }
 }
-Information = (0, _tsDecorate._)([
+Informations = (0, _tsDecorate._)([
     (0, _core.customElement)({
         name: "page-informations",
-        template: (0, _core.html)`${(information)=>{
+        template: (0, _core.html)`${(informations)=>{
             return (0, _core.html)`
       <pf-page masterhead-no-icon masterhead-no-branding drawer-inline drawer-expanded drawer-static drawer-panel-left>
           <div slot = "drawer-panel">
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Informations</h1>
+            <div slot="header">
+              <h1 class="title">Informations</h1>
+            </div>
             <div class="table-infos">
-              ${(0, _core.asyncAppend)(information.preloadData(), (result)=>{
+              ${(0, _core.asyncAppend)(informations.preloadData(), (result)=>{
                 return (0, _core.html)`${(0, _core.repeat)(result, (0, _core.html)`${(info)=>{
                     console.log(info);
                     return (0, _core.html)`
                           <div class="row">
-                            <div class="date-of-birth">
-                              <label for="date_of_birth">Date de naissance:</label>
-                              <input type="text" id="date_of_birth" value="${information.formatDateFromISO(info.date_of_birth)}" readonly disabled/>
-                            </div>
-
-                            <div class="email">
-                              <label for="email">Email:</label>
-                              <input type="email" id="email" value="${info.email}"/>
-                            </div>
-
-                            <div class="first-name">
-                              <label for="first_name">Prénom:</label>
-                              <input type="text" id="first_name" value="${info.first_name}"/>
-                            </div>
-
-                            <div class="gender">
-                              <label for="gender">Genre:</label>
-                              <input type="text" id="gender" value="${info.gender}"/>
-                            </div>
-
-                            <div class="grade">
-                              <label for="grade">Grade:</label>
-                              <input type="text" id="grade" value="${info.grade}"/>
-                            </div>
-
-                            <div class="last-name">
-                              <label for="last_name">Nom:</label>
-                              <input type="text" id="last_name" value="${info.last_name}"/>
-                            </div>
-
-                            <div class="role">
-                              <label for="role">Rôle:</label>
-                              <input type="text" id="role" value="${info.role}" readonly disabled/>
-                            </div>
-
-                            <div class="abonnement">
-                              <label for="abonnement">Abonnement:</label>
-                              <input type="text" id="abonnement" value="${info.abonnement}"/>
-                            </div>
-                          </div>
-                          `;
+                            <div class="type-de-cours">${informations.formatDateFromISO(info.created_at)}</div>
+                            <div class="heure-debut">${info.email}</div>
+                            <div class="heure-fin">${info.first_name}</div>
+                            <div class="type-de-cours">${info.gender}</div>
+                            <div class="heure-debut">${info.grade}</div>
+                            <div class="heure-fin">${info.last_name}</div>
+                            <div class="heure-fin">${info.role}</div>
+                          </div>`;
                 }}`)}`;
             })}
             </div>
@@ -710,10 +679,13 @@ Information = (0, _tsDecorate._)([
       .navigation{
         color: black
       }
+      .title{
+        color: black;
+      }
     `
         ]
     })
-], Information);
+], Informations);
 let template = (0, _core.html)`${(context)=>{
     return (0, _core.html)`<page-informations></page-informations>`;
 }}`;

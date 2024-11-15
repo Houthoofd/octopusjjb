@@ -20,7 +20,9 @@ import '../../components';
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Informations</h1>
+            <div slot="header">
+              <h1 class="title">Cours</h1>
+            </div>
             <div class="table-infos">
               ${asyncAppend(cours.preloadData(), (result) => {
                 return html`
@@ -49,6 +51,9 @@ import '../../components';
     }}`,
     styles: [
       css`
+        .title{
+          color: black;
+        }
         .table-infos {
           color: black;
           display: flex;

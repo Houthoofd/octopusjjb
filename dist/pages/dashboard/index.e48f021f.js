@@ -829,7 +829,9 @@ Dashboard = (0, _tsDecorate._)([
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Dashboard</h1>
+            <div slot="header">
+              <h1 class="title">Dashboard</h1>
+            </div>
             <input
               type="text"
               placeholder="Rechercher un utilisateur"
@@ -858,6 +860,9 @@ Dashboard = (0, _tsDecorate._)([
         }}`,
         styles: [
             (0, _core.css)`
+        .title{
+          color: black;
+        }
         .table-infos {
           color: black;
           display: flex;

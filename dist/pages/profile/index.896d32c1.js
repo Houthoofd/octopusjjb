@@ -682,7 +682,9 @@ Profile = (0, _tsDecorate._)([
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Profile</h1>
+            <div slot="header">
+              <h1 class="title">Profile</h1>
+            </div>
             <div class="table-infos">
               ${(0, _core.asyncAppend)(profile.preloadData(), (result)=>{
                 console.log(result);
@@ -709,6 +711,9 @@ Profile = (0, _tsDecorate._)([
         }}`,
         styles: [
             (0, _core.css)`
+      .title{
+        color: black;
+      }
       .table-infos {
         color: black;
       }

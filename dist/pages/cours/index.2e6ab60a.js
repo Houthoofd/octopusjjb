@@ -854,7 +854,9 @@ Cours = (0, _tsDecorate._)([
             <navigation-panel></navigation-panel>
           </div>
           <pf-panel header scrollable>
-            <h1 slot="header">Informations</h1>
+            <div slot="header">
+              <h1 class="title">Cours</h1>
+            </div>
             <div class="table-infos">
               ${(0, _core.asyncAppend)(cours.preloadData(), (result)=>{
                 return (0, _core.html)`
@@ -880,6 +882,9 @@ Cours = (0, _tsDecorate._)([
         }}`,
         styles: [
             (0, _core.css)`
+        .title{
+          color: black;
+        }
         .table-infos {
           color: black;
           display: flex;
