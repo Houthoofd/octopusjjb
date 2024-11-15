@@ -139,7 +139,7 @@ import 'unofficial-pf-v5-wc-icons';
 
         <div class="dropdown">
             <details>
-            <summary id="dropdownButtonGenre">Choisir un plan</summary>
+            <summary id="dropdownButtonGenre">Choisir un genre</summary>
             <div class="dropdown-menu">
               <!-- Les éléments du menu seront ajoutés ici -->
               ${asyncAppend(inscription.preloadData(`http://localhost:3000/informations/gender`), (result) => {

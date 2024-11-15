@@ -141,6 +141,75 @@ router.post('/infos', verifyToken, async (req, res) => {
 });
 
 
+// Route pour récupérer et mettre à jour les informations utilisateur
+router.patch('/update', async (req, res) => {
+  const { new_email, new_first_name, new_last_name, current_mail } = req.body;
+
+  // Vérification que l'email actuel est présent
+  if (!current_mail) {
+    return res.status(400).json({ success: false, message: 'L\'email actuel est requis pour la mise à jour.' });
+  }
+
+  try {
+    const client = new SQLClient();
+
+    // Étape 1: Récupérer les informations actuelles de l'utilisateur
+    const selectQuery = `SELECT * FROM utilisateurs WHERE email = ?;`;
+    const resultUtilisateur = await client.query(selectQuery, [current_mail]);
+
+    // Vérifier si l'utilisateur existe
+    if (resultUtilisateur.length === 0) {
+      return res.status(404).json({ success: false, message: 'Utilisateur non trouvé.' });
+    }
+
+    const user = resultUtilisateur[0];  // Informations actuelles de l'utilisateur
+
+    // Étape 2: Mettre à jour les informations de l'utilisateur
+    const updatedFirstName = new_first_name || user.first_name;
+    const updatedLastName = new_last_name || user.last_name;
+    const updatedEmail = new_email || user.email;
+
+    const updateQuery = `
+      UPDATE utilisateurs
+      SET first_name = ?, last_name = ?, email = ?
+      WHERE email = ?;
+    `;
+
+    // Exécution de la mise à jour avec les nouvelles données
+    const updateResult = await client.query(updateQuery, [updatedFirstName, updatedLastName, updatedEmail, current_mail]);
+
+    if (updateResult.affectedRows === 0) {
+      return res.status(500).json({ success: false, message: 'La mise à jour a échoué.' });
+    }
+
+    // Étape 3: Récupérer les informations mises à jour
+    const updatedRows = await client.query(selectQuery, [updatedEmail]);
+
+    const userInfo = {
+      email: updatedRows[0].email,
+      first_name: updatedRows[0].first_name,
+      last_name: updatedRows[0].last_name,
+      role: updatedRows[0].status
+    };
+
+    if (updatedRows.length === 0) {
+      return res.status(500).json({ success: false, message: 'Erreur lors de la récupération des données mises à jour.' });
+    }
+
+
+    // Répondre avec les informations mises à jour
+    res.status(200).json({ success: true, message: 'Utilisateur mis à jour avec succès.', data: userInfo });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des informations utilisateur:', error);
+    res.status(500).json({ success: false, message: 'Erreur serveur.' });
+  }
+});
+
+
+
+
+
+
 
 
 

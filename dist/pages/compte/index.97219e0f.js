@@ -661,8 +661,8 @@ class Login extends (0, _core.WebComponent) {
                     console.log("Connexion r\xe9ussie", result);
                     console.log(result);
                     const userData = {
-                        nom: result.userData.nom,
-                        prenom: result.userData.prenom,
+                        last_name: result.userData.nom,
+                        first_name: result.userData.prenom,
                         email: result.userData.email,
                         role: result.userData.role
                     };
@@ -1256,7 +1256,7 @@ Inscription = (0, _tsDecorate._)([
 
         <div class="dropdown">
             <details>
-            <summary id="dropdownButtonGenre">Choisir un plan</summary>
+            <summary id="dropdownButtonGenre">Choisir un genre</summary>
             <div class="dropdown-menu">
               <!-- Les éléments du menu seront ajoutés ici -->
               ${(0, _core.asyncAppend)(inscription.preloadData(`http://localhost:3000/informations/gender`), (result)=>{

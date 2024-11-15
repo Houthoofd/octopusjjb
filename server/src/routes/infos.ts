@@ -28,10 +28,12 @@ const verifyToken = (req:any, res:any, next:any) => {
 };
 
 router.post('/', verifyToken, async (req, res) => {
-  const { email, prenom, nom} = req.body; 
+  const { email, first_name, last_name} = req.body; 
   console.log("Requête reçue avec les données :", req.body);
 
-  if (!email || !prenom || !nom) {
+  console.log(email, first_name, last_name)
+
+  if (!email || !first_name || !last_name) {
     return res.status(400).send('Tous les champs sont requis.');
   }
 
@@ -42,7 +44,7 @@ router.post('/', verifyToken, async (req, res) => {
     const query = `
       SELECT * FROM utilisateurs 
       WHERE email = ? AND first_name = ? AND last_name = ?`;
-    const values = [email, prenom, nom];
+    const values = [email, first_name, last_name];
 
     const results = await client.query(query, values);
 
@@ -155,6 +157,31 @@ router.get('/gender', async (req, res) => {
 
     console.log("Plans genres trouvés :", genres);
     return res.status(200).json(genres);
+
+  } catch (err) {
+    console.error('Erreur lors de la récupération des plans tarifaires:', err);
+    return res.status(500).send('Erreur lors de la récupération des plans tarifaires.');
+  }
+});
+
+// Appliquer le middleware de vérification du token sur ce routeur
+router.get('/grade', async (req, res) => {
+  const client = new SQLClient();
+
+  try {
+    // Requête pour récupérer les noms des abonnements et leurs prix
+    const query = `
+      SELECT *
+      FROM grades`;
+    
+    const results = await client.query(query);
+
+    if (results.length === 0) {
+      return res.status(404).send('Aucun plan tarifaire trouvé.');
+    }
+
+    console.log("grades trouvés :", results);
+    return res.status(200).json(results);
 
   } catch (err) {
     console.error('Erreur lors de la récupération des plans tarifaires:', err);

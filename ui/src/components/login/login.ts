@@ -227,8 +227,8 @@ export class Login extends WebComponent {
           console.log(result);
   
           const userData = {
-            nom: result.userData.nom,
-            prenom: result.userData.prenom,
+            last_name: result.userData.nom,
+            first_name: result.userData.prenom,
             email: result.userData.email,
             role: result.userData.role,
           };
