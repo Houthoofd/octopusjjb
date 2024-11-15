@@ -40,6 +40,7 @@ CREATE TABLE utilisateurs (
     date_of_birth DATE NOT NULL,
     status VARCHAR(19) DEFAULT 'user',
     grade VARCHAR(20) DEFAULT 'ceinture blanche',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     abonnement INT,  -- Clé étrangère pour le tarif (plan)
     FOREIGN KEY (gender) REFERENCES genres(id),
     FOREIGN KEY (abonnement) REFERENCES plans_tarifaires(id)
