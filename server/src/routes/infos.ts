@@ -60,6 +60,7 @@ router.post('/', verifyToken, async (req, res) => {
       gender: results[0].gender,
       date_of_birth: results[0].date_of_birth,
       grade: null,
+      abonnement: null
     };
 
     // Requête pour récupérer le nom du grade à partir de l'ID du grade
@@ -67,10 +68,28 @@ router.post('/', verifyToken, async (req, res) => {
       SELECT grade FROM grades WHERE id = ?`; // Recherche par ID du grade
     const gradeResults = await client.query(gradeQuery, [results[0].grade]);
 
+    console.log(gradeResults)
+
     if (gradeResults.length > 0) {
       userInfo.grade = gradeResults[0].grade; // Ajout du nom du grade dans 'grade'
     } else {
       userInfo.grade = null; // Valeur par défaut si aucune correspondance
+    }
+
+    // Requête pour récupérer le nom du genre à partir de l'ID du genre
+    const genreQuery = `SELECT genre_name FROM genres WHERE id = ?`;
+    const genreResults = await client.query(genreQuery, [results[0].gender]);
+
+    if (genreResults.length > 0) {
+      userInfo.gender = genreResults[0].genre_name; // Ajout du nom du genre dans 'gender'
+    }
+
+    // Requête pour récupérer le type d'abonnement à partir de l'ID d'abonnement
+    const abonnementQuery = `SELECT nom_plan FROM plans_tarifaires WHERE id = ?`;
+    const abonnementResults = await client.query(abonnementQuery, [results[0].abonnement]);
+
+    if (abonnementResults.length > 0) {
+      userInfo.abonnement = abonnementResults[0].nom_plan; // Ajout du nom du plan d'abonnement
     }
 
     console.log("Informations utilisateur trouvées :", userInfo);

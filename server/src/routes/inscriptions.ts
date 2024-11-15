@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
         // Insérer l'utilisateur avec les IDs du genre et du tarif, et abonnement à la fin
         const insertQuery = `
             INSERT INTO utilisateurs (first_name, last_name, email, password, gender, date_of_birth, status, grade, abonnement)
-            VALUES (?, ?, ?, ?, ?, ?, 'user', 'ceinture blanche', ?)
+            VALUES (?, ?, ?, ?, ?, ?, 'user', '1', ?)
         `;
 
         await client.query(insertQuery, [firstName, lastName, email, hashedPassword, genreId, date, tarifId]);

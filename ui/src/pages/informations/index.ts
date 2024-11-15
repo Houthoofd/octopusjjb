@@ -23,14 +23,47 @@ import '../../components';
                         console.log(info)
                         return html`
                           <div class="row">
-                            <div class="type-de-cours">${information.formatDateFromISO(info.date_of_birth)}</div>
-                            <div class="heure-debut">${info.email}</div>
-                            <div class="heure-fin">${info.first_name}</div>
-                            <div class="type-de-cours">${info.gender}</div>
-                            <div class="heure-debut">${info.grade}</div>
-                            <div class="heure-fin">${info.last_name}</div>
-                            <div class="heure-fin">${info.role}</div>
-                          </div>`;
+                            <div class="date-of-birth">
+                              <label for="date_of_birth">Date de naissance:</label>
+                              <input type="text" id="date_of_birth" value="${information.formatDateFromISO(info.date_of_birth)}" readonly disabled/>
+                            </div>
+
+                            <div class="email">
+                              <label for="email">Email:</label>
+                              <input type="email" id="email" value="${info.email}"/>
+                            </div>
+
+                            <div class="first-name">
+                              <label for="first_name">Prénom:</label>
+                              <input type="text" id="first_name" value="${info.first_name}"/>
+                            </div>
+
+                            <div class="gender">
+                              <label for="gender">Genre:</label>
+                              <input type="text" id="gender" value="${info.gender}"/>
+                            </div>
+
+                            <div class="grade">
+                              <label for="grade">Grade:</label>
+                              <input type="text" id="grade" value="${info.grade}"/>
+                            </div>
+
+                            <div class="last-name">
+                              <label for="last_name">Nom:</label>
+                              <input type="text" id="last_name" value="${info.last_name}"/>
+                            </div>
+
+                            <div class="role">
+                              <label for="role">Rôle:</label>
+                              <input type="text" id="role" value="${info.role}" readonly disabled/>
+                            </div>
+
+                            <div class="abonnement">
+                              <label for="abonnement">Abonnement:</label>
+                              <input type="text" id="abonnement" value="${info.abonnement}"/>
+                            </div>
+                          </div>
+                          `;
                       }}`
                     )
                   }`
