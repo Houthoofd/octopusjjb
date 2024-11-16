@@ -58,8 +58,8 @@ router.post('/participant', async (req, res) => {
   }
 
   try {
-    // Créer une instance du client SQL
-    const client = new SQLClient();
+    // Créer une instance du client SQL (en supposant que tu utilises mysql2 ou mysql)
+    const client = new SQLClient(); // Assure-toi que ce client est bien configuré pour ta base de données
 
     // Requête SQL pour récupérer les participants inscrits à ce cours
     const query = `
@@ -70,29 +70,34 @@ router.post('/participant', async (req, res) => {
     `;
 
     // Exécuter la requête avec l'ID du cours
-    const participants = await client.query(query, [cour_id]);
+    const results = await client.query(query, [cour_id]);
 
-    // Vérifier s'il y a des participants
-    if (participants.length === 0) {
+    // Vérifier si les résultats sont valides
+    if (!results || results.length === 0) {
       return res.status(404).json({ message: "Aucun participant trouvé pour ce cours." });
     }
 
+    // Utilisation sécurisée de 'participants'
+    const participants = results;
+
     console.log(participants);
-    
-    // Utiliser send() si tu veux vraiment utiliser cette méthode explicitement
-    res.status(200).send({ participants: participants, message: "Participants trouvés" });
-    
+
+    // Réponse avec les participants trouvés
+    res.status(200).json({ participants: participants, message: "Participants trouvés avec succès." });
+
   } catch (error) {
     console.error('Erreur lors de la récupération des participants:', error);
     return res.status(500).json({ message: "Erreur serveur lors de la récupération des participants." });
   }
 });
 
+
+
 router.post('/inscription', async (req, res) => {
-  const { nom, prenom, email } = req.body.user;
+  const { last_name, first_name, email } = req.body.user;
   const { id: coursId } = req.body.cours;
 
-  if (!nom || !prenom || !email || !coursId) {
+  if (!last_name || !first_name || !email || !coursId) {
     return res.status(400).json({ message: "Des informations sont manquantes." });
   }
 
@@ -106,7 +111,7 @@ router.post('/inscription', async (req, res) => {
       WHERE last_name = ? AND first_name = ? AND email = ?;
     `;
 
-    const resultUser = await client.query(queryUser, [nom, prenom, email]);
+    const resultUser = await client.query(queryUser, [last_name, first_name, email]);
 
     if (resultUser.length === 0) {
       return res.status(404).json({ message: "Utilisateur non trouvé." });

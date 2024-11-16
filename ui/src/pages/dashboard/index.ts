@@ -3,7 +3,6 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
-import { userInfo, userInfo, userInfo } from 'os';
 
 @customElement({
     name: 'page-dashboard',
@@ -43,6 +42,7 @@ import { userInfo, userInfo, userInfo } from 'os';
                               <div class="heure-fin">${user.gender}</div>
                               <div class="heure-fin">${user.grade}</div>
                               <div @click="${(user) => dashboard.displayMoreInfos(user)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>
+                              ${dashboard.isSuperAdmin === true ? html`<div @click="${(user) => dashboard.deleteUser(user)}" class='icon-delete'><div class='icon'><pf-icons-trash-alt></pf-icons-trash-alt></div></div>` : html``}
                             </div>
                           </div>`
                       }}`
@@ -97,6 +97,12 @@ import { userInfo, userInfo, userInfo } from 'os';
   
 
 export class Dashboard extends WebComponent {
+
+  @state() isSuperAdmin: boolean = null;
+  connectedCallback() {
+    super.connectedCallback();
+    this.getRole();
+  }
  
   async preloadData(): Promise<any[]> {
     try {
@@ -486,6 +492,60 @@ export class Dashboard extends WebComponent {
   
     return `${year}-${month}-${day}`;
   }
+
+  getRole() {
+    const userDataString = localStorage.getItem('userData');
+    if (!userDataString) {
+      throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
+    }
+
+    const userData = JSON.parse(userDataString);
+    console.log('Données utilisateur récupérées:', userData);
+
+    // Récupérer le rôle de l'utilisateur
+    const userRole = userData.role;
+    console.log('Rôle de l\'utilisateur:', userRole);
+
+    if (userRole === 'super-administrator') {
+      this.isSuperAdmin = true;
+    } else {
+      this.isSuperAdmin = false;
+    }
+
+    console.log('Est-ce un administrateur ? ', this.isSuperAdmin);
+  }
+
+  deleteUser(user) {
+    // Afficher une alerte pour confirmer l'action avant de procéder à la suppression
+    const confirmation = window.confirm('Êtes-vous sûr de vouloir supprimer' + user.first_name + " " + user.last_name);
+    
+    if (confirmation) {
+      console.log('Suppression de l\'utilisateur avec ID:', user.first_name + " " + user.last_name);
+      
+      // Si l'utilisateur confirme, envoyer la requête DELETE pour supprimer l'utilisateur
+      fetch(`http://localhost:3000/users/delete/${user.id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log('Utilisateur supprimé avec succès');
+          // Mettre à jour l'interface utilisateur ici (par exemple, retirer l'élément de la table)
+        } else {
+          console.error('Erreur lors de la suppression de l\'utilisateur');
+        }
+      })
+      .catch(error => console.error('Erreur lors de la requête de suppression:', error));
+    } else {
+      console.log('Suppression annulée');
+    }
+  }
+  
+  
 } 
 
 

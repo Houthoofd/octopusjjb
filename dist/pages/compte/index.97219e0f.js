@@ -771,7 +771,7 @@ Login = (0, _tsDecorate._)([
           <a href="../password">Forgot password?</a>
         </div>
         <div class="footer">
-          <span>Don't have an account? <a href="../inscriptions">Create an account</a></span>
+          <span>Don't have an account? <a href="../pages/inscriptions">Create an account</a></span>
         </div>
         ${login.errorMessage ? (0, _core.html)`<div class="error-message">${login.errorMessage}</div>` : ""}
       </div>
@@ -1278,7 +1278,7 @@ Inscription = (0, _tsDecorate._)([
         </div>
 
         <div class="footer">
-          <span>Already have an account? <a href="../connexion">Log in</a></span>
+          <span>Already have an account? <a href="../pages/connexion">Log in</a></span>
         </div>
       </div>
     `;
@@ -1843,6 +1843,10 @@ class Navigation extends (0, _core.WebComponent) {
         else this.isAdmin = false;
         console.log("Est-ce un administrateur ? ", this.isAdmin);
     }
+    logout() {
+        localStorage.clear();
+        window.location.href = "http://localhost:3000";
+    }
     constructor(...args){
         super(...args);
         this.isAdmin = null;
@@ -1863,6 +1867,9 @@ Navigation = (0, _tsDecorate._)([
             <div class="item"><a href="/pages/compte">compte</a></div>
             <div class="item"><a href="/pages/profile">profile</a></div>
              ${navigation.isAdmin === true ? (0, _core.html)`<div class="item"><a href="/pages/dashboard">dashboard</a></div>` : (0, _core.html)``}
+          </div>
+          <div class="bottom-navigation">
+            <pf-button @click="${()=>navigation.logout()}">Déconnexion</pf-button>
           </div>
         </div>`;
         }}`,

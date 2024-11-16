@@ -15,6 +15,9 @@ import 'unofficial-pf-v5-wc-icons';
             <div class="item"><a href="/pages/profile">profile</a></div>
              ${navigation.isAdmin === true ? html`<div class="item"><a href="/pages/dashboard">dashboard</a></div>` : html``}
           </div>
+          <div class="bottom-navigation">
+            <pf-button @click="${() => navigation.logout()}">Déconnexion</pf-button>
+          </div>
         </div>`;
   }}`,
   styles : [
@@ -72,4 +75,12 @@ export class Navigation extends WebComponent{
 
     console.log('Est-ce un administrateur ? ', this.isAdmin);
   }
+  logout() {
+    localStorage.clear();
+    window.location.href = 'http://localhost:3000';
+  }
+  
+  
+  
+  
 }

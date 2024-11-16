@@ -286,6 +286,39 @@ router.post('/infos/update', async (req, res) => {
   }
 });
 
+// Exemple avec SQL
+router.delete('/delete/:id', async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const client = new SQLClient();
+
+    // 1. Vérifier si l'utilisateur existe dans la base de données
+    const userQuery = 'SELECT * FROM utilisateurs WHERE id = ?';
+    const [user] = await client.query(userQuery, [userId]);
+
+    if (!user || user.length === 0) {
+      return res.status(404).json({ success: false, message: 'Utilisateur non trouvé' });
+    }
+
+    // 2. Supprimer l'utilisateur de la base de données
+    const deleteQuery = 'DELETE FROM utilisateurs WHERE id = ?';
+    const result = await client.query(deleteQuery, [userId]);
+
+    // 3. Vérifier si la suppression a réussi
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ success: true, message: 'Utilisateur supprimé avec succès' });
+    } else {
+      return res.status(400).json({ success: false, message: 'Aucune donnée supprimée' });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+});
+
+
+
 
 
 

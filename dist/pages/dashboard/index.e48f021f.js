@@ -594,6 +594,10 @@ var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 var _components = require("../../components");
 class Dashboard extends (0, _core.WebComponent) {
+    connectedCallback() {
+        super.connectedCallback();
+        this.getRole();
+    }
     async preloadData() {
         try {
             const response = await fetch("http://localhost:3000/users/", {
@@ -1036,7 +1040,44 @@ class Dashboard extends (0, _core.WebComponent) {
         if (format === "YYYY-MM") return `${year}-${month}`;
         return `${year}-${month}-${day}`;
     }
+    getRole() {
+        const userDataString = localStorage.getItem("userData");
+        if (!userDataString) throw new Error("Utilisateur non connect\xe9. Aucune donn\xe9e dans localStorage.");
+        const userData = JSON.parse(userDataString);
+        console.log("Donn\xe9es utilisateur r\xe9cup\xe9r\xe9es:", userData);
+        // Récupérer le rôle de l'utilisateur
+        const userRole = userData.role;
+        console.log("R\xf4le de l'utilisateur:", userRole);
+        if (userRole === "super-administrator") this.isSuperAdmin = true;
+        else this.isSuperAdmin = false;
+        console.log("Est-ce un administrateur ? ", this.isSuperAdmin);
+    }
+    deleteUser(user) {
+        // Afficher une alerte pour confirmer l'action avant de procéder à la suppression
+        const confirmation = window.confirm("\xcates-vous s\xfbr de vouloir supprimer" + user.first_name + " " + user.last_name);
+        if (confirmation) {
+            console.log("Suppression de l'utilisateur avec ID:", user.first_name + " " + user.last_name);
+            // Si l'utilisateur confirme, envoyer la requête DELETE pour supprimer l'utilisateur
+            fetch(`http://localhost:3000/users/delete/${user.id}`, {
+                method: "DELETE",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then((response)=>response.json()).then((data)=>{
+                if (data.success) console.log("Utilisateur supprim\xe9 avec succ\xe8s");
+                else console.error("Erreur lors de la suppression de l'utilisateur");
+            }).catch((error)=>console.error("Erreur lors de la requ\xeate de suppression:", error));
+        } else console.log("Suppression annul\xe9e");
+    }
+    constructor(...args){
+        super(...args);
+        this.isSuperAdmin = null;
+    }
 }
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], Dashboard.prototype, "isSuperAdmin", void 0);
 Dashboard = (0, _tsDecorate._)([
     (0, _core.customElement)({
         name: "page-dashboard",
@@ -1074,6 +1115,7 @@ Dashboard = (0, _tsDecorate._)([
                               <div class="heure-fin">${user.gender}</div>
                               <div class="heure-fin">${user.grade}</div>
                               <div @click="${(user)=>dashboard.displayMoreInfos(user)}" class='icon-down'><div class='icon'><pf-icons-chevron-down></pf-icons-chevron-down></div></div>
+                              ${dashboard.isSuperAdmin === true ? (0, _core.html)`<div @click="${(user)=>dashboard.deleteUser(user)}" class='icon-delete'><div class='icon'><pf-icons-trash-alt></pf-icons-trash-alt></div></div>` : (0, _core.html)``}
                             </div>
                           </div>`;
                 }}`)}`;

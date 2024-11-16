@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,       // Le cookie ne peut être accédé que par le serveur, pas par JavaScript
-      secure: true,  // Si en production, forcer HTTPS
+      secure: false,  // Si en production, forcer HTTPS
       sameSite: 'none',   // Empêche l'envoi du cookie avec des requêtes inter-domaines
       maxAge: 3600000       // Durée de vie du cookie (ici 1 heure)
     });

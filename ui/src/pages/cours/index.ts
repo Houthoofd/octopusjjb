@@ -165,6 +165,7 @@ export class Cours extends WebComponent {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(inscriptionData)
         });
 
@@ -244,6 +245,7 @@ export class Cours extends WebComponent {
         const response = await fetch('http://localhost:3000/cours/participant', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify({ cour_id: courId })
         });
 

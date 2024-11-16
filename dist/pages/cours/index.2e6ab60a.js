@@ -615,6 +615,7 @@ class Cours extends (0, _core.WebComponent) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify(inscriptionData)
             });
             // Vérifier si la requête a réussi
@@ -671,6 +672,7 @@ class Cours extends (0, _core.WebComponent) {
                 headers: {
                     "Content-Type": "application/json"
                 },
+                credentials: "include",
                 body: JSON.stringify({
                     cour_id: courId
                 })
