@@ -218,37 +218,48 @@ export class Dashboard extends WebComponent {
   
 
           // Fonction pour créer une liste déroulante avec un label
-        const createDropdownField = (labelText, fieldName, options, selectedValue = '', disabled = false) => {
-          const div = document.createElement('div');
-          div.classList.add('form-group');
-
-          const label = document.createElement('label');
-          label.textContent = labelText;
-
-          const select = document.createElement('select');
-          select.name = fieldName;
-          select.disabled = disabled;
-          select.classList.add('form-control');
-
-          // Création des options
-          options.forEach(option => {
+          const createDropdownField = (labelText, fieldName, options, initialValue, disabled = false) => {
+            const div = document.createElement('div');
+            div.classList.add('form-group');
+          
+            const label = document.createElement('label');
+            label.textContent = labelText;
+          
+            const select = document.createElement('select');
+            select.name = fieldName;
+            select.disabled = disabled;
+            select.classList.add('form-control');
+          
+            // Ajout de l'option "vide" pour signaler que l'utilisateur doit choisir une option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = initialValue;
+            select.appendChild(defaultOption);
+          
+            // Créer les options dynamiquement
+            options.forEach(option => {
               const optionElement = document.createElement('option');
               optionElement.value = option.value;
               optionElement.textContent = option.text;
-
-              // Vérifie si cette option doit être sélectionnée par défaut
-              if (option.value === selectedValue) {
-                  optionElement.selected = true;
+          
+              // Vérifie si cette option doit être sélectionnée initialement
+              if (option.value === initialValue) {
+                optionElement.selected = true;
               }
-
+          
               select.appendChild(optionElement);
-          });
-
-          div.appendChild(label);
-          div.appendChild(select);
-
-          return div;
-        };
+            });
+          
+            div.appendChild(label);
+            div.appendChild(select);
+          
+            return div;
+          };
+          
+          
+          
+          
+          
 
         
         const gradeOptions = [
@@ -285,13 +296,12 @@ export class Dashboard extends WebComponent {
           { value: '31', text: 'ceinture noire dix barettes (ceinture rouge)' }
         ];
         
-        
           // Ajouter les champs au formulaire
           form.appendChild(createInputField('Prénom', 'first_name', userInfo.first_name, true));
           form.appendChild(createInputField('Nom', 'last_name', userInfo.last_name, true));
           form.appendChild(createInputField('Email', 'email', userInfo.email, true));
           form.appendChild(createDropdownField('Choisisez votre rôle', 'role', [{ value: 'user', text: 'user' },{ value: 'administrator', text: 'administrator' },{ value: 'super-administrator', text:'super-administrator' }],userInfo.role, true)); // Champ désactivé
-          form.appendChild(createDropdownField('Choisisez votre genre', 'genre', [{ value: '1', text: 'Masculin' },{ value: '2', text: 'Féminin' }],userInfo.genre, true));
+          form.appendChild(createDropdownField('Choisisez votre genre', 'genre', [{ value: '1', text: 'Masculin' },{ value: '2', text: 'Féminin' }],userInfo.gender, true));
           form.appendChild(createInputField('Date de naissance', 'date_of_birth', new Date(userInfo.date_of_birth).toLocaleDateString()));
           form.appendChild(createDropdownField('Choisisez votre grade', 'grade', gradeOptions,userInfo.grade, true));
           form.appendChild(createDropdownField('Choisisez votre abonnement', 'abonnement', [{ value: '1', text: 'paiement mensuel - 25€' },{ value: '2', text: 'paiement- trimestriel - 100€' },{ value: '3', text: 'paiement annuel - 300€' }],userInfo.abonnement, true));

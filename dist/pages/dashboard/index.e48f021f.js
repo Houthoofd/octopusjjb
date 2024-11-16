@@ -692,7 +692,7 @@ class Dashboard extends (0, _core.WebComponent) {
                         return div;
                     };
                     // Fonction pour créer une liste déroulante avec un label
-                    const createDropdownField = (labelText, fieldName, options, selectedValue = "", disabled = false)=>{
+                    const createDropdownField = (labelText, fieldName, options, initialValue, disabled = false)=>{
                         const div = document.createElement("div");
                         div.classList.add("form-group");
                         const label = document.createElement("label");
@@ -701,13 +701,18 @@ class Dashboard extends (0, _core.WebComponent) {
                         select.name = fieldName;
                         select.disabled = disabled;
                         select.classList.add("form-control");
-                        // Création des options
+                        // Ajout de l'option "vide" pour signaler que l'utilisateur doit choisir une option
+                        const defaultOption = document.createElement("option");
+                        defaultOption.value = "";
+                        defaultOption.textContent = initialValue;
+                        select.appendChild(defaultOption);
+                        // Créer les options dynamiquement
                         options.forEach((option)=>{
                             const optionElement = document.createElement("option");
                             optionElement.value = option.value;
                             optionElement.textContent = option.text;
-                            // Vérifie si cette option doit être sélectionnée par défaut
-                            if (option.value === selectedValue) optionElement.selected = true;
+                            // Vérifie si cette option doit être sélectionnée initialement
+                            if (option.value === initialValue) optionElement.selected = true;
                             select.appendChild(optionElement);
                         });
                         div.appendChild(label);
@@ -867,7 +872,7 @@ class Dashboard extends (0, _core.WebComponent) {
                             value: "2",
                             text: "F\xe9minin"
                         }
-                    ], userInfo.genre, true));
+                    ], userInfo.gender, true));
                     form.appendChild(createInputField("Date de naissance", "date_of_birth", new Date(userInfo.date_of_birth).toLocaleDateString()));
                     form.appendChild(createDropdownField("Choisisez votre grade", "grade", gradeOptions, userInfo.grade, true));
                     form.appendChild(createDropdownField("Choisisez votre abonnement", "abonnement", [
