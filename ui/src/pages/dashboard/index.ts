@@ -214,16 +214,87 @@ export class Dashboard extends WebComponent {
   
             return div;
           };
+
   
+
+          // Fonction pour créer une liste déroulante avec un label
+        const createDropdownField = (labelText, fieldName, options, selectedValue = '', disabled = false) => {
+          const div = document.createElement('div');
+          div.classList.add('form-group');
+
+          const label = document.createElement('label');
+          label.textContent = labelText;
+
+          const select = document.createElement('select');
+          select.name = fieldName;
+          select.disabled = disabled;
+          select.classList.add('form-control');
+
+          // Création des options
+          options.forEach(option => {
+              const optionElement = document.createElement('option');
+              optionElement.value = option.value;
+              optionElement.textContent = option.text;
+
+              // Vérifie si cette option doit être sélectionnée par défaut
+              if (option.value === selectedValue) {
+                  optionElement.selected = true;
+              }
+
+              select.appendChild(optionElement);
+          });
+
+          div.appendChild(label);
+          div.appendChild(select);
+
+          return div;
+        };
+
+        
+        const gradeOptions = [
+          { value: '1', text: 'ceinture blanche' },
+          { value: '2', text: 'ceinture blanche une barette' },
+          { value: '3', text: 'ceinture blanche deux barettes' },
+          { value: '4', text: 'ceinture blanche trois barettes' },
+          { value: '5', text: 'ceinture blanche quatre barettes' },
+          { value: '6', text: 'ceinture bleue' },
+          { value: '7', text: 'ceinture bleue une barette' },
+          { value: '8', text: 'ceinture bleue deux barettes' },
+          { value: '9', text: 'ceinture bleue trois barettes' },
+          { value: '10', text: 'ceinture bleue quatre barettes' },
+          { value: '11', text: 'ceinture violette' },
+          { value: '12', text: 'ceinture violette une barette' },
+          { value: '13', text: 'ceinture violette deux barettes' },
+          { value: '14', text: 'ceinture violette trois barettes' },
+          { value: '15', text: 'ceinture violette quatre barettes' },
+          { value: '16', text: 'ceinture marron' },
+          { value: '17', text: 'ceinture marron une barette' },
+          { value: '18', text: 'ceinture marron deux barettes' },
+          { value: '19', text: 'ceinture marron trois barettes' },
+          { value: '20', text: 'ceinture marron quatre barettes' },
+          { value: '21', text: 'ceinture noire' },
+          { value: '22', text: 'ceinture noire une barette' },
+          { value: '23', text: 'ceinture noire deux barettes' },
+          { value: '24', text: 'ceinture noire trois barettes' },
+          { value: '25', text: 'ceinture noire quatre barettes' },
+          { value: '26', text: 'ceinture noire cinq barettes (ceinture noire avec bande rouge)' },
+          { value: '27', text: 'ceinture noire six barettes (ceinture noire avec bande rouge)' },
+          { value: '28', text: 'ceinture noire sept barettes (ceinture rouge et noire)' },
+          { value: '29', text: 'ceinture noire huit barettes (ceinture rouge et noire)' },
+          { value: '30', text: 'ceinture noire neuf barettes (ceinture rouge)' },
+          { value: '31', text: 'ceinture noire dix barettes (ceinture rouge)' }
+        ];
+        
+        
           // Ajouter les champs au formulaire
-          form.appendChild(createInputField('Prénom', 'first_name', userInfo.first_name));
-          form.appendChild(createInputField('Nom', 'last_name', userInfo.last_name));
-          form.appendChild(createInputField('Email', 'email', userInfo.email));
-          form.appendChild(createInputField('Rôle', 'role', userInfo.role, true)); // Champ désactivé
-          form.appendChild(createInputField('Genre', 'gender', userInfo.gender));
+          form.appendChild(createInputField('Prénom', 'first_name', userInfo.first_name, true));
+          form.appendChild(createInputField('Nom', 'last_name', userInfo.last_name, true));
+          form.appendChild(createInputField('Email', 'email', userInfo.email, true));
+          form.appendChild(createDropdownField('Choisisez votre rôle', 'rôle', [{ value: '1', text: 'user' },{ value: '2', text: 'administrator' },{ value: '3', text:'super-administrator' }],userInfo.role, true)); // Champ désactivé
+          form.appendChild(createDropdownField('Choisisez votre genre', 'genre', [{ value: '1', text: 'Masculin' },{ value: '2', text: 'Féminin' }],userInfo.genre, true));
           form.appendChild(createInputField('Date de naissance', 'date_of_birth', new Date(userInfo.date_of_birth).toLocaleDateString()));
-          form.appendChild(createInputField('Grade', 'grade', userInfo.grade));
-          form.appendChild(createInputField('Abonnement', 'abonnement', userInfo.abonnement));
+          form.appendChild(createDropdownField('Choisisez votre grade', 'grade', gradeOptions,userInfo.grade, true));
+          form.appendChild(createDropdownField('Choisisez votre abonnement', 'abonnement', [{ value: '1', text: 'paiement mensuel - 25€' },{ value: '2', text: 'paiement- trimestriel - 100€' },{ value: '3', text: 'paiement annuel - 300€' }],userInfo.abonnement, true));
   
           // Créer un bouton de modification
           const editButton = document.createElement('button');
@@ -252,14 +323,20 @@ export class Dashboard extends WebComponent {
           participantsDiv.appendChild(form);
           participantsDiv.appendChild(MoreInfosButton)
   
-          // Fonction pour activer les champs d'édition
+          // Fonction pour activer/désactiver tous les champs du formulaire
           const enableFormFields = (enable) => {
+            // Désactiver/Activer tous les champs input
             form.querySelectorAll('input').forEach(input => {
-              if (input.name !== 'role') { // Ne pas activer le champ "role"
-                input.disabled = !enable;
-              }
+              input.disabled = !enable;
+            });
+
+            // Désactiver/Activer tous les menus déroulants (select)
+            form.querySelectorAll('select').forEach(select => {
+              select.disabled = !enable;
             });
           };
+
+          
   
           // Gérer l'événement du bouton de modification
           editButton.addEventListener('click', () => {
@@ -327,20 +404,45 @@ export class Dashboard extends WebComponent {
           // Gérer l'événement du bouton de sauvegarde
           saveButton.addEventListener('click', async () => {
             // Récupérer les données du formulaire
-            const updatedData = {
-              first_name: form.first_name.value,
-              last_name: form.last_name.value,
-              email: form.email.value,
-              gender: form.gender.value,
-              date_of_birth: form.date_of_birth.value,
-              grade: form.grade.value,
-            };
-  
+            const updatedData = {};
+          
+            // Récupérer les valeurs des champs input
+            form.querySelectorAll('input').forEach(input => {
+              updatedData[input.name] = input.value;  // Utiliser le nom de l'input comme clé
+            });
+          
+            // Récupérer les valeurs des menus déroulants (select)
+            form.querySelectorAll('select').forEach(select => {
+              updatedData[select.name] = select.value;  // Utiliser le nom du select comme clé
+            });
+            console.log(updatedData)
+            try {
+              const response = await fetch('http://localhost:3000/users/infos/update', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ user_id: user.id, data: updatedData}),
+                  credentials: 'include',
+              });
+      
+              if (!response.ok) {
+                  throw new Error('Erreur serveur.');
+              }
+      
+              const data = await response.json();
+              console.log(data)
+      
+              // Vérifier si la réponse contient des participants
+              return data;
+          } catch (error) {
+              console.error('Erreur lors de la requête fetch:', error);
+              return [];
+          }
+          
             try {
               // Sauvegarder les nouvelles données via l'API
-              //await this.updateUserInfos(user.id, updatedData);
+              // await this.updateUserInfos(user.id, updatedData);
               console.log('Informations mises à jour avec succès:', updatedData);
-  
+          
               // Désactiver les champs après la sauvegarde
               enableFormFields(false);
               saveButton.style.display = 'none'; // Cacher le bouton "Sauvegarder"
@@ -348,7 +450,7 @@ export class Dashboard extends WebComponent {
             } catch (error) {
               console.error('Erreur lors de la mise à jour des informations:', error);
             }
-          });
+          });          
         }
       } catch (error) {
         console.error('Erreur lors du chargement des informations :', error);

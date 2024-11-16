@@ -205,6 +205,88 @@ router.patch('/update', async (req, res) => {
   }
 });
 
+router.post('/infos/update', async (req, res) => {
+  const { user_id, data } = req.body;
+  console.log("requête reçue:", data.abonnement);
+
+  try {
+    const client = new SQLClient();
+
+    // 1. Récupérer les informations actuelles de l'utilisateur
+    const userQuery = 'SELECT * FROM utilisateurs WHERE id = ?';
+    const [user] = await client.query(userQuery, [user_id]);
+
+    if (!user || user.length === 0) {
+      return res.status(404).json({ success: false, message: 'Utilisateur non trouvé' });
+    }
+
+    // Initialiser userInfo avec les données actuelles de l'utilisateur
+    let userInfo = { ...user[0] }; // Utilisation de l'utilisateur actuel
+
+    // 2. Récupérer le nom du grade à partir de l'ID du grade
+    const gradeQuery = 'SELECT grade FROM grades WHERE id = ?';
+    const [gradeResults] = await client.query(gradeQuery, [userInfo.grade]);
+
+    if (gradeResults && gradeResults.length > 0) {
+      userInfo.grade = gradeResults[0].grade; // Ajouter le nom du grade
+    } else {
+      userInfo.grade = null; // Valeur par défaut si aucune correspondance
+    }
+
+    // 3. Récupérer le nom du genre à partir de l'ID du genre
+    const genreQuery = 'SELECT genre_name FROM genres WHERE id = ?';
+    const [genreResults] = await client.query(genreQuery, [userInfo.gender]);
+
+    if (genreResults && genreResults.length > 0) {
+      userInfo.gender = genreResults[0].genre_name; // Ajouter le nom du genre
+    } else {
+      userInfo.gender = null; // Valeur par défaut si aucune correspondance
+    }
+
+    // 4. Récupérer le type d'abonnement à partir de l'ID d'abonnement
+    const abonnementQuery = 'SELECT nom_plan FROM plans_tarifaires WHERE id = ?';
+    const [abonnementResults] = await client.query(abonnementQuery, [userInfo.abonnement]);
+
+    if (abonnementResults && abonnementResults.length > 0) {
+      userInfo.abonnement = abonnementResults[0].nom_plan; // Ajouter le nom du plan d'abonnement
+    } else {
+      userInfo.abonnement = null; // Valeur par défaut si aucune correspondance
+    }
+
+    // 5. Mettre à jour les informations de l'utilisateur avec les nouvelles données
+    const updateQuery = `
+      UPDATE utilisateurs 
+      SET 
+        first_name = ?, 
+        last_name = ?, 
+        email = ?, 
+        gender = ?, 
+        date_of_birth = ?,
+        status = ?,
+        grade = ?, 
+        abonnement = ?
+      WHERE id = ?
+    `;
+    
+    const { first_name, last_name, email, gender, date_of_birth, status, grade, abonnement } = data;
+    const result = await client.query(updateQuery, [
+      first_name, last_name, email, gender, date_of_birth, status, grade, abonnement, user_id
+    ]);
+
+    // 6. Vérifier si la mise à jour a réussi
+    if (result.affectedRows > 0) {
+      return res.status(200).json({ success: true, message: 'Informations mises à jour avec succès' });
+    } else {
+      return res.status(400).json({ success: false, message: 'Aucune donnée mise à jour' });
+    }
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des informations:', error);
+    return res.status(500).json({ success: false, message: 'Erreur serveur' });
+  }
+});
+
+
+
 
 
 
