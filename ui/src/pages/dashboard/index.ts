@@ -195,25 +195,26 @@ export class Dashboard extends WebComponent {
           form.classList.add('user-info-form');
   
           // Fonction pour créer un input avec un label
-          const createInputField = (labelText, fieldName, value, disabled = false) => {
+          const createInputField = (labelText, fieldName, value, type = 'text', disabled = false) => {
             const div = document.createElement('div');
             div.classList.add('form-group');
-  
+          
             const label = document.createElement('label');
             label.textContent = labelText;
-  
+          
             const input = document.createElement('input');
-            input.type = 'text';
+            input.type = type;  // Permet de spécifier le type (date, email, text, etc.)
             input.name = fieldName;
-            input.value = value || '';
+            input.value = value || '';  // Utilise la valeur donnée ou vide si non spécifiée
             input.disabled = disabled;
             input.classList.add('form-control');
-  
+          
             div.appendChild(label);
             div.appendChild(input);
-  
+          
             return div;
           };
+          
 
   
 
@@ -297,12 +298,12 @@ export class Dashboard extends WebComponent {
         ];
         
           // Ajouter les champs au formulaire
-          form.appendChild(createInputField('Prénom', 'first_name', userInfo.first_name, true));
-          form.appendChild(createInputField('Nom', 'last_name', userInfo.last_name, true));
-          form.appendChild(createInputField('Email', 'email', userInfo.email, true));
+          form.appendChild(createInputField('Prénom', 'first_name', userInfo.first_name, 'text', true));
+          form.appendChild(createInputField('Nom', 'last_name', userInfo.last_name, 'text',true));
+          form.appendChild(createInputField('Email', 'email', userInfo.email, 'email', true));
           form.appendChild(createDropdownField('Choisisez votre rôle', 'role', [{ value: 'user', text: 'user' },{ value: 'administrator', text: 'administrator' },{ value: 'super-administrator', text:'super-administrator' }],userInfo.role, true)); // Champ désactivé
           form.appendChild(createDropdownField('Choisisez votre genre', 'genre', [{ value: '1', text: 'Masculin' },{ value: '2', text: 'Féminin' }],userInfo.gender, true));
-          form.appendChild(createInputField('Date de naissance', 'date_of_birth', new Date(userInfo.date_of_birth).toLocaleDateString()));
+          form.appendChild(createInputField('Date de naissance', 'date_of_birth', this.formatDate(userInfo.date_of_birth, 'YYYY-MM-DD'), 'date',true));
           form.appendChild(createDropdownField('Choisisez votre grade', 'grade', gradeOptions,userInfo.grade, true));
           form.appendChild(createDropdownField('Choisisez votre abonnement', 'abonnement', [{ value: '1', text: 'paiement mensuel - 25€' },{ value: '2', text: 'paiement- trimestriel - 100€' },{ value: '3', text: 'paiement annuel - 300€' }],userInfo.abonnement, true));
   
@@ -471,6 +472,19 @@ export class Dashboard extends WebComponent {
     } else {
       console.error('Aucun élément "panel-row" trouvé pour cet utilisateur.');
     }
+  }
+
+  formatDate(dateString: string, format: 'YYYY-MM-DD' | 'YYYY-MM' = 'YYYY-MM-DD'): string {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    if (format === 'YYYY-MM') {
+      return `${year}-${month}`;
+    }
+  
+    return `${year}-${month}-${day}`;
   }
 } 
 

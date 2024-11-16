@@ -676,15 +676,15 @@ class Dashboard extends (0, _core.WebComponent) {
                     const form = document.createElement("form");
                     form.classList.add("user-info-form");
                     // Fonction pour créer un input avec un label
-                    const createInputField = (labelText, fieldName, value, disabled = false)=>{
+                    const createInputField = (labelText, fieldName, value, type = "text", disabled = false)=>{
                         const div = document.createElement("div");
                         div.classList.add("form-group");
                         const label = document.createElement("label");
                         label.textContent = labelText;
                         const input = document.createElement("input");
-                        input.type = "text";
+                        input.type = type; // Permet de spécifier le type (date, email, text, etc.)
                         input.name = fieldName;
-                        input.value = value || "";
+                        input.value = value || ""; // Utilise la valeur donnée ou vide si non spécifiée
                         input.disabled = disabled;
                         input.classList.add("form-control");
                         div.appendChild(label);
@@ -846,9 +846,9 @@ class Dashboard extends (0, _core.WebComponent) {
                         }
                     ];
                     // Ajouter les champs au formulaire
-                    form.appendChild(createInputField("Pr\xe9nom", "first_name", userInfo.first_name, true));
-                    form.appendChild(createInputField("Nom", "last_name", userInfo.last_name, true));
-                    form.appendChild(createInputField("Email", "email", userInfo.email, true));
+                    form.appendChild(createInputField("Pr\xe9nom", "first_name", userInfo.first_name, "text", true));
+                    form.appendChild(createInputField("Nom", "last_name", userInfo.last_name, "text", true));
+                    form.appendChild(createInputField("Email", "email", userInfo.email, "email", true));
                     form.appendChild(createDropdownField("Choisisez votre r\xf4le", "role", [
                         {
                             value: "user",
@@ -873,7 +873,7 @@ class Dashboard extends (0, _core.WebComponent) {
                             text: "F\xe9minin"
                         }
                     ], userInfo.gender, true));
-                    form.appendChild(createInputField("Date de naissance", "date_of_birth", new Date(userInfo.date_of_birth).toLocaleDateString()));
+                    form.appendChild(createInputField("Date de naissance", "date_of_birth", this.formatDate(userInfo.date_of_birth, "YYYY-MM-DD"), "date", true));
                     form.appendChild(createDropdownField("Choisisez votre grade", "grade", gradeOptions, userInfo.grade, true));
                     form.appendChild(createDropdownField("Choisisez votre abonnement", "abonnement", [
                         {
@@ -1027,6 +1027,14 @@ class Dashboard extends (0, _core.WebComponent) {
             }
             console.log("Informations ajout\xe9es dans la div:", participantsDiv);
         } else console.error('Aucun \xe9l\xe9ment "panel-row" trouv\xe9 pour cet utilisateur.');
+    }
+    formatDate(dateString, format = "YYYY-MM-DD") {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        if (format === "YYYY-MM") return `${year}-${month}`;
+        return `${year}-${month}-${day}`;
     }
 }
 Dashboard = (0, _tsDecorate._)([
