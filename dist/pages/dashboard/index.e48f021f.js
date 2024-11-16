@@ -844,17 +844,17 @@ class Dashboard extends (0, _core.WebComponent) {
                     form.appendChild(createInputField("Pr\xe9nom", "first_name", userInfo.first_name, true));
                     form.appendChild(createInputField("Nom", "last_name", userInfo.last_name, true));
                     form.appendChild(createInputField("Email", "email", userInfo.email, true));
-                    form.appendChild(createDropdownField("Choisisez votre r\xf4le", "r\xf4le", [
+                    form.appendChild(createDropdownField("Choisisez votre r\xf4le", "role", [
                         {
-                            value: "1",
+                            value: "user",
                             text: "user"
                         },
                         {
-                            value: "2",
+                            value: "administrator",
                             text: "administrator"
                         },
                         {
-                            value: "3",
+                            value: "super-administrator",
                             text: "super-administrator"
                         }
                     ], userInfo.role, true)); // Champ désactivé

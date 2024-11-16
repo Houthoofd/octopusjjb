@@ -207,7 +207,7 @@ router.patch('/update', async (req, res) => {
 
 router.post('/infos/update', async (req, res) => {
   const { user_id, data } = req.body;
-  console.log("requête reçue:", data.abonnement);
+  console.log("genre:" + data.genre, "rôle:" + data.role,);
 
   try {
     const client = new SQLClient();
@@ -235,7 +235,7 @@ router.post('/infos/update', async (req, res) => {
 
     // 3. Récupérer le nom du genre à partir de l'ID du genre
     const genreQuery = 'SELECT genre_name FROM genres WHERE id = ?';
-    const [genreResults] = await client.query(genreQuery, [userInfo.gender]);
+    const [genreResults] = await client.query(genreQuery, [userInfo.genre]);
 
     if (genreResults && genreResults.length > 0) {
       userInfo.gender = genreResults[0].genre_name; // Ajouter le nom du genre
@@ -268,9 +268,10 @@ router.post('/infos/update', async (req, res) => {
       WHERE id = ?
     `;
     
-    const { first_name, last_name, email, gender, date_of_birth, status, grade, abonnement } = data;
+    const { first_name, last_name, email, genre, date_of_birth, role, grade, abonnement } = data;
+    console.log(first_name, last_name, email, genre, date_of_birth, role, grade, abonnement)
     const result = await client.query(updateQuery, [
-      first_name, last_name, email, gender, date_of_birth, status, grade, abonnement, user_id
+      first_name, last_name, email, genre, date_of_birth, role, grade, abonnement, user_id
     ]);
 
     // 6. Vérifier si la mise à jour a réussi

@@ -290,7 +290,7 @@ export class Dashboard extends WebComponent {
           form.appendChild(createInputField('Prénom', 'first_name', userInfo.first_name, true));
           form.appendChild(createInputField('Nom', 'last_name', userInfo.last_name, true));
           form.appendChild(createInputField('Email', 'email', userInfo.email, true));
-          form.appendChild(createDropdownField('Choisisez votre rôle', 'rôle', [{ value: '1', text: 'user' },{ value: '2', text: 'administrator' },{ value: '3', text:'super-administrator' }],userInfo.role, true)); // Champ désactivé
+          form.appendChild(createDropdownField('Choisisez votre rôle', 'role', [{ value: 'user', text: 'user' },{ value: 'administrator', text: 'administrator' },{ value: 'super-administrator', text:'super-administrator' }],userInfo.role, true)); // Champ désactivé
           form.appendChild(createDropdownField('Choisisez votre genre', 'genre', [{ value: '1', text: 'Masculin' },{ value: '2', text: 'Féminin' }],userInfo.genre, true));
           form.appendChild(createInputField('Date de naissance', 'date_of_birth', new Date(userInfo.date_of_birth).toLocaleDateString()));
           form.appendChild(createDropdownField('Choisisez votre grade', 'grade', gradeOptions,userInfo.grade, true));
