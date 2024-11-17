@@ -1971,23 +1971,34 @@ Navigation = (0, _tsDecorate._)([
         template: (0, _core.html)`${(navigation)=>{
             return (0, _core.html)`
     <div class="navigation">
-          <div class="list"></div>
-            <div class="item"><a href="/pages/cours">cours</a></div>
-            <div class="item"><a href="/pages/informations">infos</a></div>
-            <div class="item"><a href="/pages/compte">compte</a></div>
-            <div class="item"><a href="/pages/profile">profile</a></div>
-             ${navigation.isAdmin === true ? (0, _core.html)`<div class="item"><a href="/pages/dashboard">dashboard</a></div>` : (0, _core.html)``}
+      <div class="navigation-list">
+        <div class="list"></div>
+          <div class="item"><a href="/pages/cours">cours</a></div>
+          <div class="item"><a href="/pages/informations">infos</a></div>
+          <div class="item"><a href="/pages/compte">compte</a></div>
+          <div class="item"><a href="/pages/profile">profile</a></div>
+            ${navigation.isAdmin === true ? (0, _core.html)`<div class="item"><a href="/pages/dashboard">dashboard</a></div>` : (0, _core.html)``}
           </div>
           <div class="bottom-navigation">
             <pf-button @click="${()=>navigation.logout()}">Déconnexion</pf-button>
           </div>
-        </div>`;
+      </div>
+    </div>`;
         }}`,
         styles: [
             (0, _core.css)`
-      .navigation{
+    .navigation{
         color: black;
-        background-color: #ffffff
+        background-color: #ffffff;
+        justify-content: space-between;
+        flex-direction: column;
+        display: flex;
+      }
+      .navigation-list{
+        color: black;
+        background-color: #ffffff;
+        justify-content: space-between;
+        flex-direction: column;
       }
       .list{
         display: flex;
