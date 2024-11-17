@@ -10,9 +10,9 @@ let template: ViewTemplate<any> = html`${( context:ViewContext )=>{
 
 
 
-  return html`<new-password-page>
+  return html`<page-new-password>
 
-  </new-password-page>
+  </page-new-password>
   `;
 }}`
 

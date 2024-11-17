@@ -1535,27 +1535,136 @@ var _routerElement = require("@lithium-framework/router-element");
 var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 class NewPassword extends (0, _core.WebComponent) {
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    handleEmailInput(login) {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const emailValue = inputs?.[0].value || "";
+        this.Mail = emailValue;
+        this.validateForm();
+    }
+    handlePasswordInput(login) {
+        const inputs = this.shadowRoot?.querySelectorAll("input");
+        const password = inputs?.[1].value || "";
+        console.log(password);
+        this.Password = password;
+        this.validateForm();
+    }
+    validateForm() {
+        console.log(this.Mail, this.Password);
+        this.isFormValid = this.Mail !== "" && this.Password !== "";
+        this.errorMessage = this.isFormValid ? null : "Veuillez entrer \xe0 la fois un email et un mot de passe.";
+    }
+    async sendData() {
+        if (this.isFormValid) {
+            const data = {
+                email: this.Mail,
+                newpassword: this.Password
+            };
+            console.log(data);
+            try {
+                const response = await fetch("http://localhost:3000/password", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                // Vérification de la réponse HTTP
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log(result);
+                    // Redirection vers la page des cours
+                    window.location.href = "/pages/connexion";
+                } else {
+                    // Gestion des erreurs de statut (par exemple, 401 Unauthorized)
+                    console.error("Erreur lors de la connexion :", response.statusText);
+                    this.errorMessage = "\xc9chec de la connexion. Veuillez v\xe9rifier vos informations.";
+                }
+            } catch (error) {
+                console.error("Erreur lors de la requ\xeate :", error);
+                this.errorMessage = "Une erreur est survenue. Veuillez r\xe9essayer plus tard.";
+            }
+        } else this.errorMessage = "Veuillez remplir tous les champs.";
+    }
+    // Gestion de la soumission du formulaire
+    handleLogin() {
+        this.validateForm();
+        if (this.isFormValid) this.sendData();
+    }
+    toggleRememberMe() {
+        this.rememberMe = !this.rememberMe;
+    }
+    constructor(...args){
+        super(...args);
+        this.email = "";
+        this.password = "";
+        this.rememberMe = false;
+        this.isFormValid = false;
+        this.errorMessage = null;
+        this.isCustom = false;
+        this.Mail = "";
+        this.Password = "";
+    }
 }
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], NewPassword.prototype, "email", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], NewPassword.prototype, "password", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], NewPassword.prototype, "rememberMe", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], NewPassword.prototype, "isFormValid", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], NewPassword.prototype, "errorMessage", void 0);
+(0, _tsDecorate._)([
+    (0, _core.state)()
+], NewPassword.prototype, "isCustom", void 0);
 NewPassword = (0, _tsDecorate._)([
     (0, _core.customElement)({
-        name: "new-password-page",
-        template: (0, _core.html)`${(newPassword)=>{
+        name: "page-new-password",
+        template: (0, _core.html)`${(newpassword)=>{
             return (0, _core.html)`
-        <div class="login">
-          <div class="header">
-            <h1>Change your password</h1>
-          </div>
-          <div class="main-body">
-            <div class="input-field">
-              <input type="email" placeholder="Email">
-            </div>
-            <div class="input-field">
-              <input type="password" placeholder="Password">
-            </div>
-            <button class="button-login">Save change</button>
-          </div>
+      <div class="login">
+        <div class="header">
+          <h1>Change your password</h1>
         </div>
-      `;
+        <div class="main-body">
+          <div class="input-field">
+            <pf-icons-envelope></pf-icons-envelope>
+            <input 
+              type="email" 
+              placeholder="Email" 
+              @input="${(login)=>login.handleEmailInput()}" 
+              value="${newpassword.email}"
+            >
+          </div>
+          <div class="input-field">
+            <pf-icons-lock></pf-icons-lock>
+            <input 
+              type="password" 
+              placeholder="Password" 
+              @input="${(newpassword)=>newpassword.handlePasswordInput()}" 
+              value="${newpassword.password}"
+            >
+          </div>
+          <button 
+            class="button-login" 
+            ?disabled="${!newpassword.isFormValid}"
+            @click="${()=>newpassword.handleLogin()}"
+          >
+            Save changes
+          </button>
+        </div>
+        ${newpassword.errorMessage ? (0, _core.html)`<div class="error-message">${newpassword.errorMessage}</div>` : ""}
+      </div>
+    `;
         }}`,
         styles: [
             (0, _core.css)`
@@ -1572,6 +1681,7 @@ NewPassword = (0, _tsDecorate._)([
         justify-content: center;
         align-items: center;
         gap: 7%;
+        border-radius: 5px;
       }
       .main-body {
         display: grid;

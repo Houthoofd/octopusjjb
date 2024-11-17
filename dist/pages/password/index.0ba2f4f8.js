@@ -590,9 +590,9 @@ var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 var _components = require("../../components");
 let template = (0, _core.html)`${(context)=>{
-    return (0, _core.html)`<new-password-page>
+    return (0, _core.html)`<page-new-password>
 
-  </new-password-page>
+  </page-new-password>
   `;
 }}`;
 (0, _core.render)(template);
