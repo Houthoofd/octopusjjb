@@ -171,9 +171,9 @@ router.get('/', verifyToken, async(req, res) => {
 
 
 router.post('/', async (req, res) => {
-  const { email, nom, prenom } = req.body;
+  const { email, last_name, first_name } = req.body;
 
-  console.log("Données reçues via body:", { email, nom, prenom });
+  console.log("Données reçues via body:", { email, last_name, first_name });
 
   try {
     const client = new SQLClient();
@@ -186,7 +186,7 @@ router.post('/', async (req, res) => {
     `;
     
     // Exécuter la requête pour récupérer l'ID de l'utilisateur
-    const [user] = await client.query(userIdQuery, [email, nom, prenom]);
+    const [user] = await client.query(userIdQuery, [email, last_name, first_name]);
     console.log("Utilisateur trouvé:", user);
 
     // Si l'utilisateur n'est pas trouvé, renvoyer une erreur
