@@ -25,9 +25,9 @@
   },
   "scripts": {
     "start": "node server/dist/index.js",
-    "build": "parcel build --no-cache",
+    "build": "npm run clean && parcel build --no-cache",
     "watch": "parcel watch --no-cache",
-    "dev": "concurrently \"npm run build\" \"parcel serve --target frontend --no-cache --port 1234\" \"parcel watch --target backend --no-cache --port 8080\" \"nodemon server/dist/index.js\"",
+    "dev": "concurrently \"npm run clean && npm run build\" \"parcel serve --target frontend --no-cache --port 1234\" \"parcel watch --target backend --no-cache --port 8080\" \"nodemon server/dist/index.js\"",
     "clean": "gulp clean-old-bundles"
   },
   "keywords": [],
