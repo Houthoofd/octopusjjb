@@ -51,7 +51,7 @@ import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login'
           <a href="../password">Forgot password?</a>
         </div>
         <div class="footer">
-          <span>Don't have an account? <a href="../pages/inscriptions">Create an account</a></span>
+          <span>Don't have an account? <a href="../inscriptions">Create an account</a></span>
         </div>
         ${login.errorMessage 
           ? html`<div class="error-message">${login.errorMessage}</div>` 

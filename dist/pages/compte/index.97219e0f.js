@@ -771,7 +771,7 @@ Login = (0, _tsDecorate._)([
           <a href="../password">Forgot password?</a>
         </div>
         <div class="footer">
-          <span>Don't have an account? <a href="../pages/inscriptions">Create an account</a></span>
+          <span>Don't have an account? <a href="../inscriptions">Create an account</a></span>
         </div>
         ${login.errorMessage ? (0, _core.html)`<div class="error-message">${login.errorMessage}</div>` : ""}
       </div>
@@ -881,7 +881,7 @@ Login = (0, _tsDecorate._)([
     })
 ], Login);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"18JMv":[function(require,module,exports) {
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"18JMv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _inscription = require("./inscription");
@@ -1278,7 +1278,7 @@ Inscription = (0, _tsDecorate._)([
         </div>
 
         <div class="footer">
-          <span>Already have an account? <a href="../pages/connexion">Log in</a></span>
+          <span>Already have an account? <a href="../connexion">Log in</a></span>
         </div>
       </div>
     `;
@@ -1519,7 +1519,7 @@ Inscription = (0, _tsDecorate._)([
     })
 ], Inscription);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3LFGP":[function(require,module,exports) {
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3LFGP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _password = require("./password");
@@ -1770,7 +1770,7 @@ NewPassword = (0, _tsDecorate._)([
     })
 ], NewPassword);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4uMQr":[function(require,module,exports) {
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4uMQr":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _notification = require("./notification");
@@ -1920,7 +1920,7 @@ Notification = (0, _tsDecorate._)([
     })
 ], Notification);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"f8xTW":[function(require,module,exports) {
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"f8xTW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _navigation = require("./navigation");
@@ -2023,6 +2023,6 @@ Navigation = (0, _tsDecorate._)([
     })
 ], Navigation);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["5nziR"], null, "parcelRequirec605")
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["5nziR"], null, "parcelRequirec605")
 
 //# sourceMappingURL=index.97219e0f.js.map

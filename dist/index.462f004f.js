@@ -589,11 +589,10 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Home", ()=>Home);
 parcelHelpers.export(exports, "Section", ()=>Section);
 parcelHelpers.export(exports, "Footer", ()=>Footer);
-parcelHelpers.export(exports, "Modal", ()=>Modal);
 var _tsDecorate = require("@swc/helpers/_/_ts_decorate");
 var _core = require("@lithium-framework/core");
-var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _routerElement = require("@lithium-framework/router-element");
+var _unofficialPfV5Wc = require("unofficial-pf-v5-wc");
 var _unofficialPfV5WcIcons = require("unofficial-pf-v5-wc-icons");
 class Home extends (0, _core.WebComponent) {
 }
@@ -1285,13 +1284,6 @@ Footer = (0, _tsDecorate._)([
         ]
     })
 ], Footer);
-class Modal extends (0, _unofficialPfV5Wc.PfModalBox) {
-}
-Modal = (0, _tsDecorate._)([
-    (0, _core.customElement)({
-        name: "custom-modal"
-    })
-], Modal);
 // function displaySelection(){
 //     const storedSelection = localStorage.getItem('selectionArray');
 //     const form = document.querySelectorAll('form')[0];
@@ -1364,6 +1356,6 @@ Modal = (0, _tsDecorate._)([
 // }
 (0, _core.render)((0, _core.html)`<main-home></main-home>`, document.body);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","unofficial-pf-v5-wc":"eGY4R","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc-icons":"gk8FK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["89kOC","03LU1"], "03LU1", "parcelRequirec605")
 
 //# sourceMappingURL=index.462f004f.js.map

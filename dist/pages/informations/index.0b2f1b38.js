@@ -691,6 +691,6 @@ let template = (0, _core.html)`${(context)=>{
 }}`;
 (0, _core.render)(template);
 
-},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"eGY4R","unofficial-pf-v5-wc-icons":"gk8FK","../../components":"HH6XE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bQeHR","6WVIp"], "6WVIp", "parcelRequirec605")
+},{"@swc/helpers/_/_ts_decorate":"lX6TJ","@lithium-framework/core":"hmv1B","@lithium-framework/router-element":"cZ2Eg","unofficial-pf-v5-wc":"bU1uI","unofficial-pf-v5-wc-icons":"7gm82","../../components":"HH6XE","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["bQeHR","6WVIp"], "6WVIp", "parcelRequirec605")
 
 //# sourceMappingURL=index.0b2f1b38.js.map

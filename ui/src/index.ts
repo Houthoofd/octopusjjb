@@ -691,12 +691,6 @@ export class Footer extends WebComponent{
 
 }
 
-@customElement({
-    name: "custom-modal",
-})
-export class Modal extends PfModalBox{
-
-}
 
 
 // function displaySelection(){

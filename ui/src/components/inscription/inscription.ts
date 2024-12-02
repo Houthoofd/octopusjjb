@@ -164,7 +164,7 @@ import 'unofficial-pf-v5-wc-icons';
         </div>
 
         <div class="footer">
-          <span>Already have an account? <a href="../pages/connexion">Log in</a></span>
+          <span>Already have an account? <a href="../connexion">Log in</a></span>
         </div>
       </div>
     `;
