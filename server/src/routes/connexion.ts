@@ -55,7 +55,6 @@ router.post('/', async (req, res) => {
       secure: process.env.NODE_ENV === 'production', // En prod, forcer HTTPS
       sameSite: 'none',
       maxAge: 3600000,       // Durée de vie du cookie (1 heure)       // Durée de vie du cookie (ici 1 heure)
-      domain: '.octopusjjb.ovh'  
     });
 
     // Envoi du token également dans la réponse JSON
