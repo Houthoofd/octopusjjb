@@ -233,6 +233,9 @@ export class Login extends WebComponent {
             role: result.userData.role,
             token: result.userData.token
           };
+
+          console.log(userData.token.length);  // Affiche la longueur du token
+          console.log(localStorage.length); 
   
           // Stockage des informations utilisateur dans localStorage
           localStorage.setItem('userData', JSON.stringify(userData));
