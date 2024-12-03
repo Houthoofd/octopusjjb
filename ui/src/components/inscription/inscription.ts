@@ -664,7 +664,7 @@ export class Inscription extends WebComponent {
   
     console.log('Envoi des données:', formData);
     try {
-      const response = await fetch('http://localhost:3000/inscriptions', {
+      const response = await fetch('http://www.octopusjjb.ovh/inscriptions', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
