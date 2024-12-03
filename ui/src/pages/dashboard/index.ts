@@ -106,7 +106,7 @@ export class Dashboard extends WebComponent {
  
   async preloadData(): Promise<any[]> {
     try {
-        const response = await fetch('http://localhost:3000/users/', {
+        const response = await fetch('http://www.octopusjjb.ovh/users/', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -128,7 +128,7 @@ export class Dashboard extends WebComponent {
   async loadInfosUser(userId) {
     console.log(userId);
     try {
-        const response = await fetch('http://localhost:3000/users/infos', {
+        const response = await fetch('http://www.octopusjjb.ovh/users/infos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId }),
@@ -382,17 +382,17 @@ export class Dashboard extends WebComponent {
             const queryString = new URLSearchParams(queryParams).toString();
             console.log("queryString" + queryString);
 
-            window.location.href = `http://localhost:1234/pages/profile?${queryString}`;
+            window.location.href = `http://www.octopusjjb.ovh/pages/profile?${queryString}`;
           
             // Si les paramètres sont présents (si `email` ou `prenom` ou `nom` sont non vides), c'est pour un utilisateur spécifique
             if (queryParams.email && queryParams.prenom && queryParams.nom) {
-              fetch(`http://localhost:1234/pages/profile?${queryString}`)
+              fetch(`http://www.octopusjjb.ovh/pages/profile?${queryString}`)
                 .then(response => response.json())
                 .then(data => {
                   console.log("Statistiques de l'utilisateur:", data);
                   // Logique pour afficher les stats de l'utilisateur
                   // Vous pouvez rediriger après avoir reçu les données si nécessaire
-                  window.location.href = `http://localhost:1234/pages/profile?${queryString}`;
+                  window.location.href = `http://www.octopusjjb.ovh/pages/profile?${queryString}`;
                 })
                 .catch(error => console.error("Erreur:", error));
             } else {
@@ -401,7 +401,7 @@ export class Dashboard extends WebComponent {
               const firstName = localStorage.getItem('firstName');
               const lastName = localStorage.getItem('lastName');
               console.log("fetch via body");
-              fetch('http://localhost:1234/pages/profile', {
+              fetch('http://www.octopusjjb.ovh/pages/profile', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, firstName, lastName })
@@ -434,7 +434,7 @@ export class Dashboard extends WebComponent {
             });
             console.log(updatedData)
             try {
-              const response = await fetch('http://localhost:3000/users/infos/update', {
+              const response = await fetch('http://www.octopusjjb.ovh/users/infos/update', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ user_id: user.id, data: updatedData}),
@@ -523,7 +523,7 @@ export class Dashboard extends WebComponent {
       console.log('Suppression de l\'utilisateur avec ID:', user.first_name + " " + user.last_name);
       
       // Si l'utilisateur confirme, envoyer la requête DELETE pour supprimer l'utilisateur
-      fetch(`http://localhost:3000/users/delete/${user.id}`, {
+      fetch(`http://www.octopusjjb.ovh/users/delete/${user.id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

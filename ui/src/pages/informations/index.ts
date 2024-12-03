@@ -72,7 +72,7 @@ export class Informations extends WebComponent {
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
-      const response = await fetch('http://localhost:3000/compte', {
+      const response = await fetch('http://www.octopusjjb.ovh/compte', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

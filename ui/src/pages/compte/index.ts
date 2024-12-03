@@ -18,7 +18,7 @@ import { response } from 'express';
               <h1 class="title">Compte</h1>
             </div>
             <div class="table-infos">
-              ${asyncAppend(compte.preloadData('http://localhost:3000/informations'), (result) => {
+              ${asyncAppend(compte.preloadData('http://www.octopusjjb.ovh/informations'), (result) => {
                   return html`${
                     repeat(
                       result,
@@ -299,7 +299,7 @@ async saveChanges() {
     };
 
     // Envoyer les données à l'API via fetch
-    fetch('http://localhost:3000/users/update', {
+    fetch('http://www.octopusjjb.ovh/users/update', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

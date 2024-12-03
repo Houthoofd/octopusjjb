@@ -211,7 +211,7 @@ export class Login extends WebComponent {
       console.log(data);
   
       try {
-        const response = await fetch('http://localhost:3000/connexion', {
+        const response = await fetch('http://www.octopusjjb.ovh/connexion', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

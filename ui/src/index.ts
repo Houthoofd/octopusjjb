@@ -446,7 +446,7 @@ export class Section extends WebComponent {
     
         if (isEligible === true) {
             try {
-                const response = await fetch('http://localhost:3000/reservations', {
+                const response = await fetch('http://www.octopusjjb.ovh/reservations', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -510,7 +510,7 @@ export class Section extends WebComponent {
     async verification(nameValue: string, emailValue: string): Promise<boolean> {
         const usersInformations = { nom: nameValue, email: emailValue };
         try {
-            const response = await fetch('http://localhost:3000/reservations/verification', {
+            const response = await fetch('http://www.octopusjjb.ovh/reservations/verification', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -543,7 +543,7 @@ export class Section extends WebComponent {
 
     async preloadData(): Promise<any[]> {
         try {
-            const response = await fetch('http://localhost:3000/cours/', {
+            const response = await fetch('http://www.octopusjjb.ovh/cours/', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });

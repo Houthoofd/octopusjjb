@@ -160,7 +160,7 @@ export class Cours extends WebComponent {
         console.log(inscriptionData);
 
         // Faire la requête fetch
-        const response = await fetch('http://localhost:3000/cours/inscription', {
+        const response = await fetch('http://www.octopusjjb.ovh/cours/inscription', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ export class Cours extends WebComponent {
 
     async preloadData(): Promise<any[]> {
         try {
-            const response = await fetch('http://localhost:3000/cours/', {
+            const response = await fetch('http://www.octopusjjb.ovh/cours/', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -242,7 +242,7 @@ export class Cours extends WebComponent {
   async loadParticipants(courId) {
     console.log(courId);
     try {
-        const response = await fetch('http://localhost:3000/cours/participant', {
+        const response = await fetch('http://www.octopusjjb.ovh/cours/participant', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -339,7 +339,7 @@ export class Cours extends WebComponent {
             iconCrossDiv.addEventListener('click', async () => {
               try {
                 // Effectuer la requête POST pour supprimer le participant
-                const response = await fetch('http://localhost:3000/cours/participant/cancel', {
+                const response = await fetch('http://www.octopusjjb.ovh/cours/participant/cancel', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
@@ -385,7 +385,7 @@ export class Cours extends WebComponent {
               console.log(cour.id,participant.participant_id)
               try {
                 // Effectuer la requête POST pour supprimer le participant
-                const response = await fetch('http://localhost:3000/cours/participant/validation', {
+                const response = await fetch('http://www.octopusjjb.ovh/cours/participant/validation', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
