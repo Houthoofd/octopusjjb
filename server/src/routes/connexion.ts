@@ -69,9 +69,7 @@ router.post('/', async (req, res) => {
       },
     });
 
-    setTimeout(() => {
-      window.location.href = '/pages/cours';
-    }, 1000);
+    return res.redirect('/pages/cours'); 
 
   } catch (err) {
     console.error('Erreur lors de la vérification de l\'utilisateur', err);
