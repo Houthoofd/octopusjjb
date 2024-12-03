@@ -69,6 +69,10 @@ router.post('/', async (req, res) => {
       },
     });
 
+    setTimeout(() => {
+      window.location.href = '/pages/cours';
+    }, 1000);
+
   } catch (err) {
     console.error('Erreur lors de la vérification de l\'utilisateur', err);
     res.status(500).send('Erreur lors de la vérification de l\'utilisateur');

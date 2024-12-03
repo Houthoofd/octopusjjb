@@ -243,8 +243,7 @@ export class Login extends WebComponent {
             console.error('Erreur de connexion');
           }
   
-          // Redirection vers la page des cours
-          //window.location.href = '/pages/cours';
+          
         } else {
           // Gestion des erreurs de statut (par exemple, 401 Unauthorized)
           console.error("Erreur lors de la connexion :", response.statusText);
