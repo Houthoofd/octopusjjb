@@ -230,7 +230,8 @@ export class Login extends WebComponent {
             last_name: result.userData.nom,
             first_name: result.userData.prenom,
             email: result.userData.email,
-            role: result.userData.role
+            role: result.userData.role,
+            token: result.userData.token
           };
   
           // Stockage des informations utilisateur dans localStorage
