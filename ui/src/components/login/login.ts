@@ -231,6 +231,7 @@ export class Login extends WebComponent {
             first_name: result.userData.prenom,
             email: result.userData.email,
             role: result.userData.role,
+            token: result.userData.token
           };
   
           // Stockage des informations utilisateur dans localStorage
@@ -244,7 +245,7 @@ export class Login extends WebComponent {
           }
   
           // Redirection vers la page des cours
-          window.location.href = '/pages/cours';
+          //window.location.href = '/pages/cours';
         } else {
           // Gestion des erreurs de statut (par exemple, 401 Unauthorized)
           console.error("Erreur lors de la connexion :", response.statusText);

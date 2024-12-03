@@ -57,6 +57,14 @@ router.post('/', async (req, res) => {
       maxAge: 3600000       // Durée de vie du cookie (ici 1 heure)
     });
 
+    console.log({
+      email: user.email,
+      role: user.status,
+      nom: user.last_name,
+      prenom: user.first_name,
+      token: token
+    })
+
     // Envoi du token également dans la réponse JSON
     res.status(200).json({
       message: 'Connexion réussie',
@@ -64,7 +72,8 @@ router.post('/', async (req, res) => {
         email: user.email,
         role: user.status,
         nom: user.last_name,
-        prenom: user.first_name
+        prenom: user.first_name,
+        token: token
       },
     });
 

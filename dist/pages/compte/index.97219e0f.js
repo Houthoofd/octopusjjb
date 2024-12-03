@@ -664,7 +664,8 @@ class Login extends (0, _core.WebComponent) {
                         last_name: result.userData.nom,
                         first_name: result.userData.prenom,
                         email: result.userData.email,
-                        role: result.userData.role
+                        role: result.userData.role,
+                        token: result.userData.token
                     };
                     // Stockage des informations utilisateur dans localStorage
                     localStorage.setItem("userData", JSON.stringify(userData));
@@ -672,8 +673,8 @@ class Login extends (0, _core.WebComponent) {
                         console.log("Token JWT:", result.token);
                         localStorage.setItem("token", result.token); // Optionnel : stocker le token dans le localStorage
                     } else console.error("Erreur de connexion");
-                    // Redirection vers la page des cours
-                    window.location.href = "/pages/cours";
+                // Redirection vers la page des cours
+                //window.location.href = '/pages/cours';
                 } else {
                     // Gestion des erreurs de statut (par exemple, 401 Unauthorized)
                     console.error("Erreur lors de la connexion :", response.statusText);
