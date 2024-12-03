@@ -469,7 +469,6 @@ export class Inscription extends WebComponent {
       // Faire la requête pour récupérer les plans tarifaires depuis l'URL
       const response = await fetch(url, {
         method: 'GET',
-        credentials: 'include', // Inclure les cookies et autres credentials si nécessaire
         headers: {
           'Content-Type': 'application/json',
         },

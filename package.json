@@ -45,7 +45,9 @@
     "jsonwebtoken": "^9.0.2",
     "latest": "^0.2.0",
     "morgan": "^1.10.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "unofficial-pf-v5-wc": "^1.0.0",
+    "unofficial-pf-v5-wc-icons": "^1.0.0"
   },
   "devDependencies": {
     "@lithium-framework/core": "^1.8.5-0",
