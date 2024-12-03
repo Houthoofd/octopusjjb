@@ -51,10 +51,11 @@ router.post('/', async (req, res) => {
     console.log('Cookie set:', 'token=' + token);
 
     res.cookie('token', token, {
-      httpOnly: true,        // Le cookie ne peut être accédé que par le serveur, pas par JavaScript
-      secure: false, // En prod, forcer HTTPS
-      sameSite: 'none',
-      maxAge: 3600000,       // Durée de vie du cookie (1 heure)       // Durée de vie du cookie (ici 1 heure)
+      httpOnly: true,         // Le cookie ne peut être accédé que par le serveur, pas par JavaScript
+      secure: false,          // Ne pas forcer HTTPS si vous utilisez HTTP
+      sameSite: 'none',       // Permet l'envoi du cookie dans les requêtes inter-domaines
+      maxAge: 3600000,        // Durée de vie du cookie (1 heure)
+      domain: '.octopusjjb.ovh', // Assurez-vous que le domaine est bien configuré
     });
 
     // Envoi du token également dans la réponse JSON
