@@ -674,8 +674,9 @@ export class Inscription extends WebComponent {
       });
   
       if (response.ok) {
-          const result = await response.json();
-          console.log("Utilisateur enregistré avec succès !", result);
+          const result = await response.text();
+          alert("Utilisateur enregistré avec succès !");
+          window.location.href = "/connexion";
       } else {
           console.error("Erreur lors de l'enregistrement :", response.statusText);
           alert("Une erreur s'est produite. Veuillez réessayer.");

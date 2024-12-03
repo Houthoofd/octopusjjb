@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
 
         await client.query(insertQuery, [firstName, lastName, email, hashedPassword, genreId, date, tarifId]);
 
-        res.status(201).send('Utilisateur enregistré avec succès');
+        res.status(201).json({ message: 'Utilisateur enregistré avec succès' });
 
     } catch (error) {
         console.error('Erreur lors de l\'inscription', error);

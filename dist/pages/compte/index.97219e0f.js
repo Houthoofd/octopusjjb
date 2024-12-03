@@ -1081,8 +1081,9 @@ class Inscription extends (0, _core.WebComponent) {
                 body: JSON.stringify(formData)
             });
             if (response.ok) {
-                const result = await response.json();
-                console.log("Utilisateur enregistr\xe9 avec succ\xe8s !", result);
+                const result = await response.text();
+                alert("Utilisateur enregistr\xe9 avec succ\xe8s !");
+                window.location.href = "/connexion";
             } else {
                 console.error("Erreur lors de l'enregistrement :", response.statusText);
                 alert("Une erreur s'est produite. Veuillez r\xe9essayer.");
