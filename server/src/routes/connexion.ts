@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,        // Le cookie ne peut être accédé que par le serveur, pas par JavaScript
-      secure: process.env.NODE_ENV === 'production', // En prod, forcer HTTPS
+      secure: false, // En prod, forcer HTTPS
       sameSite: 'none',
       maxAge: 3600000,       // Durée de vie du cookie (1 heure)       // Durée de vie du cookie (ici 1 heure)
     });
@@ -64,8 +64,7 @@ router.post('/', async (req, res) => {
         email: user.email,
         role: user.status,
         nom: user.last_name,
-        prenom: user.first_name,
-        token: token
+        prenom: user.first_name
       },
     });
 
