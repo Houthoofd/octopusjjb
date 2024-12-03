@@ -65,11 +65,10 @@ router.post('/', async (req, res) => {
         email: user.email,
         role: user.status,
         nom: user.last_name,
-        prenom: user.first_name
+        prenom: user.first_name,
+        token: token
       },
     });
-
-    return res.redirect('http://www.octopusjjb.ovh/pages/cours'); 
 
   } catch (err) {
     console.error('Erreur lors de la vérification de l\'utilisateur', err);
