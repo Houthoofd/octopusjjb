@@ -123,7 +123,7 @@ import 'unofficial-pf-v5-wc-icons';
             <summary id="dropdownButtonPrice">Choisir un plan</summary>
             <div class="dropdown-menu">
               <!-- Les éléments du menu seront ajoutés ici -->
-              ${asyncAppend(inscription.preloadData(`http://localhost:3000/informations/abonnement`), (result) => {
+              ${asyncAppend(inscription.preloadData(`http://www.octopusjjb.ovh/informations/abonnement`), (result) => {
                 return html`${repeat(
                   result,
                   html`${(plan) => {
@@ -142,7 +142,7 @@ import 'unofficial-pf-v5-wc-icons';
             <summary id="dropdownButtonGenre">Choisir un genre</summary>
             <div class="dropdown-menu">
               <!-- Les éléments du menu seront ajoutés ici -->
-              ${asyncAppend(inscription.preloadData(`http://localhost:3000/informations/gender`), (result) => {
+              ${asyncAppend(inscription.preloadData(`http://www.octopusjjb.ovh/informations/gender`), (result) => {
                 return html`${repeat(
                   result,
                   html`${(info) => {
