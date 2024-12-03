@@ -245,6 +245,9 @@ export class Login extends WebComponent {
   
           // Redirection vers la page des cours
           //window.location.href = '/pages/cours';
+          setTimeout(() => {
+            window.location.href = '/pages/cours';  // Rediriger après un délai
+          }, 1000);
         } else {
           // Gestion des erreurs de statut (par exemple, 401 Unauthorized)
           console.error("Erreur lors de la connexion :", response.statusText);
