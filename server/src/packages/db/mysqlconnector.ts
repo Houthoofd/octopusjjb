@@ -6,10 +6,11 @@ export default class MysqlConnector {
   constructor() {
       // Configuration de la connexion à la base de données MySQL
       this.connection = mysql.createConnection({
-          host: 'localhost',
-          user: 'root',
-          password: '',
-          database: 'octopus_jjb'
+        host: 'mydbinstance.cxj7l8fskg9v.us-east-1.rds.amazonaws.com', // Remplacez par votre endpoint RDS
+        port: 3306, // Le port par défaut pour MySQL
+        user: 'admin', // Remplacez par votre nom d'utilisateur RDS
+        password: 'PtW143kjkS3F', // Remplacez par votre mot de passe RDS
+        database: 'octopusjjb',
       });
 
       // Établir la connexion à la base de données
