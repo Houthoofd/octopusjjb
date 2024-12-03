@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
       },
     });
 
-    return res.redirect('/pages/cours'); 
+    return res.redirect('http://www.octopusjjb.ovh/pages/cours'); 
 
   } catch (err) {
     console.error('Erreur lors de la vérification de l\'utilisateur', err);
