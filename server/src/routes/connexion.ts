@@ -51,10 +51,10 @@ router.post('/', async (req, res) => {
     console.log('Cookie set:', 'token=' + token);
 
     res.cookie('token', token, {
-      httpOnly: true,       // Le cookie ne peut être accédé que par le serveur, pas par JavaScript
-      secure: true,  // Si en production, forcer HTTPS
-      sameSite: 'none',   // Empêche l'envoi du cookie avec des requêtes inter-domaines
-      maxAge: 3600000       // Durée de vie du cookie (ici 1 heure)
+      httpOnly: true,        // Le cookie ne peut être accédé que par le serveur, pas par JavaScript
+      secure: process.env.NODE_ENV === 'production', // En prod, forcer HTTPS
+      sameSite: 'none',
+      maxAge: 3600000        // Durée de vie du cookie (1 heure)       // Durée de vie du cookie (ici 1 heure)
     });
 
     // Envoi du token également dans la réponse JSON
