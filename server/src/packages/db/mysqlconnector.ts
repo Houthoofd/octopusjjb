@@ -10,7 +10,7 @@ export default class MysqlConnector {
         port: 3306, // Le port par défaut pour MySQL
         user: 'admin', // Remplacez par votre nom d'utilisateur RDS
         password: 'PtW143kjkS3F', // Remplacez par votre mot de passe RDS
-        database: 'dbserver',
+        database: 'octopusjjb',
       });
 
       // Établir la connexion à la base de données
