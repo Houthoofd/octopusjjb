@@ -241,7 +241,7 @@ export class Login extends WebComponent {
 
           // Rediriger après une légère attente
           setTimeout(() => {
-            window.location.href = '/page-protection';
+            window.location.href = '/pages/cours';
           }, 1000);
 
           if (result.token) {
