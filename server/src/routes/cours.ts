@@ -119,6 +119,18 @@ router.post('/inscription', async (req, res) => {
 
     const userId = resultUser[0].id;
 
+    // Vérification si l'utilisateur est déjà inscrit au cours
+    const queryCheck = `
+      SELECT * FROM inscriptions 
+      WHERE utilisateur_id = ? AND cours_id = ?;
+    `;
+
+    const resultCheck = await client.query(queryCheck, [userId, coursId]);
+
+    if (resultCheck.length > 0) {
+      return res.status(409).json({ info_message: "Utilisateur déjà inscrit à ce cours." });
+    }
+
     // Requête pour inscrire l'utilisateur au cours
     const queryInsert = `
       INSERT INTO inscriptions (utilisateur_id, cours_id) 
@@ -128,13 +140,14 @@ router.post('/inscription', async (req, res) => {
     await client.query(queryInsert, [userId, coursId]);
 
     // Envoyer une réponse de succès
-    res.status(200).json({ message: "Inscription réussie", userId, coursId });
+    res.status(200).json({ success_message: "Inscription réussie", userId, coursId });
 
   } catch (error) {
     console.error('Erreur lors de l\'inscription:', error);
     res.status(500).json({ message: "Erreur serveur lors de l'inscription." });
   }
 });
+
 
 // Route pour valider la présence d'un participant
 router.post('/participant/cancel', async (req, res) => {
