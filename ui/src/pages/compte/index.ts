@@ -228,7 +228,6 @@ export class Compte extends WebComponent {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify(userData),
       });
   
@@ -256,7 +255,6 @@ export class Compte extends WebComponent {
   
       const response = await fetch(url, {
         method: 'GET',
-        credentials: 'include', // Inclure les cookies et autres credentials si nécessaire
         headers: {
           'Content-Type': 'application/json',
         },
@@ -346,7 +344,6 @@ async saveChanges() {
       headers: {
         'Content-Type': 'application/json'
       },
-      credentials: 'include',  // Si nécessaire pour envoyer les cookies
       body: JSON.stringify(data)
     })
     .then(response => response.json())
