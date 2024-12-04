@@ -11,8 +11,7 @@ const __server_dirname = process.cwd ? process.cwd() : process.env.PWD as string
 const app = express();
 
 app.use(cors({
-  origin: 'http://www.octopusjjb.ovh',
-  credentials: true
+  origin: 'http://www.octopusjjb.ovh'
 }));
 
 app.use(logger('dev'));

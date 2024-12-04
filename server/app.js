@@ -34,8 +34,7 @@ app.use(function(req, res, next) {
 
 // Configuration de CORS pour accepter les requêtes du frontend sur localhost:1234
 app.use(cors({
-  origin: 'http://www.octopusjjb.ovh',
-  credentials: true
+  origin: 'http://www.octopusjjb.ovh'
 }));
 
 // Utiliser les routes API
