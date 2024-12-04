@@ -1,6 +1,6 @@
 ### Google
 
-GET http://localhost:3000/users
+GET http://www.octopusjjb.ovh//users
 
 ### Youtube
 
@@ -9,14 +9,14 @@ GET http://localhost:3000/pages
 
 ### Connexion
 
-POST http://localhost:3000/connexion
+POST http://www.octopusjjb.ovh//connexion
 
 
 ### inscriptions
-POST http://localhost:3000/cours/inscription/
+POST http://www.octopusjjb.ovh/cours/inscription/
 
 ### participants
-POST http://localhost:3000/cours/inscription/participants
+POST http://www.octopusjjb.ovh/cours/inscription/participants
 
 ### cours
 GET http://www.octopusjjb.ovh/cours/

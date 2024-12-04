@@ -157,7 +157,6 @@ export class Profile extends WebComponent {
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include',
           body: JSON.stringify(userData),
         });
 
@@ -173,7 +172,6 @@ export class Profile extends WebComponent {
 
         const response = await fetch(`http://www.octopusjjb.ovh/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`, {
           method: 'GET',
-          credentials: 'include',
           headers: {
             'Content-Type': 'application/json',
           },
