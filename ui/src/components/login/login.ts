@@ -233,12 +233,16 @@ export class Login extends WebComponent {
             role: result.userData.role,
             token: result.userData.token
           };
-
-          console.log(userData.token.length);  // Affiche la longueur du token
-          console.log(localStorage.length); 
   
           // Stockage des informations utilisateur dans localStorage
           localStorage.setItem('userData', JSON.stringify(userData));
+
+          alert("connexion réussie");
+
+          // Rediriger après une légère attente
+          setTimeout(() => {
+            window.location.href = '/page-protection';
+          }, 1000);
 
           if (result.token) {
             console.log('Token JWT:', result.token);
