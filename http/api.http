@@ -19,4 +19,7 @@ POST http://localhost:3000/cours/inscription/
 POST http://localhost:3000/cours/inscription/participants
 
 ### cours
-GET http://localhost:3000/cours/
+GET http://www.octopusjjb.ovh/cours/
+
+### cours
+POST http://www.octopusjjb.ovh/informations/
