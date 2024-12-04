@@ -173,10 +173,10 @@ import 'unofficial-pf-v5-wc-icons';
     css`
       .register{
         width: 500px;
-        height: 680px;
+        height: 800px;
         background-color: #ffffff;
         position: absolute;
-        top: 25%;
+        top: 10%;
         left: 15%;
         color: black;
         display: flex;
@@ -346,8 +346,12 @@ import 'unofficial-pf-v5-wc-icons';
       /* Conteneur du dropdown */
 .dropdown {
   position: relative;
-  display: inline-block;
-  width: 100%;
+    display: inline-block;
+    /* width: 100%; */
+    border: 1px solid #eff3f8;
+    padding: 20px 10px;
+    border-radius: 3px;
+    background-color: #fafbfe;
 }
 
 /* Bouton du dropdown */
@@ -394,6 +398,10 @@ import 'unofficial-pf-v5-wc-icons';
 /* Affichage du menu lorsque l'utilisateur clique sur le bouton */
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+summary#dropdownButtonPrice {
+    color: #fafbfe;
 }
 
 

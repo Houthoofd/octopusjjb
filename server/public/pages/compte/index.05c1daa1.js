@@ -252,10 +252,10 @@ var e=globalThis,o={},i={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e i
     `}`,styles:[(0,s.css)`
       .register{
         width: 500px;
-        height: 680px;
+        height: 800px;
         background-color: #ffffff;
         position: absolute;
-        top: 25%;
+        top: 10%;
         left: 15%;
         color: black;
         display: flex;
@@ -425,8 +425,12 @@ var e=globalThis,o={},i={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e i
       /* Conteneur du dropdown */
 .dropdown {
   position: relative;
-  display: inline-block;
-  width: 100%;
+    display: inline-block;
+    /* width: 100%; */
+    border: 1px solid #eff3f8;
+    padding: 20px 10px;
+    border-radius: 3px;
+    background-color: #fafbfe;
 }
 
 /* Bouton du dropdown */
@@ -473,6 +477,10 @@ var e=globalThis,o={},i={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e i
 /* Affichage du menu lorsque l'utilisateur clique sur le bouton */
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+
+summary#dropdownButtonPrice {
+    color: #fafbfe;
 }
 
 
@@ -712,4 +720,4 @@ var e=globalThis,o={},i={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e i
         text-decoration: none;
       }
     `]})],a)});
-//# sourceMappingURL=index.432b4ddb.js.map
+//# sourceMappingURL=index.05c1daa1.js.map
