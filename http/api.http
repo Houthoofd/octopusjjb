@@ -23,3 +23,6 @@ GET http://www.octopusjjb.ovh/cours/
 
 ### cours
 POST http://www.octopusjjb.ovh/informations/
+
+### compte
+GET http://www.octopusjjb.ovh/compte/
