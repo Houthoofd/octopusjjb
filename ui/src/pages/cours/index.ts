@@ -143,17 +143,39 @@ export class Cours extends WebComponent {
     this.getRole();
   }
 
-  redirection() {
+  checkUserConnection() {
     const userDataString = localStorage.getItem('userData');
-
-    // Vérifie si userData existe dans le localStorage
     if (!userDataString) {
-        // Si userData n'existe pas, on redirige vers '/pages/connexion'
+        // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
         window.location.href = '/pages/connexion';
-    } else {
-        // Si userData existe, on ne fait rien ou on peut exécuter d'autres actions
-        console.log('Utilisateur déjà connecté');
+        return false; // Retourne false pour indiquer qu'aucun utilisateur n'est connecté
     }
+    return true; // Si l'utilisateur est connecté, retourne true
+  }
+
+  // Méthode pour récupérer le rôle et affecter isAdmin
+  getRole() {
+    // Vérifie d'abord si l'utilisateur est connecté
+    if (!this.checkUserConnection()) {
+        return; // Si l'utilisateur n'est pas connecté, on arrête l'exécution
+    }
+
+    const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
+    console.log('Données utilisateur récupérées:', userData);
+
+    // Récupère le rôle de l'utilisateur
+    const userRole = userData.role;
+    console.log('Rôle de l\'utilisateur:', userRole);
+
+    // Vérifie si l'utilisateur a un rôle administrateur et met à jour isAdmin
+    if (userRole === 'administrator' || userRole === 'super-administrator') {
+        this.isAdmin = true;
+    } else {
+        this.isAdmin = false;
+    }
+
+    console.log('Est-ce un administrateur ? ', this.isAdmin);
   }
 
 
@@ -233,41 +255,6 @@ export class Cours extends WebComponent {
             return [];
         }
     }
-
-    checkUserConnection() {
-      const userDataString = localStorage.getItem('userData');
-      if (!userDataString) {
-          // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
-          window.location.href = '/pages/connexion';
-          return false; // Retourne false pour indiquer qu'aucun utilisateur n'est connecté
-      }
-      return true; // Si l'utilisateur est connecté, retourne true
-  }
-
-    // Méthode pour récupérer le rôle et affecter isAdmin
-    getRole() {
-      // Vérifie d'abord si l'utilisateur est connecté
-      if (!this.checkUserConnection()) {
-          return; // Si l'utilisateur n'est pas connecté, on arrête l'exécution
-      }
-  
-      const userDataString = localStorage.getItem('userData');
-      const userData = JSON.parse(userDataString);
-      console.log('Données utilisateur récupérées:', userData);
-  
-      // Récupère le rôle de l'utilisateur
-      const userRole = userData.role;
-      console.log('Rôle de l\'utilisateur:', userRole);
-  
-      // Vérifie si l'utilisateur a un rôle administrateur et met à jour isAdmin
-      if (userRole === 'administrator' || userRole === 'super-administrator') {
-          this.isAdmin = true;
-      } else {
-          this.isAdmin = false;
-      }
-  
-      console.log('Est-ce un administrateur ? ', this.isAdmin);
-  }
   
 
   async loadParticipants(courId) {
