@@ -225,6 +225,7 @@ export class Compte extends WebComponent {
   
       const response = await fetch('http://www.octopusjjb.ovh/informations', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
