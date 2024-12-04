@@ -234,17 +234,24 @@ export class Cours extends WebComponent {
         }
     }
 
+    checkUserConnection() {
+      const userDataString = localStorage.getItem('userData');
+      if (!userDataString) {
+          // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
+          window.location.href = '/pages/connexion';
+          return false; // Retourne false pour indiquer qu'aucun utilisateur n'est connecté
+      }
+      return true; // Si l'utilisateur est connecté, retourne true
+  }
+
     // Méthode pour récupérer le rôle et affecter isAdmin
     getRole() {
-      const userDataString = localStorage.getItem('userData');
-  
-      // Vérifie si les données de l'utilisateur existent
-      if (!userDataString) {
-          // Si pas d'utilisateur connecté, redirige vers la page de connexion
-          window.location.href = '/pages/cours';
-          return; // Empêche l'exécution du reste du code
+      // Vérifie d'abord si l'utilisateur est connecté
+      if (!this.checkUserConnection()) {
+          return; // Si l'utilisateur n'est pas connecté, on arrête l'exécution
       }
   
+      const userDataString = localStorage.getItem('userData');
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
