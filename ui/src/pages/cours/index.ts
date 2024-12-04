@@ -145,7 +145,6 @@ export class Cours extends WebComponent {
 
   async register(cour) {
     try {
-        // Récupérer les données utilisateur depuis le localStorage
         const userDataString = localStorage.getItem('userData');
         if (!userDataString) {
             throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
@@ -160,7 +159,7 @@ export class Cours extends WebComponent {
         };
         console.log(inscriptionData);
 
-        // Faire la requête fetch pour l'inscription
+        // Faire la requête fetch
         const response = await fetch('http://www.octopusjjb.ovh/cours/inscription', {
             method: 'POST',
             headers: {
@@ -172,42 +171,31 @@ export class Cours extends WebComponent {
 
         // Vérifier si la requête a réussi
         if (!response.ok) {
-            throw new Error('Erreur serveur. Code: ' + response.status);
+            throw new Error('Erreur serveur.');
         }
 
         // Récupérer les données JSON de la réponse
         const data = await response.json();
-        console.log('Réponse du serveur:', data);
+        console.log(data);
 
-        // Vérification des messages de succès ou d'information dans la réponse
+        // Vérifie si la réponse contient un message et gérer en conséquence
         if (data) {
-            if (data.success_message) {
-                // Affiche une alerte avec le message de succès
-                alert("Succès : " + data.success_message + " pour le cours du " + this.formatDateFromISO(cour.date_cours));
-                console.log("Succès : " + data.success_message);
 
-                if (data.success_message === "Inscription réussie !") {
-                    console.log("Bien inscrit au cours.");
-                } else {
-                    console.log("Réponse inattendue : " + data.success_message);
-                }
-            } else if (data.info_message) {
-                // Affiche une alerte avec le message d'information
-                alert("Information : " + data.info_message + " pour le cours du " + this.formatDateFromISO(cour.date_cours));
-                console.log("Information : " + data.info_message);
-            } else {
-                console.log("Aucun message dans la réponse.");
+            if (data.success_message) {
+              alert(data.success_message + "au cour du " + this.formatDateFromISO(cour.date_cours))  // Affiche le message du serveur
+            }
+            if (data.info_message) {
+              alert(data.info_message)
             }
         } else {
             console.log("Réponse vide ou mal formatée.");
         }
 
     } catch (error) {
-        console.error('Erreur lors de la requête fetch:', error.message);
-        return [];  // On retourne un tableau vide ou un autre comportement selon le besoin
+        console.error('Erreur lors de la requête fetch:', error);
+        return [];
     }
-}
-
+  }
 
     async preloadData(): Promise<any[]> {
         try {
