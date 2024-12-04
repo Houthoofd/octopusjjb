@@ -178,16 +178,20 @@ export class Cours extends WebComponent {
         const data = await response.json();
         console.log(data);
 
-        // Vérifie si la réponse contient un message et gérer en conséquence
-        if (response.status === 409) {
-          alert(data.info_message);  // Informer l'utilisateur qu'il est déjà inscrit
-        } else if (response.ok) {
-          if (data.success_message) {
-            alert(data.success_message);
+        // Vérifier si la requête a réussi
+        if (!response.ok) {
+          const data = await response.json(); // Récupère les données JSON de l'erreur
+          if (response.status === 409 && data.info_message) {
+              alert(data.info_message);  // Affiche le message d'erreur retourné par le serveur
+          } else {
+              alert('Erreur serveur. Veuillez réessayer plus tard.');
           }
-        } else {
-          console.error("Réponse inattendue:", data);
-        }
+          throw new Error('Erreur serveur.');
+      }
+
+      if (data.success_message) {
+          alert(data.success_message);
+      }
 
     } catch (error) {
         console.error('Erreur lors de la requête fetch:', error);
