@@ -178,9 +178,9 @@ export class Cours extends WebComponent {
         const data = await response.json();
         console.log(data);
 
-        // Vérifier si la réponse contient un message et gérer en conséquence
+        // Vérifie si la réponse contient un message et gérer en conséquence
         if (data && data.message) {
-            console.log(data.message);  // Affiche le message du serveur
+            alert(data.message)  // Affiche le message du serveur
             if (data.message === "Inscription réussie !") {
                 console.log("Bien inscrit au cours");
             } else {
