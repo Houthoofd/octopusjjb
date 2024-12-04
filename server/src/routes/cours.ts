@@ -124,6 +124,8 @@ router.post('/inscription', async (req, res) => {
     `;
     const resultCheck = await client.query(queryCheck, [userId, coursId]);
 
+    console.log(resultCheck)
+
     if (resultCheck.length > 0) {
       // Informer que l'utilisateur est déjà inscrit
       console.log(`Utilisateur déjà inscrit au cours ${coursId}`);
