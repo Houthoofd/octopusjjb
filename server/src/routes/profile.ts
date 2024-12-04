@@ -36,31 +36,9 @@ interface Courses {
   presences: [];
 }
 
-// Middleware pour vérifier le token JWT
-const verifyToken = (req:any, res:any, next:any) => {
-  const token = req.cookies.token;
-
-  if (!token) {
-    return res.status(403).send('Token manquant, veuillez vous connecter.');
-  }
-
-  const secretKey = process.env.TOKEN_SECRET;
-  if (!secretKey) {
-    return res.status(500).send('Clé secrète JWT manquante.');
-  }
-
-  jwt.verify(token, secretKey, (err:any, decoded:any) => {
-    if (err) {
-      return res.status(403).send('Token invalide ou expiré.');
-    }
-
-    req.user = decoded;  // Ajoute l'utilisateur décodé à la requête
-    next();
-  });
-};
 
 
-router.get('/', verifyToken, async(req, res) => {
+router.get('/', async(req, res) => {
 
   const { email, nom, prenom } = req.query;
   console.log('Requête reçue:', req.query);  // Log pour vérifier les paramètres reçus
