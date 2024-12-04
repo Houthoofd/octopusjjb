@@ -608,8 +608,6 @@ class Cours extends (0, _core.WebComponent) {
                 user: userData,
                 cours: cour
             };
-            console.log(inscriptionData);
-            // Faire la requête fetch
             const response = await fetch("http://localhost:3000/cours/inscription", {
                 method: "POST",
                 headers: {
@@ -619,19 +617,13 @@ class Cours extends (0, _core.WebComponent) {
                 body: JSON.stringify(inscriptionData)
             });
             // Vérifier si la requête a réussi
-            if (!response.ok) throw new Error("Erreur serveur.");
-            // Récupérer les données JSON de la réponse
             const data = await response.json();
-            console.log(data);
-            // Vérifier si la réponse contient un message et gérer en conséquence
-            if (data && data.message) {
-                console.log(data.message); // Affiche le message du serveur
-                if (data.message === "Inscription r\xe9ussie !") console.log("Bien inscrit au cours");
-                else console.log("Pas d'inscription ou r\xe9ponse inattendue.");
-            } else console.log("R\xe9ponse vide ou mal format\xe9e.");
+            if (response.status === 409) alert(data.info_message); // Informer l'utilisateur qu'il est déjà inscrit
+            else if (response.ok) {
+                if (data.success_message) alert(data.success_message);
+            } else console.error("R\xe9ponse inattendue:", data);
         } catch (error) {
             console.error("Erreur lors de la requ\xeate fetch:", error);
-            return [];
         }
     }
     async preloadData() {

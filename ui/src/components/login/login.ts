@@ -237,6 +237,8 @@ export class Login extends WebComponent {
           // Stockage des informations utilisateur dans localStorage
           localStorage.setItem('userData', JSON.stringify(userData));
 
+          window.location.href = "/pages/cours";
+
           if (result.token) {
             console.log('Token JWT:', result.token);
             localStorage.setItem('token', result.token); // Optionnel : stocker le token dans le localStorage

@@ -102,15 +102,13 @@ router.post('/inscription', async (req, res) => {
   }
 
   try {
-    // Créer une instance du client SQL (remplace SQLClient par ton système)
     const client = new SQLClient();
 
-    // Requête pour récupérer l'ID de l'utilisateur en fonction de son nom, prénom et email
+    // Requête pour récupérer l'ID de l'utilisateur
     const queryUser = `
       SELECT id FROM utilisateurs 
       WHERE last_name = ? AND first_name = ? AND email = ?;
     `;
-
     const resultUser = await client.query(queryUser, [last_name, first_name, email]);
 
     if (resultUser.length === 0) {
@@ -119,22 +117,36 @@ router.post('/inscription', async (req, res) => {
 
     const userId = resultUser[0].id;
 
-    // Requête pour inscrire l'utilisateur au cours
+    // Vérification si l'utilisateur est déjà inscrit au cours
+    const queryCheck = `
+      SELECT * FROM inscriptions 
+      WHERE utilisateur_id = ? AND cours_id = ?;
+    `;
+    const resultCheck = await client.query(queryCheck, [userId, coursId]);
+
+    if (resultCheck.length > 0) {
+      // Informer que l'utilisateur est déjà inscrit
+      console.log(`Utilisateur déjà inscrit au cours ${coursId}`);
+      return res.status(409).json({ info_message: "Utilisateur déjà inscrit à ce cours." });
+    }
+
+    // Inscription de l'utilisateur
     const queryInsert = `
       INSERT INTO inscriptions (utilisateur_id, cours_id) 
       VALUES (?, ?);
     `;
-
     await client.query(queryInsert, [userId, coursId]);
 
-    // Envoyer une réponse de succès
-    res.status(200).json({ message: "Inscription réussie", userId, coursId });
+    // Réponse de succès
+    res.status(200).json({ success_message: "Inscription réussie", userId, coursId });
 
   } catch (error) {
     console.error('Erreur lors de l\'inscription:', error);
     res.status(500).json({ message: "Erreur serveur lors de l'inscription." });
   }
 });
+
+
 
 // Route pour valider la présence d'un participant
 router.post('/participant/cancel', async (req, res) => {
