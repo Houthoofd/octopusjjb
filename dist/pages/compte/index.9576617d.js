@@ -605,7 +605,6 @@ class Compte extends (0, _core.WebComponent) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                credentials: "include",
                 body: JSON.stringify(userData)
             });
             if (!response.ok) throw new Error("Erreur serveur.");
@@ -625,7 +624,6 @@ class Compte extends (0, _core.WebComponent) {
         try {
             const response = await fetch(url, {
                 method: "GET",
-                credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -696,7 +694,6 @@ class Compte extends (0, _core.WebComponent) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                credentials: "include",
                 body: JSON.stringify(data)
             }).then((response)=>response.json()).then((result)=>{
                 if (result.success) {

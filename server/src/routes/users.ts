@@ -27,7 +27,7 @@ const verifyToken = (req:any, res:any, next:any) => {
   });
 };
 
-router.get('/', verifyToken, async (req, res) => {
+router.get('/', async (req, res) => {
 
   const client = new SQLClient();
 
@@ -79,7 +79,7 @@ router.get('/', verifyToken, async (req, res) => {
   }
 });
 
-router.post('/infos', verifyToken, async (req, res) => {
+router.post('/infos', async (req, res) => {
   const { user_id } = req.body; 
   console.log("Requête reçue avec les données :", req.body);
 

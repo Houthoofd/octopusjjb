@@ -27,7 +27,7 @@ const verifyToken = (req:any, res:any, next:any) => {
   });
 };
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', async (req, res) => {
   const { email, first_name, last_name} = req.body; 
   console.log("Requête reçue avec les données :", req.body);
 

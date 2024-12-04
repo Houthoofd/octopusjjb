@@ -620,7 +620,6 @@ class Profile extends (0, _core.WebComponent) {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    credentials: "include",
                     body: JSON.stringify(userData)
                 });
                 if (!response.ok) throw new Error("Erreur serveur.");

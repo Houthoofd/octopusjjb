@@ -60,7 +60,7 @@ const verifyToken = (req:any, res:any, next:any) => {
 };
 
 
-router.get('/', verifyToken, async(req, res) => {
+router.get('/', async(req, res) => {
 
   const { email, nom, prenom } = req.query;
   console.log('Requête reçue:', req.query);  // Log pour vérifier les paramètres reçus

@@ -28,7 +28,7 @@ const verifyToken = (req:any, res:any, next:any) => {
 };
 
 // Appliquer le middleware de vérification du token sur ce routeur
-router.post('/', verifyToken, async (req, res) => {
+router.post('/',async (req, res) => {
   const { email } = req.body;
 
   if (!email) {
