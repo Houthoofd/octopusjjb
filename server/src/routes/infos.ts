@@ -27,32 +27,26 @@ const router = express.Router();
 //   });
 // };
 
-router.post('/',async (req, res) => {
-  const { email, first_name, last_name} = req.body; 
+router.post('/', async (req, res) => {
+  // Tester sans vérifier les permissions
   console.log("Requête reçue avec les données :", req.body);
 
-  console.log(email, first_name, last_name)
-
+  const { email, first_name, last_name } = req.body;
   if (!email || !first_name || !last_name) {
     return res.status(400).send('Tous les champs sont requis.');
   }
 
   const client = new SQLClient();
-
   try {
-    // Requête pour récupérer l'utilisateur
     const query = `
       SELECT * FROM utilisateurs 
       WHERE email = ? AND first_name = ? AND last_name = ?`;
     const values = [email, first_name, last_name];
-
     const results = await client.query(query, values);
 
     if (results.length === 0) {
       return res.status(404).send('Utilisateur non trouvé.');
     }
-
-    console.log(results)
 
     const userInfo = {
       email: results[0].email,
@@ -65,43 +59,14 @@ router.post('/',async (req, res) => {
       abonnement: null
     };
 
-    // Requête pour récupérer le nom du grade à partir de l'ID du grade
-    const gradeQuery = `
-      SELECT grade FROM grades WHERE id = ?`; // Recherche par ID du grade
-    const gradeResults = await client.query(gradeQuery, [results[0].grade]);
-
-    console.log(gradeResults)
-
-    if (gradeResults.length > 0) {
-      userInfo.grade = gradeResults[0].grade; // Ajout du nom du grade dans 'grade'
-    } else {
-      userInfo.grade = null; // Valeur par défaut si aucune correspondance
-    }
-
-    // Requête pour récupérer le nom du genre à partir de l'ID du genre
-    const genreQuery = `SELECT genre_name FROM genres WHERE id = ?`;
-    const genreResults = await client.query(genreQuery, [results[0].gender]);
-
-    if (genreResults.length > 0) {
-      userInfo.gender = genreResults[0].genre_name; // Ajout du nom du genre dans 'gender'
-    }
-
-    // Requête pour récupérer le type d'abonnement à partir de l'ID d'abonnement
-    const abonnementQuery = `SELECT nom_plan FROM plans_tarifaires WHERE id = ?`;
-    const abonnementResults = await client.query(abonnementQuery, [results[0].abonnement]);
-
-    if (abonnementResults.length > 0) {
-      userInfo.abonnement = abonnementResults[0].nom_plan; // Ajout du nom du plan d'abonnement
-    }
-
-    console.log("Informations utilisateur trouvées :", userInfo);
+    // Récupérer le grade, le genre et l'abonnement ici...
     return res.status(200).json(userInfo);
-
   } catch (err) {
     console.error('Erreur lors de la récupération des informations utilisateur:', err);
     return res.status(500).send('Erreur lors de la récupération des informations.');
   }
 });
+
 
 // Appliquer le middleware de vérification du token sur ce routeur
 router.get('/abonnement', async (req, res) => {
