@@ -196,6 +196,7 @@ export class Cours extends WebComponent {
 
     } catch (error) {
         console.error('Erreur lors de la requête fetch:', error);
+        alert("vous êtes déjà inscrit à ce cour");
         return [];
     }
   }
