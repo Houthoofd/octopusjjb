@@ -480,7 +480,10 @@ var e=globalThis,o={},i={},t=e.parcelRequirec605;null==t&&((t=function(e){if(e i
 }
 
 summary#dropdownButtonPrice {
-    color: #fafbfe;
+  color: #a2adcd;
+}
+summary#dropdownButtonGenre {
+    color: #a2adcd;
 }
 
 
@@ -720,4 +723,4 @@ summary#dropdownButtonPrice {
         text-decoration: none;
       }
     `]})],a)});
-//# sourceMappingURL=index.05c1daa1.js.map
+//# sourceMappingURL=index.f55f72bb.js.map

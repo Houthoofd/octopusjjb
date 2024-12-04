@@ -401,7 +401,10 @@ import 'unofficial-pf-v5-wc-icons';
 }
 
 summary#dropdownButtonPrice {
-    color: #fafbfe;
+  color: #a2adcd;
+}
+summary#dropdownButtonGenre {
+    color: #a2adcd;
 }
 
 
