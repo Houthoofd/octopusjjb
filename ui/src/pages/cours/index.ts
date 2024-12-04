@@ -179,16 +179,14 @@ export class Cours extends WebComponent {
         console.log(data);
 
         // Vérifie si la réponse contient un message et gérer en conséquence
-        if (data) {
-
-            if (data.success_message) {
-              alert(data.success_message + "au cour du " + this.formatDateFromISO(cour.date_cours))  // Affiche le message du serveur
-            }
-            if (data.info_message) {
-              alert(data.info_message)
-            }
+        if (response.status === 409) {
+          alert(data.info_message);  // Informer l'utilisateur qu'il est déjà inscrit
+        } else if (response.ok) {
+          if (data.success_message) {
+            alert(data.success_message);
+          }
         } else {
-            console.log("Réponse vide ou mal formatée.");
+          console.error("Réponse inattendue:", data);
         }
 
     } catch (error) {
