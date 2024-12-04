@@ -180,7 +180,7 @@ export class Cours extends WebComponent {
 
         // Vérifie si la réponse contient un message et gérer en conséquence
         if (data && data.message) {
-            alert(data.message)  // Affiche le message du serveur
+            alert(data.message + "au cour du " + cour.date_cours)  // Affiche le message du serveur
             if (data.message === "Inscription réussie !") {
                 console.log("Bien inscrit au cours");
             } else {
