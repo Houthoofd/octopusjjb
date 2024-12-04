@@ -241,9 +241,7 @@ export class Cours extends WebComponent {
       // Vérifie si les données de l'utilisateur existent
       if (!userDataString) {
           // Si pas d'utilisateur connecté, redirige vers la page de connexion
-          setTimeout(() => {
-            window.location.href = '/pages/cours';
-          }, 1000);
+          window.location.href = '/pages/cours';
           return; // Empêche l'exécution du reste du code
       }
   
