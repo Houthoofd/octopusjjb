@@ -5,10 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-// Importer les routes
-var apiRoutes = require('./routes/api');
+// Importer le routeur
+var indexRouter = require('./src/routes/index');  // Correctement importé
 
 var app = express();
 
@@ -22,34 +20,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Configuration CORS
+app.use(cors({
+  origin: 'http://www.octopusjjb.ovh',  // Frontend autorisé
+}));
 
+// Utilisation du routeur pour la racine
+app.use('/', indexRouter);  // Toutes les requêtes à '/' vont vers le routeur
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-
-// Configuration de CORS pour accepter les requêtes du frontend sur localhost:1234
-app.use(cors({
-  origin: 'http://www.octopusjjb.ovh'
-}));
-
-// Utiliser les routes API
-app.use('/api', apiRoutes);
-
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
-
 
 module.exports = app;
