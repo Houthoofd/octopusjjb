@@ -143,6 +143,20 @@ export class Cours extends WebComponent {
     this.getRole();
   }
 
+  redirection() {
+    const userDataString = localStorage.getItem('userData');
+
+    // Vérifie si userData existe dans le localStorage
+    if (!userDataString) {
+        // Si userData n'existe pas, on redirige vers '/pages/connexion'
+        window.location.href = '/pages/connexion';
+    } else {
+        // Si userData existe, on ne fait rien ou on peut exécuter d'autres actions
+        console.log('Utilisateur déjà connecté');
+    }
+  }
+
+
   async register(cour) {
     try {
         const userDataString = localStorage.getItem('userData');
@@ -221,28 +235,33 @@ export class Cours extends WebComponent {
     }
 
     // Méthode pour récupérer le rôle et affecter isAdmin
-  getRole() {
-    const userDataString = localStorage.getItem('userData');
-    if (!userDataString) {
-      throw new Error('Utilisateur non connecté. Aucune donnée dans localStorage.');
-    }
-
-    const userData = JSON.parse(userDataString);
-    console.log('Données utilisateur récupérées:', userData);
-
-    // Récupérer le rôle de l'utilisateur
-    const userRole = userData.role;
-    console.log('Rôle de l\'utilisateur:', userRole);
-
-    // Vérifier si le rôle est 'administrator' ou 'super-administrator' et mettre à jour isAdmin
-    if (userRole === 'administrator' || userRole === 'super-administrator') {
-      this.isAdmin = true;
-    } else {
-      this.isAdmin = false;
-    }
-
-    console.log('Est-ce un administrateur ? ', this.isAdmin);
+    getRole() {
+      const userDataString = localStorage.getItem('userData');
+  
+      // Vérifie si les données de l'utilisateur existent
+      if (!userDataString) {
+          // Si pas d'utilisateur connecté, redirige vers la page de connexion
+          window.location.href = '/pages/connexion';
+          return; // Empêche l'exécution du reste du code
+      }
+  
+      const userData = JSON.parse(userDataString);
+      console.log('Données utilisateur récupérées:', userData);
+  
+      // Récupère le rôle de l'utilisateur
+      const userRole = userData.role;
+      console.log('Rôle de l\'utilisateur:', userRole);
+  
+      // Vérifie si l'utilisateur a un rôle administrateur et met à jour isAdmin
+      if (userRole === 'administrator' || userRole === 'super-administrator') {
+          this.isAdmin = true;
+      } else {
+          this.isAdmin = false;
+      }
+  
+      console.log('Est-ce un administrateur ? ', this.isAdmin);
   }
+  
 
   async loadParticipants(courId) {
     console.log(courId);

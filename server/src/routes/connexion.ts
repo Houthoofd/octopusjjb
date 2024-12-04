@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
         role: user.status,
         nom: user.last_name,
         prenom: user.first_name,
-        token: token
+        isloged: true
       },
     });
 
