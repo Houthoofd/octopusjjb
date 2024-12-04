@@ -178,19 +178,20 @@ export class Cours extends WebComponent {
         const data = await response.json();
         console.log(data);
 
-        // Vérifier si la requête a réussi
-        if (!response.ok) {
-          const data = await response.json(); // Récupère les données JSON de l'erreur
-          if (response.status === 409 && data.info_message) {
-              alert(data.info_message);  // Affiche le message d'erreur retourné par le serveur
-          } else {
-              alert('Erreur serveur. Veuillez réessayer plus tard.');
-          }
-          throw new Error('Erreur serveur.');
-      }
+        // Vérifie si la réponse contient un message et gérer en conséquence
+        if (data) {
 
-      if (data.success_message) {
-          alert(data.success_message);
+            if (data.success_message) {
+              alert(data.success_message + "au cour du " + this.formatDateFromISO(cour.date_cours))  // Affiche le message du serveur
+            }
+            if (data.info_message) {
+              alert(data.info_message)
+            }
+        } else {
+            console.log("Réponse vide ou mal formatée.");
+        }
+      if(response.status === 409){
+        alert(data.info_message);
       }
 
     } catch (error) {
