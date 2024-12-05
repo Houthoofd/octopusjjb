@@ -471,11 +471,10 @@ export class Dashboard extends WebComponent {
             });
             console.log(updatedData)
             try {
-              const response = await fetch(`${url}infos/update/`, {
+              const response = await fetch(`${url}infos/update`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ user_id: user.id, data: updatedData}),
-                  credentials: 'include',
+                  body: JSON.stringify({ user_id: user.id, data: updatedData})
               });
       
               if (!response.ok) {
