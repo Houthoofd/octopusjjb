@@ -118,7 +118,7 @@ export class Informations extends WebComponent {
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
-      const response = await fetch(`${url}informations`, {
+      const response = await fetch(`${url}compte/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
