@@ -239,7 +239,7 @@ export class Cours extends WebComponent {
 
     async preloadData(): Promise<any[]> {
         try {
-            const response = await fetch('http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/cours/cours/', {
+            const response = await fetch('http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/cours/', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
