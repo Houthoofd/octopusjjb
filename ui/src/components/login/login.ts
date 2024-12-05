@@ -212,7 +212,7 @@ export class Login extends WebComponent {
       console.log(data);
   
       try {
-        const response = await fetch(`${url}pages/connexion/`, {
+        const response = await fetch(`${url}connexion/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
