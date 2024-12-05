@@ -20,25 +20,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const allowedOrigins = [
-  'http://octopusjjb.ovh',
-  'http://www.octopusjjb.ovh',
-  'http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com'
-];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-          callback(null, true);
-      } else {
-          callback(new Error('Not allowed by CORS'));
-      }
-  },
-  methods: 'GET, POST, PUT, DELETE, OPTIONS',
-  allowedHeaders: 'Content-Type, Authorization'
-};
-
-app.use(cors(corsOptions));
+// Configuration CORS
+app.use(cors({
+  origin: 'http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com/'
+}));
 
 // Utilisation du routeur pour la racine
 app.use('/', indexRouter);
