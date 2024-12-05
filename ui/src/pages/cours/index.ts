@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
+import {url} from '../../../../url';
 
 @customElement({
     name: 'page-cours',
@@ -237,9 +238,10 @@ export class Cours extends WebComponent {
     }
   }
 
+
     async preloadData(): Promise<any[]> {
         try {
-            const response = await fetch('http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/cours/', {
+            const response = await fetch(`${url}cours/`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
