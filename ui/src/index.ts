@@ -3,6 +3,7 @@ import { PfModalBox } from 'unofficial-pf-v5-wc';
 import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
+import {url} from '../../url';
 
 @customElement({
     name: "main-home",
@@ -543,7 +544,7 @@ export class Section extends WebComponent {
 
     async preloadData(): Promise<any[]> {
         try {
-            const response = await fetch('http://www.octopusjjb.ovh/cours/', {
+            const response = await fetch(`${url}cours/`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
