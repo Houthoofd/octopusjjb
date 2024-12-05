@@ -28,7 +28,8 @@
     "build": "npm run clean && parcel build --no-cache",
     "watch": "parcel watch --no-cache",
     "dev": "concurrently \"npm run clean && npm run build\" \"parcel serve --target frontend --no-cache --port 1234\" \"parcel watch --target backend --no-cache --port 8080\" \"nodemon server/dist/index.js\"",
-    "clean": "gulp clean-old-bundles"
+    "clean": "gulp clean-old-bundles",
+    "prod:start": "pm2-runtime server/app.js"
   },
   "keywords": [],
   "author": "",
