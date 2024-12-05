@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login';
+import {url} from '../../../../url';
 
 @customElement({
   name: 'login-page',
@@ -211,7 +212,7 @@ export class Login extends WebComponent {
       console.log(data);
   
       try {
-        const response = await fetch('http://www.octopusjjb.ovh/connexion', {
+        const response = await fetch(`${url}/connexion`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
