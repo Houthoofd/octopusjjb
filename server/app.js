@@ -22,11 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuration CORS
 app.use(cors({
-  origin: 'http://www.octopusjjb.ovh',  // Frontend autorisé
+  origin: ['http://www.octopusjjb.ovh','http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com/']  // Frontend autorisé
 }));
 
 // Utilisation du routeur pour la racine
-app.use('/', indexRouter);  // Toutes les requêtes à '/' vont vers le routeur
+app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
