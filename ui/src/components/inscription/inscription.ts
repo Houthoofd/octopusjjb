@@ -2,6 +2,7 @@ import { html , render , WebComponent , customElement , attr , attrState , state
 import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
+import {url} from '../../../../url';
 
 @customElement({
   name: 'inscription-page',
@@ -123,7 +124,7 @@ import 'unofficial-pf-v5-wc-icons';
             <summary id="dropdownButtonPrice">Choisir un plan</summary>
             <div class="dropdown-menu">
               <!-- Les éléments du menu seront ajoutés ici -->
-              ${asyncAppend(inscription.preloadData(`http://www.octopusjjb.ovh/informations/abonnement`), (result) => {
+              ${asyncAppend(inscription.preloadData(`${url}informations/abonnement`), (result) => {
                 return html`${repeat(
                   result,
                   html`${(plan) => {
@@ -142,7 +143,7 @@ import 'unofficial-pf-v5-wc-icons';
             <summary id="dropdownButtonGenre">Choisir un genre</summary>
             <div class="dropdown-menu">
               <!-- Les éléments du menu seront ajoutés ici -->
-              ${asyncAppend(inscription.preloadData(`http://www.octopusjjb.ovh/informations/gender`), (result) => {
+              ${asyncAppend(inscription.preloadData(`${url}informations/gender`), (result) => {
                 return html`${repeat(
                   result,
                   html`${(info) => {
@@ -675,7 +676,7 @@ export class Inscription extends WebComponent {
   
     console.log('Envoi des données:', formData);
     try {
-      const response = await fetch('http://www.octopusjjb.ovh/inscriptions', {
+      const response = await fetch(`${url}inscriptions`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',

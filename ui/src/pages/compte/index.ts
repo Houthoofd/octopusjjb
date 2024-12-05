@@ -4,6 +4,7 @@ import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
 import { response } from 'express';
+import {url} from '../../../../url';
 
 @customElement({
   name: 'page-compte',
@@ -18,7 +19,7 @@ import { response } from 'express';
               <h1 class="title">Compte</h1>
             </div>
             <div class="table-infos">
-              ${asyncAppend(compte.preloadData('http://www.octopusjjb.ovh/informations'), (result) => {
+              ${asyncAppend(compte.preloadData(`${url}informations/`), (result) => {
                   return html`${
                     repeat(
                       result,
@@ -223,7 +224,7 @@ export class Compte extends WebComponent {
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
-      const response = await fetch('http://www.octopusjjb.ovh/informations', {
+      const response = await fetch(`${url}informations/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -338,8 +339,8 @@ async saveChanges() {
       current_last_name: current.nom           // Utiliser les données actuelles
     };
 
-    // Envoyer les données à l'API via fetch
-    fetch('http://www.octopusjjb.ovh/users/update', {
+    // Envoie les données à l'API via fetch
+    fetch(`${url}users/update/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'

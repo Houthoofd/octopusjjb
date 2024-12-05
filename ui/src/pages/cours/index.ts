@@ -197,7 +197,8 @@ export class Cours extends WebComponent {
         console.log(inscriptionData);
 
         // Faire la requête fetch
-        const response = await fetch('http://www.octopusjjb.ovh/cours/inscription', {
+        `${url}cours/inscription/`
+        const response = await fetch(`${url}cours/inscription/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -262,7 +263,7 @@ export class Cours extends WebComponent {
   async loadParticipants(courId) {
     console.log(courId);
     try {
-        const response = await fetch('http://www.octopusjjb.ovh/cours/participant', {
+        const response = await fetch(`${url}cours/participant/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -358,8 +359,8 @@ export class Cours extends WebComponent {
             // Attacher une fonction à l'événement "click" de l'icône "cross"
             iconCrossDiv.addEventListener('click', async () => {
               try {
-                // Effectuer la requête POST pour supprimer le participant
-                const response = await fetch('http://www.octopusjjb.ovh/cours/participant/cancel', {
+                // Effectue la requête POST pour supprimer le participant
+                const response = await fetch(`${url}cours/participant/cancel/`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({
@@ -405,7 +406,7 @@ export class Cours extends WebComponent {
               console.log(cour.id,participant.participant_id)
               try {
                 // Effectuer la requête POST pour supprimer le participant
-                const response = await fetch('http://www.octopusjjb.ovh/cours/participant/validation', {
+                const response = await fetch(`${url}cours/participant/validation/`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({

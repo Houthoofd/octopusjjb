@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import LoginPageStyle from '@patternfly/react-styles/css/components/Login/login';
+import {url} from '../../../../url';
 
 @customElement({
   name: 'page-new-password',
@@ -197,7 +198,7 @@ export class NewPassword extends WebComponent {
       console.log(data);
   
       try {
-        const response = await fetch('http://www.octopusjjb.ovh/password', {
+        const response = await fetch(`${url}password`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

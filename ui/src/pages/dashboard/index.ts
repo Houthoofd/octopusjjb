@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
+import {url} from '../../../../url';
 
 @customElement({
     name: 'page-dashboard',
@@ -142,7 +143,7 @@ export class Dashboard extends WebComponent {
  
   async preloadData(): Promise<any[]> {
     try {
-        const response = await fetch('http://www.octopusjjb.ovh/users/', {
+        const response = await fetch(`${url}users/`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -164,7 +165,7 @@ export class Dashboard extends WebComponent {
   async loadInfosUser(userId) {
     console.log(userId);
     try {
-        const response = await fetch('http://www.octopusjjb.ovh/users/infos', {
+        const response = await fetch(`${url}users/infos/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: userId }),
@@ -418,17 +419,17 @@ export class Dashboard extends WebComponent {
             const queryString = new URLSearchParams(queryParams).toString();
             console.log("queryString" + queryString);
 
-            window.location.href = `http://www.octopusjjb.ovh/pages/profile?${queryString}`;
+            window.location.href = `${url}pages/profile?${queryString}`;
           
             // Si les paramètres sont présents (si `email` ou `prenom` ou `nom` sont non vides), c'est pour un utilisateur spécifique
             if (queryParams.email && queryParams.prenom && queryParams.nom) {
-              fetch(`http://www.octopusjjb.ovh/pages/profile?${queryString}`)
+              fetch(`${url}pages/profile?${queryString}`)
                 .then(response => response.json())
                 .then(data => {
                   console.log("Statistiques de l'utilisateur:", data);
                   // Logique pour afficher les stats de l'utilisateur
                   // Vous pouvez rediriger après avoir reçu les données si nécessaire
-                  window.location.href = `http://www.octopusjjb.ovh/pages/profile?${queryString}`;
+                  window.location.href = `${url}pages/profile?${queryString}`;
                 })
                 .catch(error => console.error("Erreur:", error));
             } else {
@@ -437,7 +438,7 @@ export class Dashboard extends WebComponent {
               const firstName = localStorage.getItem('firstName');
               const lastName = localStorage.getItem('lastName');
               console.log("fetch via body");
-              fetch('http://www.octopusjjb.ovh/pages/profile', {
+              fetch(`${url}pages/profile`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, firstName, lastName })
@@ -470,7 +471,7 @@ export class Dashboard extends WebComponent {
             });
             console.log(updatedData)
             try {
-              const response = await fetch('http://www.octopusjjb.ovh/users/infos/update', {
+              const response = await fetch(`${url}infos/update/`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ user_id: user.id, data: updatedData}),
@@ -538,7 +539,7 @@ export class Dashboard extends WebComponent {
       console.log('Suppression de l\'utilisateur avec ID:', user.first_name + " " + user.last_name);
       
       // Si l'utilisateur confirme, envoyer la requête DELETE pour supprimer l'utilisateur
-      fetch(`http://www.octopusjjb.ovh/users/delete/${user.id}`, {
+      fetch(`${url}users/delete/${user.id}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {

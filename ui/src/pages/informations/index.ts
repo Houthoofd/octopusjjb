@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
+import {url} from '../../../../url';
 
 @customElement({
   name: 'page-informations',
@@ -117,7 +118,7 @@ export class Informations extends WebComponent {
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
-      const response = await fetch('http://www.octopusjjb.ovh/compte', {
+      const response = await fetch(`${url}compte`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import '@lithium-framework/router-element';
 import 'unofficial-pf-v5-wc';
 import 'unofficial-pf-v5-wc-icons';
 import '../../components';
+import {url} from '../../../../url';
 
 
 @customElement({
@@ -152,7 +153,7 @@ export class Profile extends WebComponent {
         console.log('Données utilisateur récupérées depuis localStorage:', userData);
 
         // Récupérer les données via un fetch pour l'utilisateur connecté
-        const response = await fetch('http://www.octopusjjb.ovh/profile', {
+        const response = await fetch(`${url}profile`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -170,7 +171,7 @@ export class Profile extends WebComponent {
         // Si les paramètres sont présents dans l'URL, les utiliser pour faire un fetch
         console.log("Données reçues depuis l'URL:", queryParams);
 
-        const response = await fetch(`http://www.octopusjjb.ovh/profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`, {
+        const response = await fetch(`${url}profile?email=${queryParams.email}&prenom=${queryParams.prenom}&nom=${queryParams.nom}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
