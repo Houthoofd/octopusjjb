@@ -550,17 +550,27 @@ export class Section extends WebComponent {
             });
             
             if (!response.ok) {
-                throw new Error('Erreur serveur.');
+                const errorText = await response.text(); // Récupère le texte d'erreur pour plus de détails
+                throw new Error(`Erreur serveur: ${response.status} - ${errorText}`);
             }
-            
+    
             const data = await response.json();
-            console.log(data);
-            return data.cours.length > 0 ? data : [];
+            console.log('Données récupérées:', data);
+    
+            // Vérifie si 'cours' est présent et si sa longueur est > 0
+            if (data && data.cours && Array.isArray(data.cours) && data.cours.length > 0) {
+                return data.cours;
+            } else {
+                console.warn('Aucun cours trouvé.');
+                return []; // Retourne un tableau vide si aucune donnée
+            }
+    
         } catch (error) {
             console.error('Erreur lors de la requête fetch:', error);
-            return [];
+            return []; // Retourne un tableau vide en cas d'erreur
         }
     }
+    
 
     formatDateFromISO(isoDateString: string): string {
         const date = new Date(isoDateString);
