@@ -224,7 +224,7 @@ export class Compte extends WebComponent {
       const userData = JSON.parse(userDataString);
       console.log('Données utilisateur récupérées:', userData);
   
-      const response = await fetch(`http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/informations`, {
+      const response = await fetch(`${url}informations`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
