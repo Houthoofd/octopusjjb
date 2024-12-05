@@ -212,7 +212,7 @@ export class Login extends WebComponent {
       console.log(data);
   
       try {
-        const response = await fetch(`${url}/connexion`, {
+        const response = await fetch('http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/pages/connexion', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
