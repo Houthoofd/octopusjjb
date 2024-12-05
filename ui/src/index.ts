@@ -555,7 +555,7 @@ export class Section extends WebComponent {
             
             const data = await response.json();
             console.log(data);
-            return data.length > 0 ? data : [];
+            return data.cours.length > 0 ? data : [];
         } catch (error) {
             console.error('Erreur lors de la requête fetch:', error);
             return [];
