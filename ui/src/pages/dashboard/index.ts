@@ -143,7 +143,7 @@ export class Dashboard extends WebComponent {
  
   async preloadData(): Promise<any[]> {
     try {
-        const response = await fetch(`http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/users/`, {
+        const response = await fetch(`http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/users`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
