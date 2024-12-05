@@ -26,3 +26,6 @@ POST http://www.octopusjjb.ovh/informations/
 
 ### compte
 GET http://www.octopusjjb.ovh/compte/
+
+### users
+GET http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/users
