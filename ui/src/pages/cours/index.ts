@@ -136,47 +136,47 @@ import '../../components';
 export class Cours extends WebComponent {
   data: any[] = [];
 
-  @state() isAdmin: boolean = null;
+  // @state() isAdmin: boolean = null;
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.getRole();
-  }
+  // connectedCallback() {
+  //   super.connectedCallback();
+  //   this.getRole();
+  // }
 
-  checkUserConnection() {
-    const userDataString = localStorage.getItem('userData');
-    if (!userDataString) {
-        // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
-        window.location.href = '/pages/connexion';
-        return false; // Retourne false pour indiquer qu'aucun utilisateur n'est connecté
-    }
-    return true; // Si l'utilisateur est connecté, retourne true
-  }
+  // checkUserConnection() {
+  //   const userDataString = localStorage.getItem('userData');
+  //   if (!userDataString) {
+  //       // Si l'utilisateur n'est pas connecté, redirige vers la page de connexion
+  //       window.location.href = '/pages/connexion';
+  //       return false; // Retourne false pour indiquer qu'aucun utilisateur n'est connecté
+  //   }
+  //   return true; // Si l'utilisateur est connecté, retourne true
+  // }
 
-  // Méthode pour récupérer le rôle et affecter isAdmin
-  getRole() {
-    // Vérifie d'abord si l'utilisateur est connecté
-    if (!this.checkUserConnection()) {
-        return; // Si l'utilisateur n'est pas connecté, on arrête l'exécution
-    }
+  // // Méthode pour récupérer le rôle et affecter isAdmin
+  // getRole() {
+  //   // Vérifie d'abord si l'utilisateur est connecté
+  //   if (!this.checkUserConnection()) {
+  //       return; // Si l'utilisateur n'est pas connecté, on arrête l'exécution
+  //   }
 
-    const userDataString = localStorage.getItem('userData');
-    const userData = JSON.parse(userDataString);
-    console.log('Données utilisateur récupérées:', userData);
+  //   const userDataString = localStorage.getItem('userData');
+  //   const userData = JSON.parse(userDataString);
+  //   console.log('Données utilisateur récupérées:', userData);
 
-    // Récupère le rôle de l'utilisateur
-    const userRole = userData.role;
-    console.log('Rôle de l\'utilisateur:', userRole);
+  //   // Récupère le rôle de l'utilisateur
+  //   const userRole = userData.role;
+  //   console.log('Rôle de l\'utilisateur:', userRole);
 
-    // Vérifie si l'utilisateur a un rôle administrateur et met à jour isAdmin
-    if (userRole === 'administrator' || userRole === 'super-administrator') {
-        this.isAdmin = true;
-    } else {
-        this.isAdmin = false;
-    }
+  //   // Vérifie si l'utilisateur a un rôle administrateur et met à jour isAdmin
+  //   if (userRole === 'administrator' || userRole === 'super-administrator') {
+  //       this.isAdmin = true;
+  //   } else {
+  //       this.isAdmin = false;
+  //   }
 
-    console.log('Est-ce un administrateur ? ', this.isAdmin);
-  }
+  //   console.log('Est-ce un administrateur ? ', this.isAdmin);
+  // }
 
 
   async register(cour) {
@@ -239,7 +239,7 @@ export class Cours extends WebComponent {
 
     async preloadData(): Promise<any[]> {
         try {
-            const response = await fetch('http://www.octopusjjb.ovh/cours/', {
+            const response = await fetch('http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/cours/cours/', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
             });
