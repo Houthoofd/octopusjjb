@@ -62,7 +62,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             display: flex;
             flex-direction: column;
             width: 100%;
-            /*max-width: 400px;*/
+            max-width: 400px;
             margin: 50px auto;
             padding: 10px;
             justify-content: center;
@@ -118,7 +118,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
 
         .header h2 {
             font-size: 36px;
-            color: #cccccc;
+            color: #ffffff;
             margin-bottom: 10px;
         }
 
@@ -352,6 +352,10 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             background-color: #f3faf2;
             margin-top: 10px;
         }
+        form{
+            display: flex;
+            justify-content: align-center;
+        }
         `]})],l);class c extends n.WebComponent{}c=(0,r.__decorate)([(0,n.customElement)({name:"main-footer",template:(0,n.html)`${e=>(0,n.html)`
             <footer>
                 <div class="footer-container">
@@ -450,4 +454,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,n.render)((0,n.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.d4574c84.js.map
+//# sourceMappingURL=index.82f26200.js.map

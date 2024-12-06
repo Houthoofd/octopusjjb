@@ -100,7 +100,7 @@ import {url} from '../../url';
             display: flex;
             flex-direction: column;
             width: 100%;
-            /*max-width: 400px;*/
+            max-width: 400px;
             margin: 50px auto;
             padding: 10px;
             justify-content: center;
@@ -156,7 +156,7 @@ import {url} from '../../url';
 
         .header h2 {
             font-size: 36px;
-            color: #cccccc;
+            color: #ffffff;
             margin-bottom: 10px;
         }
 
@@ -418,6 +418,10 @@ export class Home extends WebComponent {}
             padding: 10px 10px;
             background-color: #f3faf2;
             margin-top: 10px;
+        }
+        form{
+            display: flex;
+            justify-content: align-center;
         }
         `
     ]
