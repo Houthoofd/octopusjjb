@@ -365,13 +365,18 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
       input[type="text"]::placeholder {
         color: #a2adbe;
       }
-      input[type="password"]{
+      input[type="email"]{
         border: none;
         background-color: #fafbfe;
         width: 38ch;
         padding: 10px 10px;
       }
-      input[type="password"]:placeholder{
+      /* Style quand l'email est valide */
+      input[type="email"]:valid {
+        background-color: #f1f8e9 !important;
+      }
+
+      input[type="email"]::placeholder {
         color: #a2adbe;
       }
         `]})],l);class c extends n.WebComponent{}c=(0,r.__decorate)([(0,n.customElement)({name:"main-footer",template:(0,n.html)`${e=>(0,n.html)`
@@ -472,4 +477,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,n.render)((0,n.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.dd82344c.js.map
+//# sourceMappingURL=index.446caef2.js.map

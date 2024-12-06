@@ -432,13 +432,18 @@ export class Home extends WebComponent {}
       input[type="text"]::placeholder {
         color: #a2adbe;
       }
-      input[type="password"]{
+      input[type="email"]{
         border: none;
         background-color: #fafbfe;
         width: 38ch;
         padding: 10px 10px;
       }
-      input[type="password"]:placeholder{
+      /* Style quand l'email est valide */
+      input[type="email"]:valid {
+        background-color: #f1f8e9 !important;
+      }
+
+      input[type="email"]::placeholder {
         color: #a2adbe;
       }
         `
