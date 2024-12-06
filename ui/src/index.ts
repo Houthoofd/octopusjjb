@@ -105,8 +105,13 @@ import {url} from '../../url';
             width: 100%;
             max-width: 400px;
             margin: 50px auto;
-            border: 1px solid #004080;
             padding: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        section > h3{
+            font-size: 24px;
+            color: #cccccc;
         }
         .schedule-container {
             display: flex;

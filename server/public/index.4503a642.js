@@ -64,8 +64,13 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             width: 100%;
             max-width: 400px;
             margin: 50px auto;
-            border: 1px solid #004080;
             padding: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        section > h3{
+            font-size: 24px;
+            color: #cccccc;
         }
         .schedule-container {
             display: flex;
@@ -439,4 +444,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,s.render)((0,s.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.5988f2fc.js.map
+//# sourceMappingURL=index.4503a642.js.map
