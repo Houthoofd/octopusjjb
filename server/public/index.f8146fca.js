@@ -175,12 +175,10 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             ${e.isVisible?(0,n.html)`
                 <form>
                     <div>
-                        <label for='name'>Nom</label>
-                        <input type='text'>
+                        <input type='text' placeholder="Nom">
                     </div>
                     <div>
-                        <label for='mail'>Mail</label>
-                        <input type='email'>
+                        <input type='email' placeholder="E-mail">
                     </div>
                     <pf-panel scrollable class="result-box">
                         <slot name="header">
@@ -232,7 +230,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
         }
         section#reservation > form {
             min-height: 0;
-            display: block;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -371,10 +369,6 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
         width: 38ch;
         padding: 10px 10px;
       }
-      /* Style quand l'email est valide */
-      input[type="email"]:valid {
-        background-color: #f1f8e9 !important;
-      }
 
       input[type="email"]::placeholder {
         color: #a2adbe;
@@ -477,4 +471,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,n.render)((0,n.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.446caef2.js.map
+//# sourceMappingURL=index.f8146fca.js.map

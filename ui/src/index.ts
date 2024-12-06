@@ -223,12 +223,10 @@ export class Home extends WebComponent {}
             ${section.isVisible ? html`
                 <form>
                     <div>
-                        <label for='name'>Nom</label>
-                        <input type='text'>
+                        <input type='text' placeholder="Nom">
                     </div>
                     <div>
-                        <label for='mail'>Mail</label>
-                        <input type='email'>
+                        <input type='email' placeholder="E-mail">
                     </div>
                     <pf-panel scrollable class="result-box">
                         <slot name="header">
@@ -299,7 +297,7 @@ export class Home extends WebComponent {}
         }
         section#reservation > form {
             min-height: 0;
-            display: block;
+            display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -437,10 +435,6 @@ export class Home extends WebComponent {}
         background-color: #fafbfe;
         width: 38ch;
         padding: 10px 10px;
-      }
-      /* Style quand l'email est valide */
-      input[type="email"]:valid {
-        background-color: #f1f8e9 !important;
       }
 
       input[type="email"]::placeholder {
