@@ -99,6 +99,15 @@ import {url} from '../../url';
     }}`,
     styles: [ 
         css`
+        section{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            border: 1px solid #004080;
+            padding: 10px;
+        }
         .schedule-container {
             display: flex;
             flex-direction: column;
