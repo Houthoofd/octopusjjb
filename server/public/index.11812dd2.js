@@ -68,7 +68,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             justify-content: center;
             align-items: center;
         }
-        section > h3{
+        section > h1{
             font-size: 36px;
             color: #ffffff;
         }
@@ -448,4 +448,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,s.render)((0,s.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.63eddb1c.js.map
+//# sourceMappingURL=index.11812dd2.js.map

@@ -109,7 +109,7 @@ import {url} from '../../url';
             justify-content: center;
             align-items: center;
         }
-        section > h3{
+        section > h1{
             font-size: 36px;
             color: #ffffff;
         }
