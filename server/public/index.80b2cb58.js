@@ -1,10 +1,10 @@
-var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e in t)return t[e].exports;if(e in i){var o=i[e];delete i[e];var r={id:e,exports:{}};return t[e]=r,o.call(r.exports,r,r.exports),r.exports}var s=Error("Cannot find module '"+e+"'");throw s.code="MODULE_NOT_FOUND",s}).register=function(e,t){i[e]=t},e.parcelRequirec605=o),o.register;var r=o("7WQrb"),s=o("5D1XK");o("RKbfs"),o("3I5Zu"),o("dLLJA");var n=o("keLaC");class a extends s.WebComponent{}a=(0,r.__decorate)([(0,s.customElement)({name:"main-home",template:(0,s.html)`${e=>(0,s.html)`<div>
+var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e in t)return t[e].exports;if(e in i){var o=i[e];delete i[e];var r={id:e,exports:{}};return t[e]=r,o.call(r.exports,r,r.exports),r.exports}var n=Error("Cannot find module '"+e+"'");throw n.code="MODULE_NOT_FOUND",n}).register=function(e,t){i[e]=t},e.parcelRequirec605=o),o.register;var r=o("7WQrb"),n=o("5D1XK");o("RKbfs"),o("3I5Zu"),o("dLLJA");var s=o("keLaC");class a extends n.WebComponent{}a=(0,r.__decorate)([(0,n.customElement)({name:"main-home",template:(0,n.html)`${e=>(0,n.html)`<div>
             <pf-masthead display-inline>
                 <div slot="brand">
                     <div class="logo"></div>
                 </div>
                 <pf-action-list>
-                    ${(0,s.repeat)([{label:"Accueil",ref:"/"},{label:"Horaires",ref:"/"},{label:"Tarifs",ref:"/"},{label:"Connexion",ref:"/pages/connexion"}],(0,s.html)`${e=>(0,s.html)`<pf-action-list><pf-button><a href=${e.ref}>${e.label}</a></pf-button></pf-action-list>`}`)}
+                    ${(0,n.repeat)([{label:"Accueil",ref:"/"},{label:"Horaires",ref:"/"},{label:"Tarifs",ref:"/"},{label:"Connexion",ref:"/pages/connexion"}],(0,n.html)`${e=>(0,n.html)`<pf-action-list><pf-button><a class="link" href=${e.ref}>${e.label}</a></pf-button></pf-action-list>`}`)}
                 </pf-action-list>
             </pf-masthead>
 
@@ -20,7 +20,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             <section id="schedule">
                 <h1>Grille horaires</h1>
                 <div class="schedule-container">
-                    ${(0,s.repeat)([{day:"Lundi",time:"19h30-21h15"},{day:"jeudi",time:"19h30-21h15"},{day:"Samedi",time:"12h00-13h30"},{day:"Dimanche",time:"14h15-16h00"}],(0,s.html)`${e=>(0,s.html)`
+                    ${(0,n.repeat)([{day:"Lundi",time:"19h30-21h15"},{day:"jeudi",time:"19h30-21h15"},{day:"Samedi",time:"12h00-13h30"},{day:"Dimanche",time:"14h15-16h00"}],(0,n.html)`${e=>(0,n.html)`
                             <div class="schedule-row">
                                 <div class="day">${e.day}</div>
                                 <div class="time">${e.time}</div>
@@ -37,7 +37,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
                         <h1>Choisissez parmi trois plans adaptés à vos besoins et votre budget.</h1>
                     </div>
                     <div class="plans-container">
-                        ${(0,s.repeat)([{number:1,text:"Plan mensuel",montant:"40 euros/mois"},{number:2,text:"Plan trimestriel",montant:"100 euros",mois:"30 euros/mois"},{number:3,text:"Plan annuel",montant:"300 euros",mois:"25 euros/mois"}],(0,s.html)`${e=>(0,s.html)`
+                        ${(0,n.repeat)([{number:1,text:"Plan mensuel",montant:"40 euros/mois"},{number:2,text:"Plan trimestriel",montant:"100 euros",mois:"30 euros/mois"},{number:3,text:"Plan annuel",montant:"300 euros",mois:"25 euros/mois"}],(0,n.html)`${e=>(0,n.html)`
                                     <div class="plan">
                                         <div class="plan-content">
                                             <span class="number">${e.number}</span>
@@ -57,12 +57,12 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
 
             <special-section></special-section>
             <main-footer></main-footer>
-        </div>`}`,styles:[(0,s.css)`
+        </div>`}`,styles:[(0,n.css)`
         section{
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 400px;
+            /*max-width: 400px;*/
             margin: 50px auto;
             padding: 10px;
             justify-content: center;
@@ -164,12 +164,15 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             background-position: center;
             margin: 10px 20px;
         }
-        `],shadowOptions:{mode:"open"}})],a);class l extends s.WebComponent{attributeChangedCallback(e,t,i){"visible"===e&&(this.isVisible="true"===i),super.attributeChangedCallback(e,t,i)}displayForm(){this.isVisible=!this.isVisible,this.visible=this.isVisible?"true":"false"}async send(){let e=this.shadowRoot?.querySelectorAll("input"),t=e?.[0].value||"",i=e?.[1].value||"";if(!t||!i){alert("Vous devez remplir les champs");return}if(0===this.currentSelection.length){alert("Veuillez sélectionner au moins un cours d'essai.");return}this.utilisateur.push({nom:t,email:i,cours:this.currentSelection}),console.log("Utilisateur et cours sélectionnés :",this.utilisateur);let o=await this.verification(t,i);if(console.log(o),!0===o)try{let e=await fetch(`${n.url}reservations/`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(this.utilisateur)});if(e.ok){let t=await e.json();if(console.log("Utilisateur enregistré avec succès !",t),t.role){let e={users:this.utilisateur.map(e=>({nom:e.nom,email:e.email,cours:e.cours})),role:t.role};localStorage.setItem("userStatus",JSON.stringify(e))}this.currentSelection=[],this.utilisateur=[]}else console.error("Erreur lors de l'enregistrement :",e.statusText),alert("Une erreur s'est produite. Veuillez réessayer.")}catch(e){console.error("Erreur lors de la requête :",e),alert("Impossible d'enregistrer la réservation.")}else alert("Vous avez déjà réservé un cours d'essai.")}selectRow(e){if(this.currentSelection.length>=1){alert("Vous ne pouvez sélectionner qu'un seul cours d'essai");return}this.currentSelection=[...this.currentSelection,e],console.log("Cours sélectionné:",e)}deleteRow(e){let t=e.date_cours;this.currentSelection=this.currentSelection.filter(e=>e.date_cours!==t),console.log("Liste de sélection mise à jour après suppression:",this.currentSelection)}async verification(e,t){try{let i=await fetch(`${n.url}reservations/verification/`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nom:e,email:t})});if(!i.ok)return console.error("Erreur lors de la vérification :",i.statusText),alert("Une erreur s'est produite lors de la vérification. Veuillez réessayer."),!1;{let e=await i.json();if(console.log(e.canRegister),!0===e.canRegister)return!0;return alert("Vous avez déjà réservé un cours d'essai."),!1}}catch(e){return console.error("Erreur lors de la requête :",e),alert("Impossible de vérifier la réservation."),!1}}async preloadData(){try{let e=await fetch(`${n.url}cours/`,{method:"GET",headers:{"Content-Type":"application/json"}});if(!e.ok){let t=await e.text();throw Error(`Erreur serveur: ${e.status} - ${t}`)}let t=await e.json();if(console.log("Données récupérées:",t),t&&t.cours&&Array.isArray(t.cours)&&t.cours.length>0)return t.cours;return console.warn("Aucun cours trouvé."),[]}catch(e){return console.error("Erreur lors de la requête fetch:",e),[]}}formatDateFromISO(e){let t=new Date(e),i=t.getFullYear(),o=String(t.getMonth()+1).padStart(2,"0"),r=String(t.getDate()).padStart(2,"0");return`${i}-${o}-${r}`}convertToISODate(e){let[t,i,o]=e.split("-");return new Date(`${t}-${i}-${o}T00:00:00Z`).toISOString()}constructor(...e){super(...e),this.utilisateur=[],this.currentSelection=[],this.visible=null,this.isVisible=!1}}(0,r.__decorate)([(0,s.state)()],l.prototype,"currentSelection",void 0),(0,r.__decorate)([s.attr],l.prototype,"visible",void 0),(0,r.__decorate)([(0,s.state)()],l.prototype,"isVisible",void 0),l=(0,r.__decorate)([(0,s.customElement)({name:"special-section",template:(0,s.html)`${e=>(0,s.html)`
+        .link{
+            text-decoration: none;
+        }
+        `],shadowOptions:{mode:"open"}})],a);class l extends n.WebComponent{attributeChangedCallback(e,t,i){"visible"===e&&(this.isVisible="true"===i),super.attributeChangedCallback(e,t,i)}displayForm(){this.isVisible=!this.isVisible,this.visible=this.isVisible?"true":"false"}async send(){let e=this.shadowRoot?.querySelectorAll("input"),t=e?.[0].value||"",i=e?.[1].value||"";if(!t||!i){alert("Vous devez remplir les champs");return}if(0===this.currentSelection.length){alert("Veuillez sélectionner au moins un cours d'essai.");return}this.utilisateur.push({nom:t,email:i,cours:this.currentSelection}),console.log("Utilisateur et cours sélectionnés :",this.utilisateur);let o=await this.verification(t,i);if(console.log(o),!0===o)try{let e=await fetch(`${s.url}reservations/`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(this.utilisateur)});if(e.ok){let t=await e.json();if(console.log("Utilisateur enregistré avec succès !",t),t.role){let e={users:this.utilisateur.map(e=>({nom:e.nom,email:e.email,cours:e.cours})),role:t.role};localStorage.setItem("userStatus",JSON.stringify(e))}this.currentSelection=[],this.utilisateur=[]}else console.error("Erreur lors de l'enregistrement :",e.statusText),alert("Une erreur s'est produite. Veuillez réessayer.")}catch(e){console.error("Erreur lors de la requête :",e),alert("Impossible d'enregistrer la réservation.")}else alert("Vous avez déjà réservé un cours d'essai.")}selectRow(e){if(this.currentSelection.length>=1){alert("Vous ne pouvez sélectionner qu'un seul cours d'essai");return}this.currentSelection=[...this.currentSelection,e],console.log("Cours sélectionné:",e)}deleteRow(e){let t=e.date_cours;this.currentSelection=this.currentSelection.filter(e=>e.date_cours!==t),console.log("Liste de sélection mise à jour après suppression:",this.currentSelection)}async verification(e,t){try{let i=await fetch(`${s.url}reservations/verification/`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nom:e,email:t})});if(!i.ok)return console.error("Erreur lors de la vérification :",i.statusText),alert("Une erreur s'est produite lors de la vérification. Veuillez réessayer."),!1;{let e=await i.json();if(console.log(e.canRegister),!0===e.canRegister)return!0;return alert("Vous avez déjà réservé un cours d'essai."),!1}}catch(e){return console.error("Erreur lors de la requête :",e),alert("Impossible de vérifier la réservation."),!1}}async preloadData(){try{let e=await fetch(`${s.url}cours/`,{method:"GET",headers:{"Content-Type":"application/json"}});if(!e.ok){let t=await e.text();throw Error(`Erreur serveur: ${e.status} - ${t}`)}let t=await e.json();if(console.log("Données récupérées:",t),t&&t.cours&&Array.isArray(t.cours)&&t.cours.length>0)return t.cours;return console.warn("Aucun cours trouvé."),[]}catch(e){return console.error("Erreur lors de la requête fetch:",e),[]}}formatDateFromISO(e){let t=new Date(e),i=t.getFullYear(),o=String(t.getMonth()+1).padStart(2,"0"),r=String(t.getDate()).padStart(2,"0");return`${i}-${o}-${r}`}convertToISODate(e){let[t,i,o]=e.split("-");return new Date(`${t}-${i}-${o}T00:00:00Z`).toISOString()}constructor(...e){super(...e),this.utilisateur=[],this.currentSelection=[],this.visible=null,this.isVisible=!1}}(0,r.__decorate)([(0,n.state)()],l.prototype,"currentSelection",void 0),(0,r.__decorate)([n.attr],l.prototype,"visible",void 0),(0,r.__decorate)([(0,n.state)()],l.prototype,"isVisible",void 0),l=(0,r.__decorate)([(0,n.customElement)({name:"special-section",template:(0,n.html)`${e=>(0,n.html)`
         <section id="reservation">
             <h3>Réservez maintenant</h3>
             <span>Ne manquez pas cette occasion d'essayer un cours gratuit</span>
             <pf-button @click="${()=>e.displayForm()}">Cliquez-ici</pf-button>
-            ${e.isVisible?(0,s.html)`
+            ${e.isVisible?(0,n.html)`
                 <form>
                     <div>
                         <label for='name'>Nom</label>
@@ -185,9 +188,9 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
                         </slot>
                         <slot>
                             <div class="table-infos">
-                                ${(0,s.asyncAppend)(e.preloadData(),t=>(0,s.html)`
+                                ${(0,n.asyncAppend)(e.preloadData(),t=>(0,n.html)`
                                     <div class="raw-infos">
-                                        ${(0,s.repeat)(t,(0,s.html)`${t=>(0,s.html)`
+                                        ${(0,n.repeat)(t,(0,n.html)`${t=>(0,n.html)`
                                                         <div class="row" @click="${t=>e.selectRow(t)}">
                                                             <div class="type-de-cours">${t.type_cours}</div>
                                                             <div class="date">${e.formatDateFromISO(t.date_cours)}</div>
@@ -200,7 +203,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
                         </slot>
                         <slot name="extra-slot">
                              <div class="selection">
-                                ${(0,s.repeat)(e.currentSelection,(0,s.html)`${t=>(console.log(t),(0,s.html)`
+                                ${(0,n.repeat)(e.currentSelection,(0,n.html)`${t=>(console.log(t),(0,n.html)`
                                                 <div class="selection">
                                                     <div class="type-de-cours">${t.type_cours}</div>
                                                     <div class="date">${e.formatDateFromISO(t.date_cours)}</div>
@@ -216,7 +219,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
                 </form>
             `:""}
         </section>
-        `}`,styles:[(0,s.css)`
+        `}`,styles:[(0,n.css)`
         section#reservation {
             display: flex;
             justify-content: center;
@@ -349,7 +352,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             background-color: #f3faf2;
             margin-top: 10px;
         }
-        `]})],l);class c extends s.WebComponent{}c=(0,r.__decorate)([(0,s.customElement)({name:"main-footer",template:(0,s.html)`${e=>(0,s.html)`
+        `]})],l);class c extends n.WebComponent{}c=(0,r.__decorate)([(0,n.customElement)({name:"main-footer",template:(0,n.html)`${e=>(0,n.html)`
             <footer>
                 <div class="footer-container">
                     <div class="footer-column">
@@ -384,7 +387,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
                     <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
                 </div>
             </div>
-        </footer>`}`,styles:[(0,s.css)`
+        </footer>`}`,styles:[(0,n.css)`
         footer {
             background-color: #002244;
             color: white;
@@ -447,5 +450,5 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             width: 24px;
             height: 24px;
         }
-        `]})],c),(0,s.render)((0,s.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.bf08fda7.js.map
+        `]})],c),(0,n.render)((0,n.html)`<main-home></main-home>`,document.body);
+//# sourceMappingURL=index.80b2cb58.js.map

@@ -32,7 +32,7 @@ import {url} from '../../url';
                     <div class="logo"></div>
                 </div>
                 <pf-action-list>
-                    ${repeat(buttons, html`${(button) => {return html`<pf-action-list><pf-button><a href=${button.ref}>${button.label}</a></pf-button></pf-action-list>`}}`)}
+                    ${repeat(buttons, html`${(button) => {return html`<pf-action-list><pf-button><a class="link" href=${button.ref}>${button.label}</a></pf-button></pf-action-list>`}}`)}
                 </pf-action-list>
             </pf-masthead>
 
@@ -103,7 +103,7 @@ import {url} from '../../url';
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 400px;
+            /*max-width: 400px;*/
             margin: 50px auto;
             padding: 10px;
             justify-content: center;
@@ -204,6 +204,9 @@ import {url} from '../../url';
             background-repeat: no-repeat;
             background-position: center;
             margin: 10px 20px;
+        }
+        .link{
+            text-decoration: none;
         }
         `
     ],
