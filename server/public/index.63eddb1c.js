@@ -9,7 +9,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             </pf-masthead>
 
             <section>
-                <h3>Plongez dans l'univers implacable du jiu jitsu Brésilien</h3>
+                <h1>Plongez dans l'univers implacable du jiu jitsu Brésilien</h1>
             </section>
 
             <section>
@@ -67,6 +67,10 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             padding: 10px;
             justify-content: center;
             align-items: center;
+        }
+        section > h3{
+            font-size: 36px;
+            color: #ffffff;
         }
         section > h3{
             font-size: 24px;
@@ -444,4 +448,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,s.render)((0,s.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.2b9c7031.js.map
+//# sourceMappingURL=index.63eddb1c.js.map

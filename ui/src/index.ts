@@ -37,7 +37,7 @@ import {url} from '../../url';
             </pf-masthead>
 
             <section>
-                <h3>Plongez dans l'univers implacable du jiu jitsu Brésilien</h3>
+                <h1>Plongez dans l'univers implacable du jiu jitsu Brésilien</h1>
             </section>
 
             <section>
@@ -108,6 +108,10 @@ import {url} from '../../url';
             padding: 10px;
             justify-content: center;
             align-items: center;
+        }
+        section > h3{
+            font-size: 36px;
+            color: #ffffff;
         }
         section > h3{
             font-size: 24px;
