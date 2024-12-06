@@ -9,9 +9,8 @@ import {url} from '../../url';
     name: "main-home",
     template: html`${(home: Home) => {
         const buttons = [
-            {label: 'Accueil', ref: '/'},
-            {label: 'Horaires', ref: '/'},
-            {label: 'Tarifs', ref: '/'},
+            {label: 'Horaires', ref: '#schedule'},
+            {label: 'Tarifs', ref: '#tarifs'},
             {label: 'Connexion', ref: '/pages/connexion'}
         ];
         const schedule = [
@@ -652,8 +651,7 @@ export class Section extends WebComponent {
                 <div class="footer-bottom">
                     <p>&copy; 2024 Tous les droits sont réservés</p>
                 <div class="footer-icons">
-                    <a href="#"><pf-icons-instagram></pf-icons-instagram></a>
-                    <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+                    <a href="https://www.instagram.com/octopusteambjj_belgium_braine/"><pf-icons-instagram></pf-icons-instagram></a>
                 </div>
             </div>
         </footer>`
