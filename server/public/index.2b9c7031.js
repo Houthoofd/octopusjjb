@@ -70,7 +70,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
         }
         section > h3{
             font-size: 24px;
-            color: #cccccc;
+            color: #ffffff;
         }
         .schedule-container {
             display: flex;
@@ -444,4 +444,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,s.render)((0,s.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.123d0ad0.js.map
+//# sourceMappingURL=index.2b9c7031.js.map

@@ -111,7 +111,7 @@ import {url} from '../../url';
         }
         section > h3{
             font-size: 24px;
-            color: #cccccc;
+            color: #ffffff;
         }
         .schedule-container {
             display: flex;
