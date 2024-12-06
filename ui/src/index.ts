@@ -105,6 +105,7 @@ import {url} from '../../url';
             padding: 10px;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
         section > h1{
             font-size: 36px;
