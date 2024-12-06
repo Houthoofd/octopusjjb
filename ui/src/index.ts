@@ -426,6 +426,7 @@ export class Home extends WebComponent {}
         background-color: #fafbfe;
         width: 47ch;
         padding: 20px 10px;
+        border-radius: 5px;
       }
       input[type="text"]::placeholder {
         color: #a2adbe;
@@ -435,6 +436,7 @@ export class Home extends WebComponent {}
         background-color: #fafbfe;
         width: 47ch;
         padding: 20px 10px;
+        border-radius: 5px;
       }
 
       input[type="email"]::placeholder {
