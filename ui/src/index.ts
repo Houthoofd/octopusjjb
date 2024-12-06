@@ -9,8 +9,6 @@ import {url} from '../../url';
     name: "main-home",
     template: html`${(home: Home) => {
         const buttons = [
-            {label: 'Horaires', ref: '#schedule'},
-            {label: 'Tarifs', ref: '#tarifs'},
             {label: 'Connexion', ref: '/pages/connexion'}
         ];
         const schedule = [
@@ -157,7 +155,7 @@ import {url} from '../../url';
         }
 
         .header h2 {
-            font-size: 16px;
+            font-size: 36px;
             color: #cccccc;
             margin-bottom: 10px;
         }
