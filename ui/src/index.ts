@@ -46,7 +46,7 @@ import {url} from '../../url';
             </section>
 
             <section id="schedule">
-                <h3>Entraînez-vous avec les meilleurs</h3>
+                <h3>Grille horaires</h3>
                 <div class="schedule-container">
                     ${repeat(
                         schedule, 
