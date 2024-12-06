@@ -13,12 +13,12 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             </section>
 
             <section>
-                <h3>Entraînez-vous avec les meilleurs</h3>
+                <h1>Entraînez-vous avec les meilleurs</h1>
                 <span>Notre équipe d'enseignants d'élite vous offre une expérience d'apprentissage intense et sans compromis</span>
             </section>
 
             <section id="schedule">
-                <h3>Grille horaires</h3>
+                <h1>Grille horaires</h1>
                 <div class="schedule-container">
                     ${(0,s.repeat)([{day:"Lundi",time:"19h30-21h15"},{day:"jeudi",time:"19h30-21h15"},{day:"Samedi",time:"12h00-13h30"},{day:"Dimanche",time:"14h15-16h00"}],(0,s.html)`${e=>(0,s.html)`
                             <div class="schedule-row">
@@ -448,4 +448,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,s.render)((0,s.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.11812dd2.js.map
+//# sourceMappingURL=index.bf08fda7.js.map

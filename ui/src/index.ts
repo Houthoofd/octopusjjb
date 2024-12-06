@@ -41,12 +41,12 @@ import {url} from '../../url';
             </section>
 
             <section>
-                <h3>Entraînez-vous avec les meilleurs</h3>
+                <h1>Entraînez-vous avec les meilleurs</h1>
                 <span>Notre équipe d'enseignants d'élite vous offre une expérience d'apprentissage intense et sans compromis</span>
             </section>
 
             <section id="schedule">
-                <h3>Grille horaires</h3>
+                <h1>Grille horaires</h1>
                 <div class="schedule-container">
                     ${repeat(
                         schedule, 
