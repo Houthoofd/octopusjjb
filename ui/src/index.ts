@@ -21,9 +21,9 @@ import {url} from '../../url';
             { day: 'Dimanche', time: '14h15-16h00' },
         ];
         const plans = [
-            { number: 1, text: 'Cours gratuit à la réservation', image: 'image1.png' },
-            { number: 2, text: 'Plan intermédiaire', image: 'image2.png' },
-            { number: 3, text: 'Plan premium', image: 'image3.png' }
+            { number: 1, text: 'Plan mensuel', montant: '40 euros/mois'},
+            { number: 2, text: 'Plan trimestriel', montant: '100 euros', mois: '30 euros/mois'},
+            { number: 3, text: 'Plan annuel', montant: '300 euros', mois: '25 euros/mois'}
         ];
 
         return html`<div>
@@ -79,8 +79,11 @@ import {url} from '../../url';
                                             <span class="number">${plan.number}</span>
                                             <p>${plan.text}</p>
                                         </div>
-                                        <div class="plan-image">
-                                            <img src="${plan.image}" alt="Plan ${plan.number}">
+                                        <div class="plan-montant">
+                                            <p>${plan.montant}</p>
+                                        </div>
+                                        <div class="plan-mois">
+                                            <p>${plan.mois}</p>
                                         </div>
                                 </div>
                                 `
