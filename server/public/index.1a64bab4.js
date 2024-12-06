@@ -359,7 +359,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
         background-color: #fafbfe;
         width: 47ch;
         padding: 20px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
       }
       input[type="text"]::placeholder {
         color: #a2adbe;
@@ -369,7 +369,7 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
         background-color: #fafbfe;
         width: 47ch;
         padding: 20px 10px;
-        border-radius: 5px;
+        border-radius: 3px;
       }
 
       input[type="email"]::placeholder {
@@ -473,4 +473,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,n.render)((0,n.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.afd674b0.js.map
+//# sourceMappingURL=index.1a64bab4.js.map
