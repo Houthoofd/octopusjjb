@@ -300,6 +300,10 @@ export class Home extends WebComponent {}
         section#reservation > form {
             min-height: 0;
             display: block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
         section#reservation > form.active {
             height: 100%;
@@ -419,10 +423,24 @@ export class Home extends WebComponent {}
             background-color: #f3faf2;
             margin-top: 10px;
         }
-        form{
-            display: flex;
-            justify-content: align-center;
-        }
+        input[type="text"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="text"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="password"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="password"]:placeholder{
+        color: #a2adbe;
+      }
         `
     ]
 })

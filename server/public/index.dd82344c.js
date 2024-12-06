@@ -233,6 +233,10 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
         section#reservation > form {
             min-height: 0;
             display: block;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
         section#reservation > form.active {
             height: 100%;
@@ -352,10 +356,24 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             background-color: #f3faf2;
             margin-top: 10px;
         }
-        form{
-            display: flex;
-            justify-content: align-center;
-        }
+        input[type="text"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="text"]::placeholder {
+        color: #a2adbe;
+      }
+      input[type="password"]{
+        border: none;
+        background-color: #fafbfe;
+        width: 38ch;
+        padding: 10px 10px;
+      }
+      input[type="password"]:placeholder{
+        color: #a2adbe;
+      }
         `]})],l);class c extends n.WebComponent{}c=(0,r.__decorate)([(0,n.customElement)({name:"main-footer",template:(0,n.html)`${e=>(0,n.html)`
             <footer>
                 <div class="footer-container">
@@ -454,4 +472,4 @@ var e=globalThis,t={},i={},o=e.parcelRequirec605;null==o&&((o=function(e){if(e i
             height: 24px;
         }
         `]})],c),(0,n.render)((0,n.html)`<main-home></main-home>`,document.body);
-//# sourceMappingURL=index.82f26200.js.map
+//# sourceMappingURL=index.dd82344c.js.map
