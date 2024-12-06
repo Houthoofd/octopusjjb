@@ -88,7 +88,7 @@ export class Navigation extends WebComponent{
   }
   logout() {
     localStorage.clear();
-    window.location.href = 'http://www.octopusjjb.ovh';
+    window.location.href = 'http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/';
   }
   
   

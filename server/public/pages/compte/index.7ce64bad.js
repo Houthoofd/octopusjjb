@@ -676,7 +676,7 @@ summary#dropdownButtonGenre {
       .icon {
         transform: translateY(2px);
       }
-    `],shadowOptions:{mode:"open"}})],a)}),s("jcBBX",function(e,o){t("3Bkhj")}),s("3Bkhj",function(e,o){var i=t("7WQrb"),s=t("5D1XK");t("RKbfs"),t("3I5Zu"),t("dLLJA");class a extends s.WebComponent{connectedCallback(){super.connectedCallback(),this.getRole()}getRole(){let e=localStorage.getItem("userData");if(!e)throw Error("Utilisateur non connecté. Aucune donnée dans localStorage.");let o=JSON.parse(e);console.log("Données utilisateur récupérées:",o);let i=o.role;console.log("Rôle de l'utilisateur:",i),"administrator"===i||"super-administrator"===i?this.isAdmin=!0:this.isAdmin=!1,console.log("Est-ce un administrateur ? ",this.isAdmin)}logout(){localStorage.clear(),window.location.href="http://www.octopusjjb.ovh"}constructor(...e){super(...e),this.isAdmin=null}}(0,i.__decorate)([(0,s.state)()],a.prototype,"isAdmin",void 0),(0,i.__decorate)([(0,s.customElement)({name:"navigation-panel",template:(0,s.html)`${e=>(0,s.html)`
+    `],shadowOptions:{mode:"open"}})],a)}),s("jcBBX",function(e,o){t("3Bkhj")}),s("3Bkhj",function(e,o){var i=t("7WQrb"),s=t("5D1XK");t("RKbfs"),t("3I5Zu"),t("dLLJA");class a extends s.WebComponent{connectedCallback(){super.connectedCallback(),this.getRole()}getRole(){let e=localStorage.getItem("userData");if(!e)throw Error("Utilisateur non connecté. Aucune donnée dans localStorage.");let o=JSON.parse(e);console.log("Données utilisateur récupérées:",o);let i=o.role;console.log("Rôle de l'utilisateur:",i),"administrator"===i||"super-administrator"===i?this.isAdmin=!0:this.isAdmin=!1,console.log("Est-ce un administrateur ? ",this.isAdmin)}logout(){localStorage.clear(),window.location.href="http://ec2-18-185-136-232.eu-central-1.compute.amazonaws.com:3000/"}constructor(...e){super(...e),this.isAdmin=null}}(0,i.__decorate)([(0,s.state)()],a.prototype,"isAdmin",void 0),(0,i.__decorate)([(0,s.customElement)({name:"navigation-panel",template:(0,s.html)`${e=>(0,s.html)`
     <div class="navigation">
       <div class="navigation-list">
         <div class="list"></div>
@@ -723,4 +723,4 @@ summary#dropdownButtonGenre {
         text-decoration: none;
       }
     `]})],a)});
-//# sourceMappingURL=index.2a014fea.js.map
+//# sourceMappingURL=index.7ce64bad.js.map
